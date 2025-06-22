@@ -96,9 +96,11 @@
     .theme-button {
       width: 100px;
       height: 40px;
-      background: linear-gradient(to bottom right, #000022, #002222); /* Darker gradient background */
+      background: darkcyan; /* Solid dark teal background */
       font-family: Impact, sans-serif; /* Explicitly set to Impact */
       font-size: 20px; /* Adjusted to fit button size */
+      color: white; /* Solid white text fill */
+      -webkit-text-stroke: 2px black; /* Black stroke for visibility */
       border: none;
       border-radius: 8px; /* Rounded corners */
       cursor: pointer;
@@ -109,10 +111,6 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
       padding: 0 5px; /* Adjusted padding to fit text */
       user-select: none; /* Prevent text selection */
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background: darkblue; /* Gradient text fill */
-      -webkit-text-stroke: 2px black; /* Black stroke for visibility */
       text-align: center;
       z-index: 11; /* Ensure buttons are above the bar */
     }
@@ -137,15 +135,15 @@
   <div class="hover-area"></div>
   <div class="bottom-bar">
     <button class="theme-button" onclick="buttonClick(1)">1</button>
-    <button class="theme-button" onclick="buttonClick(2)">2</button>
-    <button class="theme-button" onclick="buttonClick(3)">3</button>
-    <button class="theme-button" onclick="buttonClick(4)">4</button>
-    <button class="theme-button" onclick="buttonClick(5)">5</button>
-    <button class="theme-button" onclick="buttonClick(6)">6</button>
-    <button class="theme-button" onclick="buttonClick(7)">7</button>
-    <button class="theme-button" onclick="buttonClick(8)">8</button>
-    <button class="theme-button" onclick="buttonClick(9)">9</button>
-    <button class="theme-button" onclick="buttonClick(10)">10</button>
+    <button class="theme-button" onclick="buttonClick(2)">1</button>
+    <button class="theme-button" onclick="buttonClick(3)">1</button>
+    <button class="theme-button" onclick="buttonClick(4)">1</button>
+    <button class="theme-button" onclick="buttonClick(5)">1</button>
+    <button class="theme-button" onclick="buttonClick(6)">1</button>
+    <button class="theme-button" onclick="buttonClick(7)">1</button>
+    <button class="theme-button" onclick="buttonClick(8)">1</button>
+    <button class="theme-button" onclick="buttonClick(9)">1</button>
+    <button class="theme-button" onclick="buttonClick(10)">1</button>
   </div>
   <script>
     function buttonClick(buttonNumber) {
