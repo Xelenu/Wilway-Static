@@ -38,6 +38,40 @@
       animation: gradientShift 10s ease-in-out infinite;
       overflow: hidden; /* Ensure no overflow from background */
     }
+    .bottom-bar {
+      position: fixed;
+      bottom: 20px; /* Lifted off the bottom */
+      left: 5%; /* Centered with 5% margin on both sides */
+      width: 90%;
+      height: 60px;
+      background: linear-gradient(to bottom right, rgba(0,0,139,0.5), rgba(0,139,139,0.5), rgba(0,0,139,0.5)); /* Semi-transparent gradient */
+      border-radius: 15px; /* Rounded corners for the element */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Shadow for floating effect */
+      z-index: 10;
+      overflow: hidden; /* Ensure the pseudo-element respects border-radius */
+    }
+    .bottom-bar::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      background: linear-gradient(to right, darkblue, darkcyan, darkblue); /* Gradient border */
+      z-index: -1;
+      border-radius: 20px; /* Slightly larger radius to encompass the border */
+    }
+    .bottom-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom right, rgba(0,0,139,0.5), rgba(0,139,139,0.5), rgba(0,0,139,0.5));
+      border-radius: 15px; /* Match the main element's radius */
+      z-index: -1;
+    }
     @keyframes gradientShift {
       0% {
         background-position: 0% 50%;
@@ -53,6 +87,8 @@
 </head>
 <body>
   <div class="background">
+  </div>
+  <div class="bottom-bar">
   </div>
 </body>
 </html>
