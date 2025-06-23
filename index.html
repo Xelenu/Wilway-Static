@@ -76,18 +76,8 @@ let lastTabSwitch = 0;
 
     // Button click handler for iframe and selection
 function buttonClick(buttonNumber) {
-  const now = Date.now();
-  if (isLoading) {
-    console.log('Still loading, please wait.');
-    return;
-  }
-  if (now - lastTabSwitch < TAB_COOLDOWN) {
-    console.log('Cooldown active. Please wait before switching again.');
-    return;
-  }
-
+  if (isLoading) return; // Prevent overlapping calls
   isLoading = true;
-  lastTabSwitch = now;
 
   const loadingScreen = document.getElementById('loadingScreen');
   const progressCircle = document.querySelector('.progress-circle circle');
@@ -98,53 +88,64 @@ function buttonClick(buttonNumber) {
   const maxDuration = 1000;
   const duration = Math.random() * (maxDuration - minDuration) + minDuration;
 
-  // Visual feedback
+  // Disable buttons during transition
   buttons.forEach(btn => btn.classList.add('disabled'));
+
+  // Clear all selected states first
   buttons.forEach(btn => btn.classList.remove('selected'));
+
+  // Set new selected state
   buttons[buttonNumber - 1].classList.add('selected');
+
+  // Debugging log
+  console.log(`Button ${buttonNumber} clicked`);
+
+  const sources = {
+    2: 'https://example.com/',
+    3: 'https://dsa.886967.xyz/',
+    4: 'https://example.com/page4',
+    5: 'https://example.com/page5',
+    6: 'https://example.com/page6',
+    7: 'https://example.com/page7',
+    8: 'https://example.com/page8',
+    9: 'https://example.com/page9',
+    10: 'https://example.com/page10'
+  };
+
+  const sourceUrl = sources[buttonNumber];
+  console.log('Resolved URL:', sourceUrl);
 
   if (buttonNumber === 1) {
     iframe.style.display = 'none';
     homeContainer.classList.remove('hidden');
     console.log('Home button clicked, showing background and home elements');
+  } else if (sourceUrl) {
+    iframe.src = sourceUrl;
+    iframe.style.display = 'block';
+    homeContainer.classList.add('hidden');
+    console.log(`Loading iframe with: ${sourceUrl}`);
   } else {
-    const sources = {
-      2: 'https://example.com/',
-      3: 'https://dsa.886967.xyz/',
-      4: 'https://example.com/page4',
-      5: 'https://example.com/page5',
-      6: 'https://example.com/page6',
-      7: 'https://example.com/page7',
-      8: 'https://example.com/page8',
-      9: 'https://example.com/page9',
-      10: 'https://example.com/page10'
-    };
-    const sourceUrl = sources[buttonNumber];
-if (sourceUrl) {
-  iframe.src = sourceUrl;
-  iframe.style.display = 'block';
-  homeContainer.classList.add('hidden');
-  console.log(`Button ${buttonNumber} clicked, loading ${sourceUrl}`);
-} else {
-  console.error(`No URL defined for button ${buttonNumber}`);
-  iframe.style.display = 'none';
-  homeContainer.classList.remove('hidden');
-  buttons[buttonNumber - 1].classList.remove('selected');
-  buttons[0].classList.add('selected');
-  isLoading = false;
-  buttons.forEach(btn => btn.classList.remove('disabled'));
-  return;
-}
+    console.warn(`⚠️ No URL defined for button ${buttonNumber}. Reverting to Home.`);
+    iframe.style.display = 'none';
+    homeContainer.classList.remove('hidden');
+    buttons[buttonNumber - 1].classList.remove('selected');
+    buttons[0].classList.add('selected');
+    isLoading = false;
+    buttons.forEach(btn => btn.classList.remove('disabled'));
+    return;
+  }
+
+  // Show loading screen
   loadingScreen.style.display = 'flex';
   loadingScreen.style.animation = 'none';
   progressCircle.style.animation = 'none';
-  loadingScreen.offsetHeight;
+  loadingScreen.offsetHeight; // Force reflow
   loadingScreen.style.animation = `loadingFade ${duration}ms linear forwards`;
   progressCircle.style.animation = `progressFill ${duration}ms linear forwards`;
 
   setTimeout(() => {
-    loadingScreen.style.display = 'none';
     buttons.forEach(btn => btn.classList.remove('disabled'));
+    loadingScreen.style.display = 'none';
     isLoading = false;
   }, duration);
 }
