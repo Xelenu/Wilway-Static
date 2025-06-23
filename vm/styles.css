@@ -8,6 +8,69 @@
   --wilway-shadow: rgba(0, 0, 0, 0.6);
 }
 
+/* Specific styles for the "Start session!" button */
+#close-warning {
+  padding: 16px 40px; /* Extra large for prominence */
+  font-size: 24px; /* Larger than greeting (30px) for balance */
+  font-weight: 800; /* Extra bold */
+  font-family: Impact, sans-serif;
+  background: var(--wilway-accent); /* #00e6e6 */
+  color: var(--wilway-darkblue); /* #001f3f */
+  border: 4px solid var(--wilway-accent-hover); /* #33f2f2 thick border */
+  border-radius: 12px; /* Smoother, larger radius */
+  box-shadow: 0 0 18px var(--wilway-accent), 0 4px 10px var(--wilway-shadow); /* Strong glow + shadow */
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  margin-top: 15px; /* Extra spacing to stand out */
+  text-transform: uppercase; /* Emphasize action */
+}
+
+#close-warning:hover:not(:disabled) {
+  background: var(--wilway-accent-hover); /* #33f2f2 */
+  border-color: var(--wilway-text); /* #ffffff */
+  transform: scale(1.08); /* More pronounced scale */
+  box-shadow: 0 0 25px var(--wilway-accent-hover), 0 4px 14px var(--wilway-shadow); /* Brighter glow */
+}
+
+#close-warning:disabled {
+  background: var(--wilway-darkcyan); /* #004c4c, distinct from overlay */
+  color: var(--wilway-text); /* #ffffff */
+  border: 4px solid var(--wilway-accent); /* #00e6e6, ties to enabled state */
+  opacity: 0.9; /* Highly visible */
+  cursor: not-allowed;
+  box-shadow: 0 0 12px var(--wilway-accent); /* Subtle glow */
+  animation: pulse-border 1.5s infinite ease-in-out; /* Fast, noticeable pulse */
+}
+
+/* Pulsating border animation for disabled state */
+@keyframes pulse-border {
+  0% { border-color: var(--wilway-accent); box-shadow: 0 0 12px var(--wilway-accent); }
+  50% { border-color: var(--wilway-accent-hover); box-shadow: 0 0 18px var(--wilway-accent-hover); }
+  100% { border-color: var(--wilway-accent); box-shadow: 0 0 12px var(--wilway-accent); }
+}
+
+/* Premium theme overrides */
+.premium-theme #close-warning {
+  background: var(--wilway-accent);
+  box-shadow: 0 0 25px var(--wilway-accent), 0 4px 12px var(--wilway-shadow); /* Extra strong glow */
+  border: 4px solid var(--wilway-accent-hover);
+}
+
+.premium-theme #close-warning:hover:not(:disabled) {
+  background: var(--wilway-accent-hover);
+  border-color: var(--wilway-text);
+  box-shadow: 0 0 30px var(--wilway-accent-hover), 0 4px 16px var(--wilway-shadow);
+}
+
+.premium-theme #close-warning:disabled {
+  background: var(--wilway-darkcyan);
+  color: var(--wilway-text);
+  border: 4px solid var(--wilway-accent);
+  opacity: 0.9;
+  box-shadow: 0 0 15px var(--wilway-accent);
+  animation: pulse-border 1.5s infinite ease-in-out;
+}
 /* —— AUTH OVERLAY STYLES —— */
 #auth-overlay {
   position: fixed;
