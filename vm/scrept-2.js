@@ -223,10 +223,3 @@ setInterval(() => {
     }
   }
 }, 10000); // check every 10 seconds
-
-   function handleBeforeUnload(e) {
-  e.preventDefault();
-  e.returnValue = '';
-}
-
-window.addEventListener('beforeunload', handleBeforeUnload);
