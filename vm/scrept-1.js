@@ -115,7 +115,7 @@ if (serverButtons.length > 0) {
     }
   }
 
-  const acknowledgeCheckbox = document.getElementById('acknowledge-checkbox');
+ const acknowledgeCheckbox = document.getElementById('acknowledge-checkbox');
 const closeWarningButton = document.getElementById('close-warning');
 if (acknowledgeCheckbox && closeWarningButton) {
   acknowledgeCheckbox.addEventListener('change', e => {
@@ -124,14 +124,7 @@ if (acknowledgeCheckbox && closeWarningButton) {
   closeWarningButton.addEventListener('click', () => {
     document.getElementById('warning').classList.remove('active');
     start();
-    // Simulate session expiration without timer
-    const sessionDuration = isUserPremium() ? 40 * 60 * 1000 :
-                            localStorage.getItem("cvm_token") ? 30 * 60 * 1000 :
-                            20 * 60 * 1000;
-    setTimeout(() => {
-      window.removeEventListener('beforeunload', blockUnload);
-      window.location.href = 'https://nuhuh.learnstats.xyz/';
-    }, sessionDuration);
+    startSessionTimer();
   });
 } else {
   console.error('Acknowledge checkbox or close-warning button not found.');
@@ -185,8 +178,35 @@ document.addEventListener('fullscreenchange', () => {
           .classList.toggle('fullscreen-mode', inFS);
 });
 
-  // ======== timer ========
-  // Removed timer functionality (startTimer, updateTimerDisplay)
+// Session timer logic
+function startSessionTimer() {
+  const timerElement = document.getElementById('session-timer');
+  if (!timerElement) {
+    console.error('Session timer element not found.');
+    return;
+  }
+  let seconds = 60 * 60; // 60 minutes
+  updateTimerDisplay(seconds);
+  const interval = setInterval(() => {
+    if (seconds > 0) {
+      seconds--;
+      updateTimerDisplay(seconds);
+    } else {
+      clearInterval(interval);
+      window.removeEventListener('beforeunload', blockUnload);
+      window.location.href = 'https://nuhuh.learnstats.xyz/';
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay(seconds) {
+  const timerElement = document.getElementById('session-timer');
+  if (timerElement) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  }
+}
 
   // ======== key blocking ========
   document.addEventListener('keydown', e => {
