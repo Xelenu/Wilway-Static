@@ -122,7 +122,10 @@ if (acknowledgeCheckbox && closeWarningButton) {
     closeWarningButton.disabled = !e.target.checked;
   });
   closeWarningButton.addEventListener('click', () => {
-    document.getElementById('warning').classList.remove('active');
+    const warningOverlay = document.getElementById('warning');
+    if (warningOverlay) {
+      warningOverlay.classList.remove('active');
+    }
     start();
     startSessionTimer();
   });
@@ -179,13 +182,15 @@ document.addEventListener('fullscreenchange', () => {
 });
 
 // Session timer logic
+// Session timer logic
 function startSessionTimer() {
   const timerElement = document.getElementById('session-timer');
   if (!timerElement) {
-    console.error('Session timer element not found.');
+    console.error('Session timer element (#session-timer) not found.');
     return;
   }
   let seconds = 60 * 60; // 60 minutes
+  timerElement.style.display = 'block'; // Ensure visibility
   updateTimerDisplay(seconds);
   const interval = setInterval(() => {
     if (seconds > 0) {
