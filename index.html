@@ -339,7 +339,7 @@ function buttonClick(buttonNumber) {
     }
 
     // Initialize loading screen and other features
-    window.onload = function() {
+    document.addEventListener('DOMContentLoaded', () => {
       const loadingScreen = document.getElementById('loadingScreen');
       const progressCircle = document.querySelector('.progress-circle circle');
       const minDuration = 1000;
@@ -377,7 +377,7 @@ function buttonClick(buttonNumber) {
       }
 
       detectImpactFont();
-    };
+    });
   </script>
 </body>
 </html>
