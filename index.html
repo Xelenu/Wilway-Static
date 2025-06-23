@@ -7,18 +7,18 @@
       margin: 0;
       padding: 0;
       overflow: hidden; /* Prevent scrollbars from appearing */
-      font-family: Impact, sans-serif; /* Set global font to Impact */
+      font-family: Impact, sans-serif; /* Original font family */
     }
     /* Custom scrollbar for WebKit browsers (Chrome, Safari, Edge) */
     ::-webkit-scrollbar {
-      width: 12px;
+      width: 1.2vw; /* ~18px at 1920px */
     }
     ::-webkit-scrollbar-track {
       background: black;
     }
     ::-webkit-scrollbar-thumb {
       background: cyan;
-      border-radius: 6px;
+      border-radius: 0.6vw; /* ~9px */
     }
     ::-webkit-scrollbar-thumb:hover {
       background: #00e6e6; /* Slightly darker cyan on hover */
@@ -44,46 +44,46 @@
     }
     .bottom-bar {
       position: fixed;
-      bottom: 20px; /* Lifted off the bottom */
-      left: 5%; /* Centered with 5% margin on both sides */
+      bottom: 2vh; /* ~30px */
+      left: 5%; /* Centered with 5% margin */
       width: 90%;
-      height: 60px;
-      background: linear-gradient(to bottom right, rgba(0,0,139,0.5), rgba(0,139,139,0.5), rgba(0,0,139,0.5)); /* Semi-transparent gradient */
-      border-radius: 15px; /* Rounded corners for the element */
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Shadow for floating effect */
+      height: 6vh; /* ~90px */
+      background: linear-gradient(to bottom right, rgba(0,0,139,0.5), rgba(0,139,139,0.5), rgba(0,0,139,0.5));
+      border-radius: 1.5vh; /* ~22.5px */
+      box-shadow: 0 0.4vh 0.8vh rgba(0,0,0,0.3); /* ~6px, 12px */
       z-index: 10;
-      overflow: hidden; /* Ensure the pseudo-element respects border-radius */
-      transition: transform 0.3s ease; /* Smooth transition for hover effect */
+      overflow: hidden;
+      transition: transform 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 20px; /* Spacing between buttons */
-      padding: 0 10px; /* Padding to prevent buttons from touching edges */
+      gap: 1.25rem; /* ~20px, preserve spacing */
+      padding: 0 1vh; /* ~15px */
     }
     .hover-area {
       position: fixed;
-      bottom: 0px; /* Positioned just below the bottom bar */
-      left: 4%; /* Slightly wider than the bottom bar */
+      bottom: 0;
+      left: 4%;
       width: 92%;
-      height: 80px; /* Extends 20px below the bottom bar */
-      background: transparent; /* Invisible */
-      z-index: 9; /* Below the bottom bar but above the background */
-      cursor: default; /* No pointer cursor to maintain invisibility */
+      height: 8vh; /* ~120px */
+      background: transparent;
+      z-index: 9;
+      cursor: default;
     }
     .hover-area:hover ~ .bottom-bar,
     .bottom-bar:hover {
-      transform: translateY(-10px); /* Pop up 10px on hover of either element */
+      transform: translateY(-1vh); /* ~15px */
     }
     .bottom-bar::before {
       content: '';
       position: absolute;
-      top: -5px;
-      left: -5px;
-      right: -5px;
-      bottom: -5px;
-      background: linear-gradient(to right, darkblue, darkcyan, darkblue); /* Gradient border */
+      top: -0.5vh; /* ~7.5px */
+      left: -0.5vh;
+      right: -0.5vh;
+      bottom: -0.5vh;
+      background: linear-gradient(to right, darkblue, darkcyan, darkblue);
       z-index: -1;
-      border-radius: 20px; /* Slightly larger radius to encompass the border */
+      border-radius: 2vh; /* ~30px */
     }
     .bottom-bar::after {
       content: '';
@@ -93,68 +93,70 @@
       right: 0;
       bottom: 0;
       background: linear-gradient(to bottom right, rgba(0,0,139,0.5), rgba(0,139,139,0.5), rgba(0,0,139,0.5));
-      border-radius: 15px; /* Match the main element's radius */
+      border-radius: 1.5vh; /* ~22.5px */
       z-index: -1;
     }
     .theme-button {
-      width: 100px;
-      height: 40px;
-      background: darkcyan; /* Solid darkcyan background */
-      font-family: Impact, sans-serif; /* Explicitly set to Impact */
-      font-size: 20px; /* Adjusted to fit button size */
-      color: white; /* Solid white text fill */
-      -webkit-text-stroke: 2px black; /* Black stroke for visibility */
+      width: 10vw; /* ~150px at 1920px */
+      height: 4vh; /* ~60px */
+      background: darkcyan;
+      font-family: Impact, sans-serif; /* Original font family */
+      font-size: clamp(1.2rem, 2vw, 1.6rem); /* ~20-30px */
+      color: white; /* Restore original */
+      -webkit-text-stroke: 2px black; /* Restore original 2px stroke */
       border: none;
-      border-radius: 8px; /* Rounded corners */
+      border-radius: 0.8vh; /* ~12px */
       cursor: pointer;
-      transition: transform 0.2s ease-in-out, border 0.2s ease-in-out; /* Smooth transition for scaling and border */
+      transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      padding: 0 5px; /* Adjusted padding to fit text */
-      user-select: none; /* Prevent text selection */
+      box-shadow: 0 0.2vh 0.4vh rgba(0,0,0,0.2); /* ~3px, 6px */
+      padding: 0 0.5vh; /* ~7.5px */
+      user-select: none;
       text-align: center;
-      z-index: 11; /* Ensure buttons are above the bar */
-      position: relative; /* For positioning click effect */
-      overflow: hidden; /* Ensure click effect stays within button */
+      z-index: 11;
+      position: relative;
+      overflow: hidden;
     }
     .theme-button:hover {
-      transform: scale(1.2); /* Slightly larger size on hover */
-      border: 2px solid white; /* White border on hover */
+      transform: scale(1.2);
+      border: 0.2vh solid white; /* ~3px */
     }
     .theme-button:hover + .theme-button {
-      transform: translateX(10px); /* Push right neighbor to the right */
+      transform: translateX(1vh); /* ~15px */
     }
     .theme-button:hover ~ .theme-button:not(:hover) {
-      transform: translateX(10px); /* Push all buttons to the right of the hovered button */
+      transform: translateX(1vh);
     }
     .theme-button:not(:hover) {
-      transform: scale(1); /* Return to normal size */
-      border: none; /* No border when not hovered */
+      transform: scale(1);
+      border: none;
     }
     .bottom-bar:hover .theme-button {
-      transition: transform 0.2s ease-in-out; /* Ensure smooth transition for all buttons */
+      transition: transform 0.2s ease-in-out;
     }
     /* Click effect */
     .click-effect {
       position: absolute;
       background: white;
       border-radius: 50%;
-      pointer-events: none; /* Prevent interference with button clicks */
-      transform: translate(-50%, -50%); /* Center at click position */
-      animation: spread-and-fade 0.5s ease-out forwards; /* Animation for spreading and fading */
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      animation: spread-and-fade 0.5s ease-out forwards;
     }
-    /* New CSS for settings button */
+    /* Settings button */
     .settings-button {
       position: fixed;
-      bottom: 20px;
-      left: 20px;
-      width: 30px;
-      height: 30px;
+      bottom: 2vh; /* ~30px */
+      left: 2vh; /* ~30px */
+      width: 3vh; /* ~45px */
+      height: 3vh;
       background: darkcyan;
-      font-size: 20px; /* Size for emoji */
-      color: white;
+      font-family: Impact, sans-serif; /* Original font family */
+      font-size: clamp(1rem, 1.5vw, 1.2rem); /* ~20-30px */
+      color: white; /* Restore original */
+      -webkit-text-stroke: 1px black; /* Restore original 1px stroke */
       border: none;
       border-radius: 50%;
       cursor: pointer;
@@ -167,57 +169,60 @@
     .settings-button:hover {
       transform: scale(1.1);
     }
-    /* New CSS for settings panel */
+    /* Settings panel */
     .settings-panel {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 250px;
-      padding: 20px;
+      width: 25vw; /* ~375px at 1920px */
+      padding: 2vh; /* ~30px */
       background: linear-gradient(to bottom right, rgba(0,0,139,0.7), rgba(0,139,139,0.7), rgba(0,0,139,0.7));
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      border-radius: 1.5vh; /* ~22.5px */
+      box-shadow: 0 0.4vh 1.2vh rgba(0,0,0,0.5); /* ~6px, 18px */
       z-index: 13;
       display: none;
       flex-direction: column;
-      gap: 15px;
-      border: 2px solid rgba(0,139,139,0.7);
+      gap: 0.9375rem; /* ~15px, preserve spacing */
+      border: 0.2vh solid rgba(0,139,139,0.7); /* ~3px */
     }
     .settings-panel button {
       width: 100%;
-      height: 35px;
+      height: 3.5vh; /* ~52.5px */
       background: darkcyan;
-      font-family: Impact, sans-serif;
-      font-size: 16px;
-      color: white;
-      -webkit-text-stroke: 1px black;
+      font-family: Impact, sans-serif; /* Original font family */
+      font-size: clamp(0.9rem, 1.5vw, 1.2rem); /* ~16-24px */
+      color: white; /* Restore original */
+      -webkit-text-stroke: 1px black; /* Restore original 1px stroke */
       border: none;
-      border-radius: 6px;
+      border-radius: 0.6vh; /* ~9px */
       cursor: pointer;
       transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      box-shadow: 0 0.2vh 0.4vh rgba(0,0,0,0.2); /* ~3px, 6px */
     }
     .settings-panel button:hover {
       transform: scale(1.05);
-      border: 1px solid white;
+      border: 0.1vh solid white; /* ~1.5px */
     }
     .settings-panel .close-button {
-      background: darkblue; /* Darker purple for contrast */
-      font-size: 14px;
+      background: darkblue;
+      font-family: Impact, sans-serif; /* Original font family */
+      font-size: clamp(0.7rem, 1.2vw, 1rem); /* ~14-21px */
+      color: white; /* Restore original */
+      -webkit-text-stroke: 1px black; /* Restore original 1px stroke */
     }
     @keyframes spread-and-fade {
       0% {
-        width: 10px;
-        height: 10px;
+        width: 1vh; /* ~15px */
+        height: 1vh;
         opacity: 0.8;
       }
       100% {
-        width: 120px; /* Larger than button to cover it */
-        height: 120px;
+        width: 12vh; /* ~180px */
+        height: 12vh;
         opacity: 0;
       }
     }
