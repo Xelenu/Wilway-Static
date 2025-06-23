@@ -339,28 +339,33 @@ function buttonClick(buttonNumber) {
     }
 
     // Initialize loading screen and other features
-    document.addEventListener('DOMContentLoaded', () => {
-      const loadingScreen = document.getElementById('loadingScreen');
-      const progressCircle = document.querySelector('.progress-circle circle');
-      const minDuration = 1000;
-      const maxDuration = 2500;
-      const duration = Math.random() * (maxDuration - minDuration) + minDuration;
-      
-      loadingScreen.style.animationDuration = `${duration}ms`;
-      progressCircle.style.animationDuration = `${duration}ms`;
-      
-      loadingScreen.addEventListener('animationend', () => {
-        loadingScreen.style.display = 'none';
-        const iframe = document.getElementById('contentIframe');
-        const buttons = document.querySelectorAll('.theme-button');
-        const homeContainer = document.querySelector('.home-container');
-        buttons.forEach(btn => btn.classList.remove('selected'));
-        buttons[0].classList.add('selected');
-        iframe.style.display = 'none';
-        homeContainer.classList.remove('hidden');
-        console.log('Initial load complete, showing Home background and elements');
-      });
+    let initialLoadDone = false;
 
+document.addEventListener('DOMContentLoaded', () => {
+  const loadingScreen = document.getElementById('loadingScreen');
+  const progressCircle = document.querySelector('.progress-circle circle');
+  const minDuration = 1000;
+  const maxDuration = 2500;
+  const duration = Math.random() * (maxDuration - minDuration) + minDuration;
+
+  loadingScreen.style.animationDuration = `${duration}ms`;
+  progressCircle.style.animationDuration = `${duration}ms`;
+
+  loadingScreen.addEventListener('animationend', () => {
+    if (initialLoadDone) return;
+    initialLoadDone = true;
+
+    loadingScreen.style.display = 'none';
+    const iframe = document.getElementById('contentIframe');
+    const buttons = document.querySelectorAll('.theme-button');
+    const homeContainer = document.querySelector('.home-container');
+    buttons.forEach(btn => btn.classList.remove('selected'));
+    buttons[0].classList.add('selected');
+    iframe.style.display = 'none';
+    homeContainer.classList.remove('hidden');
+    console.log('Initial load complete, showing Home background and elements');
+  });
+  
       const animationPaused = getCookie('animationPaused');
       const background = document.querySelector('.background');
       
