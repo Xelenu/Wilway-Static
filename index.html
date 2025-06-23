@@ -139,11 +139,18 @@
       progressCircle.style.animation = `progressFill ${duration}ms linear forwards`;
 
       setTimeout(() => {
-        buttons.forEach(btn => btn.classList.remove('disabled'));
-        loadingScreen.style.display = 'none';
-        isLoading = false; // Allow new button clicks
-      }, duration);
-    }
+  loadingScreen.style.display = 'none';
+
+  // Keep cooldown active for a fixed duration (e.g. 1s total)
+  const cooldownDuration = 1000; // in ms
+  const remainingCooldown = Math.max(0, cooldownDuration - duration);
+
+  setTimeout(() => {
+    buttons.forEach(btn => btn.classList.remove('disabled'));
+    isLoading = false;
+  }, remainingCooldown);
+
+}, duration);
 
     // Add click effect
     document.querySelectorAll('.theme-button').forEach(button => {
