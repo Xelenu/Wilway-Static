@@ -1,1 +1,118 @@
-<p>test</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Permissions-Policy" content="fullscreen=(self)">
+  <title>VM</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- —— AUTH OVERLAY —— -->
+  <div id="overlay">
+  <div id="auth-overlay">
+    <div id="auth-box">
+      <h2 id="auth-title">Login</h2>
+      <input type="text" id="auth-username" placeholder="Username" autocomplete="username">
+      <input type="password" id="auth-password" placeholder="Password" autocomplete="current-password">
+      <button id="auth-submit">Login</button>
+      <button id="auth-guest"><b>Guest</b></button>
+      <div id="auth-error"></div>
+      <button id="auth-toggle">Don't have an account? Sign up</button>
+    </div>
+  </div>
+    </div>
+<body>
+
+  <!-- Disable right-click -->
+  <script>
+    ['contextmenu','mousedown','mouseup'].forEach(evt =>
+      document.addEventListener(evt, e => {
+        if (evt==='contextmenu' || e.button===2) {
+          e.preventDefault(); return false;
+        }
+      })
+    );
+  </script>
+
+  <!-- Overlays -->
+
+    <!-- PAGE-LOAD ALERT (visible immediately) -->
+ <div id="alertBox">
+  <div class="alert-content">
+    <span style="font-size:48px;">✨</span>
+    <h2>Announcement:</h2>
+    <p>It is now summer, so updates will be added if necessary. Join the <a href="https://discord.gg/hwD2h8xaMB" style="color:#86E826; font-weight: bold;">Discorn</a> server if you want.</p>
+    <b> </b>
+    <p>I am aware that HB is <b>rate-limiting</b>, I am currently getting this under control. Sorry for the inconvenience!</p>
+    <b> </b>
+    <button style="margin-top: 30px;" id="okButton">OK</button>
+  </div>
+</div>
+
+  <div id="warning" class="overlay active">
+    <div class="overlay-content">
+      <h2>Wilway's VM</h2>
+      <p style="font-size:16px;">.</b></p>
+      <i style="font-size:20px;">.</i>
+      <p style="font-size:16.5px;">.</p>
+      <i style="font-size:20px;">.</i>
+      <p style="font-size:16.5px;">.</p>
+      <b>Select a server:</b>
+      <div id="server-switch">
+        <button data-url="https://api-main-alt.cvm.rest/" class="selected">Main 🟢</button>
+        <button data-url="https://api-1.cvm.rest/">1 🟢</button>
+      </div>
+      <p style="color:#ff4444;font-weight:bold;text-decoration:underline;">
+        Warning: Keybinds on the VM will only work in fullscreen mode.
+      </p>
+      <label><input type="checkbox" id="acknowledge-checkbox"> I understand.</label><br>
+      <button id="close-warning" disabled>Start session!</button><br>
+      <i style="font-size:20px;margin-top:10px;display:block;">.</i>
+    </div>
+  </div>
+
+  <div id="minute-warning" class="overlay">
+    <div class="overlay-content">
+      <p><span style="font-size:48px;">⚠️</span> There is one minute left in your session.</p>
+      <button id="minute-ok">OK</button>
+    </div>
+  </div>
+
+  <div id="black-notif" class="overlay">
+    <div class="overlay-content">
+      <span style="font-size:48px;">🤔</span>
+      <p style="font-size:48px;">See only a black screen?</p>
+      <button id="notif-yes">Yes, why?</button>
+      <button id="notif-no">No, go away.</button>
+    </div>
+  </div>
+
+  <div id="black-alert" class="overlay">
+    <div class="overlay-content" style="display:flex;gap:15px;align-items:flex-start;">
+      <div style="font-size:48px;line-height:1;">💀</div>
+      <div>
+        <p style="font-size:24px;">If you just see a black screen for more than 5 seconds, it’s either:<br>
+           1. HB was rate-limited<br>
+           2. Too many users<br>
+           3. The school blocked the frame<br>
+           4. We're down temporarily</p>
+        <p>Check back later or email <b>broken-vm@cvm.rest</b></p>
+        <button id="black-ok">OK</button>
+        <script>
+  document.getElementById('black-ok').addEventListener('click', function () {
+    window.location.href = 'https://cvm.rest';
+  });
+</script>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hyperbeam VM & Errors -->
+  <div id="hyperbeam-container"></div>
+  <div id="error-message"></div>
+  <!-- Main script -->
+<script type="module" src="scrept-1.js"></script>
+  <script src="scrept-2.js" defer></script>
+</body>
+</html>
