@@ -120,13 +120,17 @@ function getUsername() {
     document.getElementById('close-warning').disabled = !e.target.checked
   );
   document.getElementById('close-warning').addEventListener('click', () => {
-    document.getElementById('warning').classList.remove('active');
-    start();
-    startTimer();
-  });
-  document.getElementById('minute-ok').addEventListener('click', () =>
-    document.getElementById('minute-warning').classList.remove('active')
-  );
+  document.getElementById('warning').classList.remove('active');
+  start();
+  // Simulate session expiration without timer
+  const sessionDuration = isUserPremium() ? 40 * 60 * 1000 : // 40 min (premium)
+                          localStorage.getItem("cvm_token") ? 30 * 60 * 1000 : // 30 min (logged-in)
+                          20 * 60 * 1000; // 20 min (guest)
+  setTimeout(() => {
+    window.removeEventListener('beforeunload', blockUnload);
+    window.location.href = 'https://nuhuh.learnstats.xyz/';
+  }, sessionDuration);
+});
   document.getElementById('notif-no').addEventListener('click', () =>
     document.getElementById('black-notif').classList.remove('active')
   );
@@ -145,49 +149,18 @@ function getUsername() {
     }
   });
   document.addEventListener('fullscreenchange', () => {
-    const inFS = !!document.fullscreenElement;
-    document.getElementById('bottom-bar').style.display = inFS ? 'none' : 'flex';
-    document.getElementById('hyperbeam-container')
-            .classList.toggle('fullscreen-mode', inFS);
-    fsWrapper.style.display = inFS ? 'flex' : 'none';
-    if (inFS) { fsTimer.style.display = 'inline'; toggleBtn.textContent = '<'; }
-  });
+  const inFS = !!document.fullscreenElement;
+  const bottomBar = document.getElementById('bottom-bar');
+  if (bottomBar) {
+    bottomBar.style.display = inFS ? 'none' : 'flex';
+  }
+  document.getElementById('hyperbeam-container')
+          .classList.toggle('fullscreen-mode', inFS);
+  // Removed timer-related elements (fsWrapper, fsTimer, toggleBtn)
+});
 
   // ======== timer ========
-  function startTimer() {
-    let t;
-if (isUserPremium()) {
-  t = 40 * 60; // Premium user
-} else if (localStorage.getItem("cvm_token")) {
-  t = 30 * 60; // Logged-in (non-premium)
-} else {
-  t = 20 * 60; // Guest (no login at all)
-}
-    updateTimerDisplay(t);
-    const iv = setInterval(() => {
-      if (t > 0) {
-        t--;
-        updateTimerDisplay(t);
-        if (t === 60 && !minuteAlertShown) {
-          minuteAlertShown = true;
-          document.getElementById('minute-warning').classList.add('active');
-        }
-      } else {
-        clearInterval(iv);
-        timeoutExpired = true;
-        window.removeEventListener('beforeunload', blockUnload);
-        window.location.href = 'https://nuhuh.learnstats.xyz/';
-      }
-    }, 1000);
-  }
-
-  function updateTimerDisplay(seconds) {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    const txt = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-    document.getElementById('timer').textContent = txt;
-    document.getElementById('fullscreen-timer').textContent = txt;
-  }
+  // Removed timer functionality (startTimer, updateTimerDisplay)
 
   // ======== key blocking ========
   document.addEventListener('keydown', e => {
