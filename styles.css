@@ -45,6 +45,8 @@ body {
       border: none;
       z-index: 5;
       display: none;
+      outline: none;
+      user-select: none;
     }
     .home-container {
       background: darkcyan;
