@@ -119,24 +119,26 @@ function buttonClick(buttonNumber) {
       9: 'https://example.com/page9',
       10: 'https://example.com/page10'
     };
-    const sourceUrl = sources[buttonNumber];
-    if (sourceUrl) {
-      iframe.src = sourceUrl;
-      iframe.style.display = 'block';
-      homeContainer.classList.add('hidden');
-      console.log(`Button ${buttonNumber} clicked, loading ${sourceUrl}`);
-    } else {
-      console.error(`No URL defined for button ${buttonNumber}`);
-      iframe.style.display = 'none';
-      homeContainer.classList.remove('hidden');
-      buttons[buttonNumber - 1].classList.remove('selected');
-      buttons[0].classList.add('selected');
-      isLoading = false;
-      buttons.forEach(btn => btn.classList.remove('disabled'));
-      return;
-    }
-  }
+    console.log(`Button ${buttonNumber} clicked`);
 
+const sourceUrl = sources[buttonNumber];
+console.log('Resolved URL:', sourceUrl);
+
+if (sourceUrl) {
+  iframe.src = sourceUrl;
+  iframe.style.display = 'block';
+  homeContainer.classList.add('hidden');
+  console.log(`Loading iframe with: ${sourceUrl}`);
+} else {
+  console.warn(`⚠️ No URL defined for button ${buttonNumber}. Reverting to Home.`);
+  iframe.style.display = 'none';
+  homeContainer.classList.remove('hidden');
+  buttons[buttonNumber - 1].classList.remove('selected');
+  buttons[0].classList.add('selected');
+  isLoading = false;
+  buttons.forEach(btn => btn.classList.remove('disabled'));
+  return;
+}
   loadingScreen.style.display = 'flex';
   loadingScreen.style.animation = 'none';
   progressCircle.style.animation = 'none';
