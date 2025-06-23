@@ -462,3 +462,39 @@ body {
       50% { background-position: 100% 100%; }
       100% { background-position: 0% 0%; }
     }
+
+/* Hyperbeam container styling */
+#hyperbeam-container {
+  border-radius: 12px; /* Curved edges */
+  overflow: hidden; /* Ensures content respects border-radius */
+  position: relative; /* For positioning timer */
+}
+
+/* Session timer styling */
+#session-timer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 31, 63, 0.8); /* Dark blue, semi-transparent */
+  color: var(--wilway-text); /* #ffffff */
+  font-size: 18px;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 230, 230, 0.5); /* Subtle cyan glow */
+  z-index: 10; /* Above Hyperbeam content */
+  font-family: monospace; /* Clean, digital look */
+}
+
+/* Ensure timer visibility in fullscreen mode */
+#hyperbeam-container.fullscreen-mode #session-timer {
+  top: 20px;
+  right: 20px;
+  font-size: 20px; /* Slightly larger in fullscreen */
+}
+
+/* Premium theme timer styling */
+.premium-theme #session-timer {
+  background: rgba(0, 76, 76, 0.8); /* Dark cyan for premium */
+  box-shadow: 0 0 10px var(--wilway-accent-hover); /* #33f2f2 glow */
+}
