@@ -47,7 +47,9 @@
     <button class="close-button" onclick="toggleSettingsPanel()">Close</button>
   </div>
   <script>
-    let isLoading = false; // Global flag to prevent overlapping buttonClick calls
+    let isLoading = false;
+const TAB_COOLDOWN = 1000;
+let lastTabSwitch = 0;
 
     // Detect if Impact font is unavailable
     function detectImpactFont() {
@@ -80,10 +82,10 @@ function buttonClick(buttonNumber) {
     return;
   }
   if (now - lastTabSwitch < TAB_COOLDOWN) {
-    console.log('Please wait before switching tabs again.');
+    console.log('Cooldown active. Please wait before switching again.');
     return;
   }
-  // Passed cooldown check: mark loading and record time
+
   isLoading = true;
   lastTabSwitch = now;
 
@@ -96,16 +98,11 @@ function buttonClick(buttonNumber) {
   const maxDuration = 1000;
   const duration = Math.random() * (maxDuration - minDuration) + minDuration;
 
-  // Disable buttons during transition
+  // Visual feedback
   buttons.forEach(btn => btn.classList.add('disabled'));
-
-  // Clear all selected states first
   buttons.forEach(btn => btn.classList.remove('selected'));
-
-  // Set new selected state
   buttons[buttonNumber - 1].classList.add('selected');
 
-  // Show/hide home container and iframe
   if (buttonNumber === 1) {
     iframe.style.display = 'none';
     homeContainer.classList.remove('hidden');
@@ -140,23 +137,19 @@ function buttonClick(buttonNumber) {
     }
   }
 
-  // Show loading screen with animation
   loadingScreen.style.display = 'flex';
   loadingScreen.style.animation = 'none';
   progressCircle.style.animation = 'none';
-  loadingScreen.offsetHeight; // force reflow
+  loadingScreen.offsetHeight;
   loadingScreen.style.animation = `loadingFade ${duration}ms linear forwards`;
   progressCircle.style.animation = `progressFill ${duration}ms linear forwards`;
 
-  // After animation duration, hide loading screen and clear isLoading
   setTimeout(() => {
-    buttons.forEach(btn => btn.classList.remove('disabled'));
     loadingScreen.style.display = 'none';
+    buttons.forEach(btn => btn.classList.remove('disabled'));
     isLoading = false;
-    // Note: lastTabSwitch remains at its recorded time, so next click must wait TAB_COOLDOWN
   }, duration);
 }
-
     // Add click effect
     document.querySelectorAll('.theme-button').forEach(button => {
       button.addEventListener('click', function(e) {
