@@ -39,9 +39,9 @@
     <button type="button" class="theme-button" onclick="buttonClick(9)">9</button>
     <button type="button" class="theme-button" onclick="buttonClick(10)">10</button>
   </div>
-  <button class="settings-button" onclick="toggleSettingsPanel()">⚙️</button>
-  <button class="fullscreen-button" onclick="toggleFullscreen()">⛶</button>
-  <button class="toggle-bar-button" onclick="toggleBottomBar()">🔽</button>
+  <button type="button" class="settings-button" onclick="toggleSettingsPanel()">⚙️</button>
+  <button type="button" class="fullscreen-button" onclick="toggleFullscreen()">⛶</button>
+  <button type="button" class="toggle-bar-button" onclick="toggleBottomBar()">🔽</button>
   <div class="settings-panel" id="settingsPanel">
     <button onclick="toggleAnimation()">Pause Animation</button>
     <button class="close-button" onclick="toggleSettingsPanel()">Close</button>
@@ -53,7 +53,7 @@ let lastTabSwitch = 0;
 
     // Detect if Impact font is unavailable
     function detectImpactFont() {
-      const testString = "Test123";
+      const testString = "test";
       const span = document.createElement('span');
       span.style.fontSize = '100px';
       span.style.visibility = 'hidden';
