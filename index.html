@@ -53,12 +53,18 @@
       box-shadow: 0 0.4vh 0.8vh rgba(0,0,0,0.3); /* ~6px, 12px */
       z-index: 10;
       overflow: hidden;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, opacity 0.3s ease; /* Fade and move down */
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 1.25rem; /* ~20px, preserve spacing */
       padding: 0 1vh; /* ~15px */
+      opacity: 1; /* Initial state */
+      transform: translateY(0); /* Initial position */
+    }
+    .bottom-bar.hidden {
+      opacity: 0; /* Hidden state */
+      transform: translateY(10vh); /* Move down ~150px */
     }
     .hover-area {
       position: fixed;
@@ -69,10 +75,21 @@
       background: transparent;
       z-index: 9;
       cursor: default;
+      transition: opacity 0.3s ease, transform 0.3s ease; /* Fade and move down */
+      opacity: 1; /* Initial state */
+      transform: translateY(0); /* Initial position */
+    }
+    .hover-area.hidden {
+      opacity: 0; /* Hidden state */
+      transform: translateY(10vh); /* Move down ~150px */
     }
     .hover-area:hover ~ .bottom-bar,
     .bottom-bar:hover {
-      transform: translateY(-1vh); /* ~15px */
+      transform: translateY(-1vh); /* ~15px upward hover, only when not hidden */
+    }
+    .bottom-bar.hidden:hover,
+    .hover-area.hidden:hover ~ .bottom-bar {
+      transform: translateY(10vh); /* Ensure hover doesn't override hidden state */
     }
     .bottom-bar::before {
       content: '';
@@ -148,13 +165,46 @@
     /* Settings button */
     .settings-button {
       position: fixed;
-      bottom: 3vh; /* ~45px, increased to avoid overlap */
-      left: 3vh; /* ~45px, increased to avoid overlap */
-      width: 5vh; /* ~75px, larger for noticeability */
+      bottom: 3vh; /* ~45px */
+      left: 3vh; /* ~45px */
+      width: 5vh; /* ~75px */
       height: 5vh;
       background: darkcyan;
       font-family: Impact, sans-serif; /* Original font family */
-      font-size: clamp(1.5rem, 2.5vw, 2rem); /* ~24-38px, larger for noticeability */
+      font-size: clamp(1.5rem, 2.5vw, 2rem); /* ~24-38px */
+      color: white; /* Original */
+      -webkit-text-stroke: 1px black; /* Original 1px stroke */
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out, opacity 0.3s ease, transform 0.3s ease; /* Fade and move down */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 12;
+      opacity: 1; /* Initial state */
+      transform: translateY(0); /* Initial position */
+    }
+    .settings-button.hidden {
+      opacity: 0; /* Hidden state */
+      transform: translateY(10vh); /* Move down ~150px */
+    }
+    .settings-button:hover {
+      transform: scale(1.1); /* Hover scale takes precedence when not hidden */
+    }
+    .settings-button.hidden:hover {
+      transform: translateY(10vh); /* Ensure hover doesn't override hidden state */
+    }
+    /* Toggle bar button */
+    .toggle-bar-button {
+      position: fixed;
+      bottom: 2vh; /* ~30px, lowered */
+      right: 3vh; /* ~45px */
+      width: 5vh; /* ~75px */
+      height: 5vh;
+      background: darkcyan;
+      font-family: Impact, sans-serif; /* Original font family */
+      font-size: clamp(1.5rem, 2.5vw, 2rem); /* ~24-38px */
       color: white; /* Original */
       -webkit-text-stroke: 1px black; /* Original 1px stroke */
       border: none;
@@ -166,7 +216,7 @@
       justify-content: center;
       z-index: 12;
     }
-    .settings-button:hover {
+    .toggle-bar-button:hover {
       transform: scale(1.1);
     }
     /* Settings panel */
@@ -249,6 +299,7 @@
     <button class="theme-button" onclick="buttonClick(10)">10</button>
   </div>
   <button class="settings-button" onclick="toggleSettingsPanel()">⚙️</button>
+  <button class="toggle-bar-button" onclick="toggleBottomBar()">🔽</button>
   <div class="settings-panel" id="settingsPanel">
     <button onclick="toggleAnimation()">Pause Animation</button>
     <button class="close-button" onclick="toggleSettingsPanel()">Close</button>
@@ -309,6 +360,51 @@
       pauseButton.textContent = background.classList.contains('paused') ? 'Resume Animation' : 'Pause Animation';
     }
 
+    // Toggle bottom bar, hover area, and settings button
+    function toggleBottomBar() {
+      const bottomBar = document.querySelector('.bottom-bar');
+      const hoverArea = document.querySelector('.hover-area');
+      const settingsButton = document.querySelector('.settings-button');
+      const toggleButton = document.querySelector('.toggle-bar-button');
+      const isVisible = !bottomBar.classList.contains('hidden');
+      
+      if (isVisible) {
+        // Start fade out and move down
+        bottomBar.classList.add('hidden');
+        hoverArea.classList.add('hidden');
+        settingsButton.classList.add('hidden');
+        toggleButton.textContent = '🔼'; // Up arrow when hidden
+        // Fallback if emoji not supported
+        if (!toggleButton.textContent.match(/🔼/)) {
+          toggleButton.textContent = '▲';
+        }
+        // Hide elements after transition
+        setTimeout(() => {
+          bottomBar.style.display = 'none';
+          hoverArea.style.display = 'none';
+          settingsButton.style.display = 'none';
+        }, 300); // Match transition duration
+      } else {
+        // Show elements before fade in and move up
+        bottomBar.style.display = 'flex';
+        hoverArea.style.display = 'block';
+        settingsButton.style.display = 'flex';
+        // Trigger reflow to ensure transition applies
+        bottomBar.offsetHeight;
+        hoverArea.offsetHeight;
+        settingsButton.offsetHeight;
+        // Start fade in and move up
+        bottomBar.classList.remove('hidden');
+        hoverArea.classList.remove('hidden');
+        settingsButton.classList.remove('hidden');
+        toggleButton.textContent = '🔽'; // Down arrow when visible
+        // Fallback if emoji not supported
+        if (!toggleButton.textContent.match(/🔽/)) {
+          toggleButton.textContent = '▼';
+        }
+      }
+    }
+
     // Toggle animation and save state
     function toggleAnimation() {
       const background = document.querySelector('.background');
@@ -335,6 +431,13 @@
         background.classList.add('paused');
       } else {
         background.classList.remove('paused');
+      }
+
+      // Initialize toggle button text
+      const toggleButton = document.querySelector('.toggle-bar-button');
+      toggleButton.textContent = '🔽'; // Default: bar is visible
+      if (!toggleButton.textContent.match(/🔽/)) {
+        toggleButton.textContent = '▼'; // Fallback
       }
     };
   </script>
