@@ -32,6 +32,7 @@
       background: linear-gradient(to bottom right, darkblue, darkcyan, darkblue);
       background-size: 200% 200%;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       animation: gradientShift 10s ease-in-out infinite;
@@ -49,6 +50,47 @@
       border: none;
       z-index: 5;
       display: none;
+    }
+    .home-container {
+      background: darkcyan;
+      font-family: Impact, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      padding: 2vh 3vw;
+      border-radius: 1vh;
+      box-shadow: 0 0.2vh 0.4vh rgba(0,0,0,0.2);
+      z-index: 6;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 1vh;
+    }
+    .no-impact .home-container {
+      background: rgba(0,139,139,0.8);
+    }
+    .home-container.hidden {
+      display: none;
+    }
+    .home-container h1 {
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-weight: 900;
+      color: white;
+      -webkit-text-stroke: 2px black;
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
+      margin: 0;
+    }
+    .no-impact .home-container h1 {
+      -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
+    }
+    .home-container p {
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      color: white;
+      -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
+      margin: 0;
+    }
+    .no-impact .home-container p {
+      -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
     }
     .bottom-bar {
       position: fixed;
@@ -324,7 +366,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0.2vh 0.4vh rgba(0,0,0,0.2);
+      box-shadow: 0 0.2vh 0.4vh rgba veda(0,0,0,0.2);
     }
     .no-impact .settings-panel button {
       -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
@@ -428,7 +470,7 @@
 <body>
   <div class="loading-screen" id="loadingScreen">
     <div class="progress-container">
-      <img class="loading-image" src="/images/1.png" alt="...">
+      <img class="loading-image" src="https://via.placeholder.com/200" alt="Loading Image">
       <svg class="progress-circle" viewBox="0 0 200 200">
         <defs>
           <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -441,6 +483,10 @@
     </div>
   </div>
   <div class="background">
+    <div class="home-container">
+      <h1>This is Wilway.</h1>
+      <p>test</p>
+    </div>
     <iframe class="content-iframe" id="contentIframe" allowfullscreen></iframe>
   </div>
   <div class="hover-area"></div>
@@ -498,6 +544,7 @@
       const progressCircle = document.querySelector('.progress-circle circle');
       const iframe = document.getElementById('contentIframe');
       const buttons = document.querySelectorAll('.theme-button');
+      const homeContainer = document.querySelector('.home-container');
       const minDuration = 750;
       const maxDuration = 1000;
       const duration = Math.random() * (maxDuration - minDuration) + minDuration;
@@ -511,10 +558,11 @@
       // Set new selected state
       buttons[buttonNumber - 1].classList.add('selected');
 
-      // Start iframe loading
+      // Show/hide home container and iframe
       if (buttonNumber === 1) {
         iframe.style.display = 'none';
-        console.log('Home button clicked, showing background');
+        homeContainer.classList.remove('hidden');
+        console.log('Home button clicked, showing background and home elements');
       } else {
         const sources = {
           2: 'https://example.com/page2',
@@ -527,9 +575,22 @@
           9: 'https://example.com/page9',
           10: 'https://example.com/page10'
         };
-        iframe.src = sources[buttonNumber];
-        iframe.style.display = 'block';
-        console.log(`Button ${buttonNumber} clicked, loading ${sources[buttonNumber]}`);
+        const sourceUrl = sources[buttonNumber];
+        if (sourceUrl) {
+          iframe.src = sourceUrl;
+          iframe.style.display = 'block';
+          homeContainer.classList.add('hidden');
+          console.log(`Button ${buttonNumber} clicked, loading ${sourceUrl}`);
+        } else {
+          console.error(`No URL defined for button ${buttonNumber}`);
+          iframe.style.display = 'none';
+          homeContainer.classList.remove('hidden');
+          buttons[buttonNumber - 1].classList.remove('selected');
+          buttons[0].classList.add('selected');
+          isLoading = false;
+          buttons.forEach(btn => btn.classList.remove('disabled'));
+          return; // Exit early to prevent loading screen
+        }
       }
 
       // Show loading screen
@@ -751,10 +812,12 @@
         loadingScreen.style.display = 'none';
         const iframe = document.getElementById('contentIframe');
         const buttons = document.querySelectorAll('.theme-button');
+        const homeContainer = document.querySelector('.home-container');
         buttons.forEach(btn => btn.classList.remove('selected'));
         buttons[0].classList.add('selected');
         iframe.style.display = 'none';
-        console.log('Initial load complete, showing Home background');
+        homeContainer.classList.remove('hidden');
+        console.log('Initial load complete, showing Home background and elements');
       });
 
       const animationPaused = getCookie('animationPaused');
