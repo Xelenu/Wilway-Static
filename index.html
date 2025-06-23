@@ -6,10 +6,10 @@
     body {
       margin: 0;
       padding: 0;
-      overflow: hidden; /* Prevent scrollbars from appearing */
-      font-family: Impact, Haettenschweiler, Arial Black, Verdana, sans-serif; /* Updated fallback fonts */
+      overflow: hidden; /* Prevent scrollbars */
+      font-family: Impact, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
-    /* Custom scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+    /* Custom scrollbar for WebKit browsers */
     ::-webkit-scrollbar {
       width: 1.2vw; /* ~18px at 1920px */
     }
@@ -21,7 +21,7 @@
       border-radius: 0.6vw; /* ~9px */
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #00e6e6; /* Slightly darker cyan on hover */
+      background: #00e6e6; /* Slightly darker cyan */
     }
     /* Custom scrollbar for Firefox */
     html {
@@ -37,15 +37,15 @@
       justify-content: center;
       align-items: center;
       animation: gradientShift 10s ease-in-out infinite;
-      overflow: hidden; /* Ensure no overflow from background */
+      overflow: hidden;
     }
     .background.paused {
-      animation-play-state: paused; /* Pause animation when class is applied */
+      animation-play-state: paused;
     }
     .bottom-bar {
       position: fixed;
       bottom: 2vh; /* ~30px */
-      left: 5%; /* Centered with 5% margin */
+      left: 5%;
       width: 90%;
       height: 6vh; /* ~90px */
       background: linear-gradient(to bottom right, rgba(0,0,139,0.5), rgba(0,139,139,0.5), rgba(0,0,139,0.5));
@@ -53,18 +53,18 @@
       box-shadow: 0 0.4vh 0.8vh rgba(0,0,0,0.3); /* ~6px, 12px */
       z-index: 10;
       overflow: hidden;
-      transition: transform 0.3s ease, opacity 0.3s ease; /* Fade and move down */
+      transition: transform 0.3s ease, opacity 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1.25rem; /* ~20px, preserve spacing */
+      gap: 1.25rem; /* ~20px */
       padding: 0 1vh; /* ~15px */
-      opacity: 1; /* Initial state */
-      transform: translateY(0); /* Initial position */
+      opacity: 1;
+      transform: translateY(0);
     }
     .bottom-bar.hidden {
-      opacity: 0; /* Hidden state */
-      transform: translateY(10vh); /* Move down ~150px */
+      opacity: 0;
+      transform: translateY(10vh); /* ~150px */
     }
     .hover-area {
       position: fixed;
@@ -75,21 +75,21 @@
       background: transparent;
       z-index: 9;
       cursor: default;
-      transition: opacity 0.3s ease, transform 0.3s ease; /* Fade and move down */
-      opacity: 1; /* Initial state */
-      transform: translateY(0); /* Initial position */
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 1;
+      transform: translateY(0);
     }
     .hover-area.hidden {
-      opacity: 0; /* Hidden state */
-      transform: translateY(10vh); /* Move down ~150px */
+      opacity: 0;
+      transform: translateY(10vh);
     }
     .hover-area:hover ~ .bottom-bar,
     .bottom-bar:hover {
-      transform: translateY(-1vh); /* ~15px upward hover, only when not hidden */
+      transform: translateY(-1vh); /* ~15px */
     }
     .bottom-bar.hidden:hover,
     .hover-area.hidden:hover ~ .bottom-bar {
-      transform: translateY(10vh); /* Ensure hover doesn't override hidden state */
+      transform: translateY(10vh);
     }
     .bottom-bar::before {
       content: '';
@@ -114,13 +114,15 @@
       z-index: -1;
     }
     .theme-button {
-      width: 10vw; /* ~150px at 1920px */
+      width: 10vw; /* ~150px */
       height: 4vh; /* ~60px */
       background: darkcyan;
-      font-family: Impact, Haettenschweiler, Arial Black, Verdana, sans-serif; /* Updated */
+      font-family: Impact, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: clamp(1.2rem, 2vw, 1.6rem); /* ~20-30px */
-      color: white; /* Original */
-      -webkit-text-stroke: 2px black; /* Original 2px stroke */
+      font-weight: 900;
+      color: white;
+      -webkit-text-stroke: 2px black;
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
       border: none;
       border-radius: 0.8vh; /* ~12px */
       cursor: pointer;
@@ -137,9 +139,9 @@
       overflow: hidden;
     }
     .no-impact .theme-button {
-      font-weight: 900; /* Bold for clarity */
-      -webkit-text-stroke: 0.5px black; /* Thinner stroke for fallback fonts */
-      letter-spacing: 0.05rem; /* Slight spacing */
+      -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem); /* ~1-2px */
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
+      background: rgba(0,139,139,0.8);
     }
     .theme-button:hover {
       transform: scale(1.2);
@@ -158,7 +160,6 @@
     .bottom-bar:hover .theme-button {
       transition: transform 0.2s ease-in-out;
     }
-    /* Click effect */
     .click-effect {
       position: absolute;
       background: white;
@@ -167,7 +168,6 @@
       transform: translate(-50%, -50%);
       animation: spread-and-fade 0.5s ease-out forwards;
     }
-    /* Settings button */
     .settings-button {
       position: fixed;
       bottom: 3vh; /* ~45px */
@@ -175,37 +175,38 @@
       width: 5vh; /* ~75px */
       height: 5vh;
       background: darkcyan;
-      font-family: Impact, Haettenschweiler, Arial Black, Verdana, sans-serif; /* Updated */
+      font-family: Impact, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: clamp(1.5rem, 2.5vw, 2rem); /* ~24-38px */
-      color: white; /* Original */
-      -webkit-text-stroke: 1px black; /* Original 1px stroke */
+      font-weight: 900;
+      color: white;
+      -webkit-text-stroke: 1px black;
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
       border: none;
       border-radius: 50%;
       cursor: pointer;
-      transition: transform 0.2s ease-in-out, opacity 0.3s ease, transform 0.3s ease; /* Fade and move down */
+      transition: transform 0.2s ease-in-out, opacity 0.3s ease, transform 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 12;
-      opacity: 1; /* Initial state */
-      transform: translateY(0); /* Initial position */
+      opacity: 1;
+      transform: translateY(0);
     }
     .no-impact .settings-button {
-      font-weight: 900;
-      -webkit-text-stroke: 0.3px black; /* Thinner stroke */
-      letter-spacing: 0.05rem;
+      -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
+      background: rgba(0,139,139,0.8);
     }
     .settings-button.hidden {
-      opacity: 0; /* Hidden state */
-      transform: translateY(10vh); /* Move down ~150px */
+      opacity: 0;
+      transform: translateY(10vh);
     }
     .settings-button:hover {
-      transform: scale(1.1); /* Hover scale takes precedence when not hidden */
+      transform: scale(1.1);
     }
     .settings-button.hidden:hover {
-      transform: translateY(10vh); /* Ensure hover doesn't override hidden state */
+      transform: translateY(10vh);
     }
-    /* Toggle bar button */
     .toggle-bar-button {
       position: fixed;
       bottom: 2vh; /* ~30px */
@@ -213,10 +214,12 @@
       width: 5vh; /* ~75px */
       height: 5vh;
       background: darkcyan;
-      font-family: Impact, Haettenschweiler, Arial Black, Verdana, sans-serif; /* Updated */
+      font-family: Impact, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: clamp(1.5rem, 2.5vw, 2rem); /* ~24-38px */
-      color: white; /* Original */
-      -webkit-text-stroke: 1px black; /* Original 1px stroke */
+      font-weight: 900;
+      color: white;
+      -webkit-text-stroke: 1px black;
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
       border: none;
       border-radius: 50%;
       cursor: pointer;
@@ -227,20 +230,19 @@
       z-index: 12;
     }
     .no-impact .toggle-bar-button {
-      font-weight: 900;
-      -webkit-text-stroke: 0.3px black; /* Thinner stroke */
-      letter-spacing: 0.05rem;
+      -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
+      background: rgba(0,139,139,0.8);
     }
     .toggle-bar-button:hover {
       transform: scale(1.1);
     }
-    /* Settings panel */
     .settings-panel {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 35vw; /* ~672px at 1920px */
+      width: 35vw; /* ~672px */
       padding: 3vh; /* ~45px */
       background: linear-gradient(to bottom right, rgba(0,0,139,0.7), rgba(0,139,139,0.7), rgba(0,0,139,0.7));
       border-radius: 1.5vh; /* ~22.5px */
@@ -255,10 +257,12 @@
       width: 100%;
       height: 5vh; /* ~75px */
       background: darkcyan;
-      font-family: Impact, Haettenschweiler, Arial Black, Verdana, sans-serif; /* Updated */
+      font-family: Impact, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: clamp(1.2rem, 2vw, 1.6rem); /* ~20-30px */
-      color: white; /* Original */
-      -webkit-text-stroke: 1px black; /* Original 1px stroke */
+      font-weight: 900;
+      color: white;
+      -webkit-text-stroke: 1px black;
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
       border: none;
       border-radius: 0.6vh; /* ~9px */
       cursor: pointer;
@@ -269,31 +273,85 @@
       box-shadow: 0 0.2vh 0.4vh rgba(0,0,0,0.2); /* ~3px, 6px */
     }
     .no-impact .settings-panel button {
-      font-weight: 900;
-      -webkit-text-stroke: 0.3px black; /* Thinner stroke */
-      letter-spacing: 0.05rem;
+      -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
+      background: rgba(0,139,139,0.8);
     }
     .settings-panel button:hover {
       transform: scale(1.05);
       border: 0.1vh solid white; /* ~1.5px */
     }
     .settings-panel .close-button {
-      background: darkblue;
-      font-family: Impact, Haettenschweiler, Arial Black, Verdana, sans-serif; /* Updated */
+      background: #4b0082;
+      font-family: Impact, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: clamp(1rem, 1.5vw, 1.2rem); /* ~16-24px */
-      color: white; /* Original */
-      -webkit-text-stroke: 1px black; /* Original 1px stroke */
+      font-weight: 900;
+      color: white;
+      -webkit-text-stroke: 1px black;
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
     }
     .no-impact .settings-panel .close-button {
-      font-weight: 900;
-      -webkit-text-stroke: 0.3px black; /* Thinner stroke */
-      letter-spacing: 0.05rem;
+      -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
+      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
+      background: rgba(75,0,130,0.8);
     }
-    /* Hidden element for font detection */
-    #font-detector {
+    /* Loading screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(0.5rem); /* ~8px */
+      -webkit-backdrop-filter: blur(0.5rem); /* Safari */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      opacity: 1;
+      animation: loadingFade linear forwards; /* Set duration dynamically */
+    }
+    .progress-container {
+      position: relative;
+      width: 18vw; /* ~345px */
+      height: 18vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .loading-image {
+      width: 15vw; /* ~288px */
+      height: 15vw;
+      border-radius: 50%;
+      object-fit: cover;
+      z-index: 101;
+    }
+    .progress-circle {
       position: absolute;
-      visibility: hidden;
-      font-size: 16px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg); /* Start at 12 o'clock */
+      width: 18vw;
+      height: 18vw;
+      z-index: 100;
+    }
+    .progress-circle circle {
+      fill: none;
+      stroke-width: 1.5vw; /* ~28px */
+      stroke: url(#gradient);
+      stroke-linecap: round;
+      stroke-dasharray: 565.48; /* Circumference for r=90 */
+      stroke-dashoffset: 565.48; /* Start empty */
+      animation: progressFill linear forwards; /* Match loading screen duration */
+    }
+    @keyframes loadingFade {
+      0%, 80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    @keyframes progressFill {
+      0% { stroke-dashoffset: 565.48; } /* Empty */
+      100% { stroke-dashoffset: 0; } /* Full */
     }
     @keyframes spread-and-fade {
       0% {
@@ -315,6 +373,20 @@
   </style>
 </head>
 <body>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="progress-container">
+      <img class="loading-image" src="/images/1.png" alt="...">
+      <svg class="progress-circle" viewBox="0 0 200 200">
+        <defs>
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:darkblue;" />
+            <stop offset="100%" style="stop-color:darkcyan;" />
+          </linearGradient>
+        </defs>
+        <circle cx="100" cy="100" r="90" />
+      </svg>
+    </div>
+  </div>
   <div class="background"></div>
   <div class="hover-area"></div>
   <div class="bottom-bar">
@@ -335,8 +407,30 @@
     <button onclick="toggleAnimation()">Pause Animation</button>
     <button class="close-button" onclick="toggleSettingsPanel()">Close</button>
   </div>
-  <span id="font-detector">test</span>
   <script>
+    // Detect if Impact font is unavailable
+    function detectImpactFont() {
+      const testString = "Test123";
+      const span = document.createElement('span');
+      span.style.fontSize = '100px';
+      span.style.visibility = 'hidden';
+      span.style.position = 'absolute';
+      span.textContent = testString;
+      document.body.appendChild(span);
+
+      span.style.fontFamily = 'Impact';
+      const impactWidth = span.offsetWidth;
+
+      span.style.fontFamily = 'monospace';
+      const fallbackWidth = span.offsetWidth;
+
+      document.body.removeChild(span);
+
+      if (impactWidth === fallbackWidth) {
+        document.body.classList.add('no-impact');
+      }
+    }
+
     function buttonClick(buttonNumber) {
       console.log(`Button ${buttonNumber} clicked`);
     }
@@ -345,7 +439,7 @@
     document.querySelectorAll('.theme-button').forEach(button => {
       button.addEventListener('click', function(e) {
         const rect = this.getBoundingClientRect();
-        const x = e.clientX - rect.left; // Click position relative to button
+        const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
         const effect = document.createElement('span');
@@ -354,7 +448,6 @@
         effect.style.top = `${y}px`;
         this.appendChild(effect);
         
-        // Remove the effect element after animation completes
         effect.addEventListener('animationend', () => {
           effect.remove();
         });
@@ -383,11 +476,10 @@
     // Toggle settings panel
     function toggleSettingsPanel() {
       const panel = document.getElementById('settingsPanel');
-      const pauseButton = panel.querySelector('button'); // First button (Pause Animation)
+      const pauseButton = panel.querySelector('button');
       const isVisible = panel.style.display === 'block';
       panel.style.display = isVisible ? 'none' : 'block';
       
-      // Update pause button text based on animation state
       const background = document.querySelector('.background');
       pauseButton.textContent = background.classList.contains('paused') ? 'Resume Animation' : 'Pause Animation';
     }
@@ -401,36 +493,29 @@
       const isVisible = !bottomBar.classList.contains('hidden');
       
       if (isVisible) {
-        // Start fade out and move down
         bottomBar.classList.add('hidden');
         hoverArea.classList.add('hidden');
         settingsButton.classList.add('hidden');
-        toggleButton.textContent = '🔼'; // Up arrow when hidden
-        // Fallback if emoji not supported
+        toggleButton.textContent = '🔼';
         if (!toggleButton.textContent.match(/🔼/)) {
           toggleButton.textContent = '▲';
         }
-        // Hide elements after transition
         setTimeout(() => {
           bottomBar.style.display = 'none';
           hoverArea.style.display = 'none';
           settingsButton.style.display = 'none';
-        }, 300); // Match transition duration
+        }, 300);
       } else {
-        // Show elements before fade in and move up
         bottomBar.style.display = 'flex';
         hoverArea.style.display = 'block';
         settingsButton.style.display = 'flex';
-        // Trigger reflow to ensure transition applies
         bottomBar.offsetHeight;
         hoverArea.offsetHeight;
         settingsButton.offsetHeight;
-        // Start fade in and move up
         bottomBar.classList.remove('hidden');
         hoverArea.classList.remove('hidden');
         settingsButton.classList.remove('hidden');
-        toggleButton.textContent = '🔽'; // Down arrow when visible
-        // Fallback if emoji not supported
+        toggleButton.textContent = '🔽';
         if (!toggleButton.textContent.match(/🔽/)) {
           toggleButton.textContent = '▼';
         }
@@ -440,7 +525,7 @@
     // Toggle animation and save state
     function toggleAnimation() {
       const background = document.querySelector('.background');
-      const pauseButton = document.querySelector('#settingsPanel button'); // First button
+      const pauseButton = document.querySelector('#settingsPanel button');
       const isPaused = background.classList.contains('paused');
       
       if (isPaused) {
@@ -454,44 +539,23 @@
       }
     }
 
-    // Font detection function
-    function detectImpactFont() {
-      const detector = document.getElementById('font-detector');
-      const testString = 'test';
-      
-      // Create spans for Impact and fallback font
-      const impactSpan = document.createElement('span');
-      impactSpan.style.fontFamily = 'Impact';
-      impactSpan.style.fontSize = '16px';
-      impactSpan.style.position = 'absolute';
-      impactSpan.style.visibility = 'hidden';
-      impactSpan.textContent = testString;
-      document.body.appendChild(impactSpan);
-      
-      const fallbackSpan = document.createElement('span');
-      fallbackSpan.style.fontFamily = 'sans-serif';
-      fallbackSpan.style.fontSize = '16px';
-      fallbackSpan.style.position = 'absolute';
-      fallbackSpan.style.visibility = 'hidden';
-      fallbackSpan.textContent = testString;
-      document.body.appendChild(fallbackSpan);
-      
-      // Compare widths
-      const impactWidth = impactSpan.offsetWidth;
-      const fallbackWidth = fallbackSpan.offsetWidth;
-      
-      // Clean up
-      impactSpan.remove();
-      fallbackSpan.remove();
-      
-      // If widths are the same, Impact is likely not available
-      if (impactWidth === fallbackWidth) {
-        document.body.classList.add('no-impact');
-      }
-    }
-
-    // Initialize animation state and font detection
+    // Initialize loading screen and other features
     window.onload = function() {
+      // Loading screen logic
+      const loadingScreen = document.querySelector('.loading-screen');
+      const progressCircle = document.querySelector('.progress-circle circle');
+      const minDuration = 1000; // 1s
+      const maxDuration = 2500; // 2.5s
+      const duration = Math.random() * (maxDuration - minDuration) + minDuration; // Random 1000–2500ms
+      
+      loadingScreen.style.animationDuration = `${duration}ms`;
+      progressCircle.style.animationDuration = `${duration}ms`;
+      
+      loadingScreen.addEventListener('animationend', () => {
+        loadingScreen.style.display = 'none';
+      });
+
+      // Initialize animation state
       const animationPaused = getCookie('animationPaused');
       const background = document.querySelector('.background');
       
@@ -503,9 +567,9 @@
 
       // Initialize toggle button text
       const toggleButton = document.querySelector('.toggle-bar-button');
-      toggleButton.textContent = '🔽'; // Default: bar is visible
+      toggleButton.textContent = '🔽';
       if (!toggleButton.textContent.match(/🔽/)) {
-        toggleButton.textContent = '▼'; // Fallback
+        toggleButton.textContent = '▼';
       }
 
       // Detect Impact font
