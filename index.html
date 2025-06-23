@@ -73,84 +73,89 @@
     }
 
     // Button click handler for iframe and selection
-    function buttonClick(buttonNumber) {
-      if (isLoading) return; // Prevent overlapping calls
-      isLoading = true;
+function buttonClick(buttonNumber) {
+  const now = Date.now();
+  if (isLoading) {
+    console.log('Still loading, please wait.');
+    return;
+  }
+  if (now - lastTabSwitch < TAB_COOLDOWN) {
+    console.log('Please wait before switching tabs again.');
+    return;
+  }
+  // Passed cooldown check: mark loading and record time
+  isLoading = true;
+  lastTabSwitch = now;
 
-      const loadingScreen = document.getElementById('loadingScreen');
-      const progressCircle = document.querySelector('.progress-circle circle');
-      const iframe = document.getElementById('contentIframe');
-      const buttons = document.querySelectorAll('.theme-button');
-      const homeContainer = document.querySelector('.home-container');
-      const minDuration = 750;
-      const maxDuration = 1000;
-      const duration = Math.random() * (maxDuration - minDuration) + minDuration;
+  const loadingScreen = document.getElementById('loadingScreen');
+  const progressCircle = document.querySelector('.progress-circle circle');
+  const iframe = document.getElementById('contentIframe');
+  const buttons = document.querySelectorAll('.theme-button');
+  const homeContainer = document.querySelector('.home-container');
+  const minDuration = 750;
+  const maxDuration = 1000;
+  const duration = Math.random() * (maxDuration - minDuration) + minDuration;
 
-      // Disable buttons during transition
-      buttons.forEach(btn => btn.classList.add('disabled'));
+  // Disable buttons during transition
+  buttons.forEach(btn => btn.classList.add('disabled'));
 
-      // Clear all selected states first
-      buttons.forEach(btn => btn.classList.remove('selected'));
+  // Clear all selected states first
+  buttons.forEach(btn => btn.classList.remove('selected'));
 
-      // Set new selected state
-      buttons[buttonNumber - 1].classList.add('selected');
+  // Set new selected state
+  buttons[buttonNumber - 1].classList.add('selected');
 
-      // Show/hide home container and iframe
-      if (buttonNumber === 1) {
-        iframe.style.display = 'none';
-        homeContainer.classList.remove('hidden');
-        console.log('Home button clicked, showing background and home elements');
-      } else {
-        const sources = {
-          2: 'https://example.com/',
-          3: 'https://dsa.886967.xyz/',
-          4: 'https://example.com/page4',
-          5: 'https://example.com/page5',
-          6: 'https://example.com/page6',
-          7: 'https://example.com/page7',
-          8: 'https://example.com/page8',
-          9: 'https://example.com/page9',
-          10: 'https://example.com/page10'
-        };
-        const sourceUrl = sources[buttonNumber];
-        if (sourceUrl) {
-          iframe.src = sourceUrl;
-          iframe.style.display = 'block';
-          homeContainer.classList.add('hidden');
-          console.log(`Button ${buttonNumber} clicked, loading ${sourceUrl}`);
-        } else {
-          console.error(`No URL defined for button ${buttonNumber}`);
-          iframe.style.display = 'none';
-          homeContainer.classList.remove('hidden');
-          buttons[buttonNumber - 1].classList.remove('selected');
-          buttons[0].classList.add('selected');
-          isLoading = false;
-          buttons.forEach(btn => btn.classList.remove('disabled'));
-          return; // Exit early to prevent loading screen
-        }
-      }
+  // Show/hide home container and iframe
+  if (buttonNumber === 1) {
+    iframe.style.display = 'none';
+    homeContainer.classList.remove('hidden');
+    console.log('Home button clicked, showing background and home elements');
+  } else {
+    const sources = {
+      2: 'https://example.com/',
+      3: 'https://dsa.886967.xyz/',
+      4: 'https://example.com/page4',
+      5: 'https://example.com/page5',
+      6: 'https://example.com/page6',
+      7: 'https://example.com/page7',
+      8: 'https://example.com/page8',
+      9: 'https://example.com/page9',
+      10: 'https://example.com/page10'
+    };
+    const sourceUrl = sources[buttonNumber];
+    if (sourceUrl) {
+      iframe.src = sourceUrl;
+      iframe.style.display = 'block';
+      homeContainer.classList.add('hidden');
+      console.log(`Button ${buttonNumber} clicked, loading ${sourceUrl}`);
+    } else {
+      console.error(`No URL defined for button ${buttonNumber}`);
+      iframe.style.display = 'none';
+      homeContainer.classList.remove('hidden');
+      buttons[buttonNumber - 1].classList.remove('selected');
+      buttons[0].classList.add('selected');
+      isLoading = false;
+      buttons.forEach(btn => btn.classList.remove('disabled'));
+      return;
+    }
+  }
 
-      // Show loading screen
-      loadingScreen.style.display = 'flex';
-      loadingScreen.style.animation = 'none';
-      progressCircle.style.animation = 'none';
-      loadingScreen.offsetHeight; // Force reflow
-      loadingScreen.style.animation = `loadingFade ${duration}ms linear forwards`;
-      progressCircle.style.animation = `progressFill ${duration}ms linear forwards`;
+  // Show loading screen with animation
+  loadingScreen.style.display = 'flex';
+  loadingScreen.style.animation = 'none';
+  progressCircle.style.animation = 'none';
+  loadingScreen.offsetHeight; // force reflow
+  loadingScreen.style.animation = `loadingFade ${duration}ms linear forwards`;
+  progressCircle.style.animation = `progressFill ${duration}ms linear forwards`;
 
-      setTimeout(() => {
-  loadingScreen.style.display = 'none';
-
-  // Keep cooldown active for a fixed duration (e.g. 1s total)
-  const cooldownDuration = 1000; // in ms
-  const remainingCooldown = Math.max(0, cooldownDuration - duration);
-
+  // After animation duration, hide loading screen and clear isLoading
   setTimeout(() => {
     buttons.forEach(btn => btn.classList.remove('disabled'));
+    loadingScreen.style.display = 'none';
     isLoading = false;
-  }, remainingCooldown);
-
-}, duration);
+    // Note: lastTabSwitch remains at its recorded time, so next click must wait TAB_COOLDOWN
+  }, duration);
+}
 
     // Add click effect
     document.querySelectorAll('.theme-button').forEach(button => {
