@@ -17,17 +17,17 @@ if (isUserPremium()) {
 
   const warningH2 = document.querySelector('#warning h2');
   if (warningH2) {
-    warningH2.textContent = "Thanks for buying premium and using CVM!";
+    warningH2.textContent = "...";
   }
 
   const paras = document.querySelectorAll('#warning .overlay-content p');
   if (paras[1]) {
     paras[1].textContent =
-      "With premium, you got a special theme, 40 minutes of time, AND are the first priority to fixing, CVM is also updated frequently, so you will get early updates too!";
+      "...";
   }
   if (paras[2]) {
     paras[2].innerHTML = 
-      `If you are enjoying premium, consider subscribing to my <a href="https://www.youtube.com/@wilburzenith" target="_blank" style="color:#55C629; text-decoration:underline;">YrouTrube</a> channel!`;
+      `...`;
   }
 
   document.querySelectorAll('#warning .overlay-content i').forEach(elem => {
@@ -111,7 +111,7 @@ function getUsername() {
     } catch {
       const e = document.getElementById('error-message');
       e.style.display = 'block';
-      e.textContent = "It's either one, you ran CVM on a proxy, two, you tried to run CVM in CVM, or three, you tried to skid (stop trying and just make your own).";
+      e.textContent = "It's either one, you ran the VM on a proxy, two, you tried to run the VM in the VM, or three, you tried to skid.";
     }
   }
 
@@ -176,7 +176,7 @@ if (isUserPremium()) {
         clearInterval(iv);
         timeoutExpired = true;
         window.removeEventListener('beforeunload', blockUnload);
-        window.location.href = 'https://cvm.rest/';
+        window.location.href = 'https://nuhuh.learnstats.xyz/';
       }
     }, 1000);
   }
