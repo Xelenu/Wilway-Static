@@ -13,7 +13,7 @@
   padding: 16px 40px; /* Extra large for prominence */
   font-size: 24px; /* Larger than greeting (30px) for balance */
   font-weight: 800; /* Extra bold */
-  font-family: Impact, sans-serif;
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: var(--wilway-accent); /* #00e6e6 */
   color: var(--wilway-darkblue); /* #001f3f */
   border: 4px solid var(--wilway-accent-hover); /* #33f2f2 thick border */
@@ -170,7 +170,7 @@
   width: 90%;
   text-align: center;
   color: var(--wilway-text);
-  font-family: Impact, sans-serif;
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #alertBox .alert-content h2 {
   margin: 0 0 14px;
@@ -254,7 +254,7 @@ body, html {
   width: 100%;
   overflow-x: hidden;
   background: var(--wilway-darkblue);
-  font-family: Impact, sans-serif;
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: var(--wilway-text);
   position: relative;
 }
@@ -336,7 +336,7 @@ body, html {
   padding: 6px 12px;
   color: var(--wilway-darkblue);
   cursor: pointer;
-  font-family: Impact, sans-serif;
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
   display: none;
   z-index: 9999;
 }
@@ -426,7 +426,7 @@ body, html {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-family: Impact, sans-serif;
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: var(--wilway-accent);
   color: var(--wilway-darkblue);
   transition: background 0.3s ease, transform 0.2s;
@@ -452,7 +452,7 @@ body, html {
 #server-switch button {
   flex: 0 0 calc(25% - 10px);
   padding: 10px;
-  font-family: Impact, sans-serif;
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: var(--wilway-darkcyan);
   color: var(--wilway-text);
   border: 2px solid var(--wilway-darkblue);
@@ -510,7 +510,7 @@ body, html {
 .premium-theme body, .premium-theme html {
   background: linear-gradient(135deg, var(--wilway-darkblue), var(--wilway-darkcyan)) !important;
   color: var(--wilway-text) !important;
-  font-family: Impact, sans-serif !important;
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 .premium-theme #auth-overlay {
   background: rgba(0, 0, 31, 0.95) !important;
