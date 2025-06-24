@@ -138,7 +138,7 @@ function buttonClick(buttonNumber) {
 
   // Show loading screen
   // Fetch a new random loading message before showing the loading screen
-fetch('/messages.json')
+fetch('/core/messages.json')
   .then(response => response.json())
   .then(data => {
     const messages = data.messages;
