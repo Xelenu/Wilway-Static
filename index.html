@@ -363,8 +363,8 @@ fetch('/core/messages.json')
 document.addEventListener('DOMContentLoaded', () => {
   const loadingScreen = document.getElementById('loadingScreen');
   const progressCircle = document.querySelector('.progress-circle circle');
-  const minDuration = 3500;
-  const maxDuration = 7500;
+  const minDuration = 3100;
+  const maxDuration = 4000;
   const duration = Math.random() * (maxDuration - minDuration) + minDuration;
 
   loadingScreen.style.animationDuration = `${duration}ms`;
