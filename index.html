@@ -385,5 +385,28 @@ document.addEventListener('DOMContentLoaded', () => {
       detectImpactFont();
     });
   </script>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('/core/messages.json')
+    .then(response => response.json())
+    .then(data => {
+      const messages = data.messages;
+      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+      
+      // Insert message into loading text element
+      const loadingText = document.getElementById('loading-text');
+      if (loadingText) {
+        loadingText.textContent = randomMessage;
+      }
+    })
+    .catch(error => {
+      console.error('Could not load messages.json:', error);
+      const fallback = document.getElementById('loading-text');
+      if (fallback) {
+        fallback.textContent = "Loading Wilway...";
+      }
+    });
+});
+</script>
 </body>
 </html>
