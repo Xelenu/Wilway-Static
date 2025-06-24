@@ -186,26 +186,7 @@ fetch('/core/messages.json')
         });
       });
     });
-
-    // Cookie functions
-    function setCookie(name, value, days) {
-      const date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      const expires = "expires=" + date.toUTCString();
-      document.cookie = name + "=" + value + ";" + expires + ";path=/";
-    }
-
-    function getCookie(name) {
-      const nameEQ = name + "=";
-      const ca = document.cookie.split(';');
-      for(let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-      }
-      return null;
-    }
-
+    
     // Toggle settings panel
     function toggleSettingsPanel() {
       const panel = document.getElementById('settingsPanel');
@@ -294,6 +275,24 @@ fetch('/core/messages.json')
       }
     }
 
+    function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+
     // Update fullscreen button visibility on fullscreen change
     document.addEventListener('fullscreenchange', () => {
       const fullscreenButton = document.querySelector('.fullscreen-button');
@@ -363,17 +362,28 @@ fetch('/core/messages.json')
 document.addEventListener('DOMContentLoaded', () => {
   const loadingScreen = document.getElementById('loadingScreen');
   const progressCircle = document.querySelector('.progress-circle circle');
-  const minDuration = 3100;
-  const maxDuration = 4000;
+
+  // Check if user is new
+  const isReturningUser = getCookie('visitedBefore') === 'true';
+
+  // Duration logic
+  let minDuration, maxDuration;
+
+  if (isReturningUser) {
+    minDuration = 2000;  // 2 seconds
+    maxDuration = 2500;  // 2.5 seconds
+  } else {
+    minDuration = 3200;  // First time: longer
+    maxDuration = 4000;
+    setCookie('visitedBefore', 'true', 32); // Set cookie to expire in 32 days
+  }
+
   const duration = Math.random() * (maxDuration - minDuration) + minDuration;
 
   loadingScreen.style.animationDuration = `${duration}ms`;
   progressCircle.style.animationDuration = `${duration}ms`;
 
   loadingScreen.addEventListener('animationend', () => {
-    if (initialLoadDone) return;
-    initialLoadDone = true;
-
     loadingScreen.style.display = 'none';
     const iframe = document.getElementById('contentIframe');
     const buttons = document.querySelectorAll('.theme-button');
