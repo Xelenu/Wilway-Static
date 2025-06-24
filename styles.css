@@ -500,9 +500,12 @@ body {
 }
 
 .loading-text {
+  font-family: Impact, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 2em; /* Adjust size as needed */
   color: white;
-  margin-top: 1rem;
-  font-size: 1.2rem;
   text-align: center;
-  font-family: sans-serif;
+  margin-top: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Optional for glow effect */
+  user-select: none;
 }
