@@ -49,7 +49,7 @@
   </div>
   <script>
     let isLoading = false;
-const TAB_COOLDOWN = 500;
+const TAB_COOLDOWN = 800;
 let lastTabSwitch = 0;
 
     // Detect if Impact font is unavailable
@@ -85,8 +85,8 @@ function buttonClick(buttonNumber) {
   const iframe = document.getElementById('contentIframe');
   const buttons = document.querySelectorAll('.theme-button');
   const homeContainer = document.querySelector('.home-container');
-  const minDuration = 800;
-  const maxDuration = 1200;
+  const minDuration = 100;
+  const maxDuration = 1300;
   const duration = Math.random() * (maxDuration - minDuration) + minDuration;
 
   // Disable buttons during transition
