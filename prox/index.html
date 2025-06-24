@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxy Loader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            z-index: 1000;
+        }
+        .hidden {
+            display: none;
+        }
+        #contentFrame {
+            width: 100%;
+            height: 80vh;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+        #urlInput {
+            width: 70%;
+            padding: 8px;
+            font-size: 16px;
+        }
+        #loadButton {
+            padding: 8px 16px;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        #statusMessage {
+            color: red;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Proxy Loader</h1>
+    <input type="text" id="urlInput" placeholder="Enter URL (e.g., example.com)">
+    <button id="loadButton">Load</button>
+    <div id="statusMessage"></div>
+    <iframe id="contentFrame"></iframe>
+    <div id="loadingOverlay" class="hidden">Loading...</div>
+
+    <script>
+        /**
+         * Utility function to decode Base64 strings.
+         * Used by proxyLoad for Verdant proxy URLs.
+         * @param {string} encodedString - The Base64 encoded string.
+         * @returns {string} The decoded string.
+         */
+        function decodeBase64(encodedString) {
+            try {
+                return atob(encodedString);
+            } catch (e) {
+                console.error("Base64 decoding error:", e);
+                return null;
+            }
+        }
+
+        /**
+         * Loads a given URL into an iframe using a proxy service.
+         * It handles both direct URLs, search queries, and custom Verdant proxy URLs.
+         * @param {string} url - The URL or search query to load.
+         * @param {HTMLIFrameElement} frame - The iframe element to load the content into.
+         * @param {HTMLElement} loadingOverlay - The loading overlay element to show/hide.
+         * @param {HTMLElement} statusElement - Element to display status messages.
+         */
+        async function proxyLoad(url, frame, loadingOverlay, statusElement) {
+            // Clear previous status
+            if (statusElement) statusElement.textContent = '';
+            // Show loading overlay
+            if (loadingOverlay) loadingOverlay.classList.remove('hidden');
+
+            let actualTargetUrl = url;
+            const verdantProxyPrefix = window.location.origin + '/route/';
+
+            // Check if the input URL is already in our custom proxy format
+            if (url.startsWith(verdantProxyPrefix)) {
+                const encodedPart = url.substring(verdantProxyPrefix.length);
+                const decodedUrl = decodeBase64(encodedPart);
+                if (decodedUrl) {
+                    actualTargetUrl = decodedUrl;
+                    console.log(`Detected Verdant proxy URL. Decoded to: ${actualTargetUrl}`);
+                } else {
+                    console.warn(`Could not decode Verdant proxy URL. Falling back to original input: ${url}`);
+                    actualTargetUrl = url;
+                }
+            } else {
+                actualTargetUrl = actualTargetUrl.replace(/^(https?:\/\/)?/, '');
+            }
+
+            const urlToFetch = actualTargetUrl.includes('.')
+                ? `https://${actualTargetUrl}`
+                : `https://html.duckduckgo.com/html?q=${encodeURIComponent(actualTargetUrl)}`;
+
+            const proxyChain = [
+                "https://corsproxy.io/?",
+                "https://api.allorigins.win/raw?url=",
+                "https://proxy.cors.sh/",
+                "https://yacdn.com/proxy/",
+                "https://api.codetabs.com/v1/proxy/?quest=",
+                "https://cors.eu.org/",
+                "https://cors.io/?",
+                "https://api.proxied.host/",
+                "https://crossorigin.me/",
+                "https://web.archive.org/web/",
+                "https://thingproxy.freeboard.io/fetch/",
+                "https://toothpaste.bekekes390.workers.dev/?url="
+            ];
+
+            let response = null;
+            let lastError = "Unknown error, no proxy successfully fetched the content.";
+
+            for (let i = 0; i < proxyChain.length; i++) {
+                const currentProxyBase = proxyChain[i];
+                let currentProxyUrl = currentProxyBase + encodeURIComponent(urlToFetch);
+                console.log(`Attempting to fetch with proxy ${i + 1}: ${currentProxyUrl}`);
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 25000);
+                    response = await fetch(currentProxyUrl, { signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    if (response.ok) {
+                        console.log(`Successfully fetched using proxy ${i + 1}.`);
+                        break;
+                    } else {
+                        lastError = `Proxy ${i + 1} failed with status ${response.status} ${response.statusText}.`;
+                        console.warn(lastError);
+                    }
+                } catch (e) {
+                    if (e.name === 'AbortError') {
+                        lastError = `Proxy ${i + 1} request timed out.`;
+                    } else {
+                        lastError = `Proxy ${i + 1} threw an error: ${e.message}.`;
+                    }
+                    console.error(lastError);
+                }
+            }
+
+            if (!response || !response.ok) {
+                if (statusElement) statusElement.textContent = `Failed to load: ${lastError}`;
+                throw new Error(`Failed to load content. Last error: ${lastError}`);
+            }
+
+            try {
+                const html = await response.text();
+                const baseUrl = new URL(urlToFetch).origin;
+                const processed = html
+                    .replace(/<head>/i, `<head><base href="${baseUrl}/">`)
+                    .replace(/<body([^>]*)>/i, `<body$1 style="margin:0;">`);
+                const blob = new Blob([processed], { type: 'text/html' });
+                const blobUrl = URL.createObjectURL(blob);
+                console.log('Blob URL ready:', blobUrl);
+                if (frame) frame.src = blobUrl;
+
+                if (frame) {
+                    frame.onload = () => {
+                        console.log('Frame loaded!');
+                        if (loadingOverlay) loadingOverlay.classList.add('hidden');
+                        try {
+                            const iframeDoc = frame.contentDocument;
+                            if (iframeDoc && iframeDoc.body) {
+                                iframeDoc.body.addEventListener('click', (e) => {
+                                    let targetElement = e.target;
+                                    let urlToRedirect = '';
+                                    let isHandled = false;
+
+                                    while (targetElement && targetElement !== iframeDoc.body) {
+                                        if (targetElement.tagName === 'A' && targetElement.href) {
+                                            urlToRedirect = targetElement.href;
+                                            isHandled = true;
+                                            break;
+                                        }
+                                        if (targetElement.onclick || targetElement.hasAttribute('data-href') || targetElement.hasAttribute('data-url')) {
+                                            urlToRedirect = targetElement.getAttribute('data-href') || targetElement.getAttribute('data-url') || '';
+                                            if (!urlToRedirect && targetElement.onclick) {
+                                                const onclickString = targetElement.onclick.toString();
+                                                const match = /(?:location\.href|window\.location|location\.assign|window\.open)\s*=\s*['"]([^'"]+)['"]/.exec(onclickString);
+                                                if (match && match[1]) {
+                                                    urlToRedirect = match[1];
+                                                }
+                                            }
+                                            if (urlToRedirect) {
+                                                isHandled = true;
+                                                break;
+                                            }
+                                        }
+                                        targetElement = targetElement.parentElement;
+                                    }
+
+                                    if (isHandled && urlToRedirect) {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        try {
+                                            const absoluteUrl = new URL(urlToRedirect, new URL(frame.srcdoc ? frame.src : frame.src).origin).href;
+                                            console.log(`Intercepted navigation to: ${absoluteUrl}`);
+                                            proxyLoad(absoluteUrl, frame, loadingOverlay, statusElement);
+                                        } catch (urlError) {
+                                            console.warn("Invalid URL for interception, attempting fallback:", urlToRedirect, urlError);
+                                            proxyLoad(urlToRedirect, frame, loadingOverlay, statusElement);
+                                        }
+                                    }
+                                }, true);
+                            }
+                        } catch (e) {
+                            console.warn('Frame access error (expected for cross-origin iframes):', e);
+                        }
+                    };
+                }
+            } catch (error) {
+                console.error('Error processing HTML:', error);
+                if (frame) {
+                    frame.srcdoc = `
+                        <div style="color:white;text-align:center;font-size:20px;font-family:sans-serif;padding:50px;background-color:#333;">
+                            Error: Failed to load content.<br><br>
+                            This might be due to a proxy issue or the target website being inaccessible.
+                            Please try a different URL or try again later.
+                        </div>
+                    `;
+                }
+                if (loadingOverlay) loadingOverlay.classList.add('hidden');
+                if (statusElement) statusElement.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        // Initialize elements and event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlInput = document.getElementById('urlInput');
+            const loadButton = document.getElementById('loadButton');
+            const contentFrame = document.getElementById('contentFrame');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const statusMessage = document.getElementById('statusMessage');
+
+            loadButton.addEventListener('click', () => {
+                const url = urlInput.value.trim();
+                if (url) {
+                    proxyLoad(url, contentFrame, loadingOverlay, statusMessage);
+                } else {
+                    statusMessage.textContent = 'Please enter a valid URL.';
+                }
+            });
+
+            urlInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const url = urlInput.value.trim();
+                    if (url) {
+                        proxyLoad(url, contentFrame, loadingOverlay, statusMessage);
+                    } else {
+                        statusMessage.textContent = 'Please enter a valid URL.';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
