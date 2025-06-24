@@ -498,3 +498,11 @@ body {
   background: rgba(0, 76, 76, 0.8); /* Dark cyan for premium */
   box-shadow: 0 0 10px var(--wilway-accent-hover); /* #33f2f2 glow */
 }
+
+.loading-text {
+  color: white;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  text-align: center;
+  font-family: sans-serif;
+}
