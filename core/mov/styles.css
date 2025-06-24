@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* === Gradient Theme Variables === */
+:root {
+    --white: #ffffff;
+    --gradient-primary: linear-gradient(to bottom right, darkblue, darkcyan, darkblue);
+    --gradient-primary-soft: linear-gradient(to bottom right, #002266, #0099aa, #002266);
+    --gradient-secondary: linear-gradient(to bottom right, #22003a, #005a6e, #22003a);
+    --gradient-secondary-soft: linear-gradient(to bottom right, #2b0050, #007b8f, #2b0050);
+
+    --radius: 5px;
+    --transition: 0.3s ease-in-out;
+    --glow: 0 0 10px darkblue, 0 0 20px darkblue;
+}
+
+/* === Base Styles === */
+body {
+    margin: 0;
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    text-align: center; /* center everything by default, per preference */
+    scrollbar-width: none;       /* Firefox */
+    -ms-overflow-style: none;    /* IE 10+ */
+}
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+
+h1, h2 {
+    margin: 20px 0 10px;
+    /* headings remain centered by inherited text-align */
+}
+
+p {
+    font-size: 25px;
+    margin: 10px 0 20px;
+    /* these will be centered too */
+}
+
+/* === Search Input === */
+#search {
+    background-image: var(--gradient-primary);
+    border: 2.5px solid transparent;
+    border-radius: var(--radius);
+    padding: 12px;
+    color: var(--white);
+    width: 30%;
+    min-width: 200px;
+    text-align: center;
+    font-size: 15px;
+    transition: var(--transition);
+    background-clip: padding-box;
+    appearance: none;
+    border-image: var(--gradient-primary) 1;
+}
+
+#search::placeholder {
+    color: var(--white);
+    opacity: 1;
+    font-style: italic;
+}
+
+#search:focus {
+    outline: none;
+    box-shadow: var(--glow);
+}
+
+/* === Buttons (including .watch-btn) === */
+button,
+.watch-btn {
+    background-image: var(--gradient-secondary);
+    border: 2.5px solid transparent;
+    border-radius: var(--radius);
+    padding: 12px 20px;
+    color: var(--white);
+    cursor: pointer;
+    font-size: 15px;
+    transition: var(--transition);
+    background-clip: padding-box;
+    border-image: var(--gradient-primary-soft) 1;
+}
+
+button:hover,
+.watch-btn:hover {
+    box-shadow: 0 0 10px #00bcd4, 0 0 20px darkblue;
+}
+
+button#next-page {
+    margin: 20px 0;
+}
+
+/* === Results Grid === */
+.results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* center movie cards row */
+    gap: 20px;
+    margin-top: 20px;
+    /* since body/text-align is center, this container is centered too */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === Movie Cards === */
+.movie {
+    background-image: var(--gradient-secondary-soft);
+    /* Restore gradient border if you like: */
+    border: 2.5px solid transparent;
+    border-radius: 10px;
+    padding: 15px;
+    width: 200px;
+    text-align: center; /* ensure text inside is centered */
+    transition: var(--transition);
+    /* gradient border-image: */
+    border-image: var(--gradient-primary-soft) 1;
+    /* Remove default opacity so JS animation can control fade-in */
+    /* opacity: 0;  <-- removed */
+}
+
+.movie:hover {
+    box-shadow: 0 0 10px #00bcd4, 0 0 20px darkblue;
+    transform: scale(1.05);
+}
+
+.movie img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    -webkit-user-drag: none;
+    user-drag: none;
+    user-select: none;
+}
+
+.movie h2 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: var(--white);
+}
+
+/* === Navigation === */
+nav {
+    width: 100%;
+    background-image: var(--gradient-secondary-soft);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+nav a {
+    color: var(--white);
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color var(--transition);
+}
+
+nav a:hover {
+    color: #c4c4c4;
+}
+
+/* === Player Container (for main page preview or general use) === */
+#player-container {
+    background-image: var(--gradient-secondary-soft);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    width: 85%;
+    max-width: 1400px;
+    aspect-ratio: 16 / 9;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#player-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* === Responsive Tweaks === */
+@media (max-width: 600px) {
+    #search {
+        width: 80%;
+    }
+    .movie {
+        width: 90%;
+    }
+    #player-container {
+        width: 95%;
+    }
+}
+
+/* ===== Player page specific styles (scoped with .player-page) ===== */
+
+.player-page html,
+.player-page body,
+.player-page main {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.player-page body,
+.player-page main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  color: var(--white);
+}
+
+.player-page main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.player-page main > div:first-child {
+  padding: 10px;
+  background: #111;
+  flex-shrink: 0;
+}
+
+.player-page #player-container {
+  flex-grow: 1;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.player-page #player-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
