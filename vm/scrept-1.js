@@ -42,8 +42,8 @@ if (isUserPremium()) {
   const serverSwitch = document.getElementById('server-switch');
   if (serverSwitch) {
     serverSwitch.innerHTML = `
-      <button data-url="https://hungry-hippo.cvm.rest/" class="selected">Main 🟢</button>
-      <button data-url="https://rubber-ducky.cvm.rest/">1 🟢</button>
+      <button data-url="https://example.com/" class="selected">Main 🟢</button>
+      <button data-url="https://example.com/">1 🟢</button>
     `;
   }
 
@@ -74,7 +74,7 @@ function getUsername() {
   return localStorage.getItem("cvm_username") || "User";
 }
 
-let serverUrl = 'https://hungry-hippo.cvm.rest/'; // Default URL
+let serverUrl = 'https://example.com/'; // Default URL
 const selectedButton = document.querySelector('#server-switch button.selected');
 if (selectedButton) {
   serverUrl = selectedButton.dataset.url;
