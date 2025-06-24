@@ -85,8 +85,8 @@ function buttonClick(buttonNumber) {
   const iframe = document.getElementById('contentIframe');
   const buttons = document.querySelectorAll('.theme-button');
   const homeContainer = document.querySelector('.home-container');
-  const minDuration = 750;
-  const maxDuration = 1000;
+  const minDuration = 1000;
+  const maxDuration = 1750;
   const duration = Math.random() * (maxDuration - minDuration) + minDuration;
 
   // Disable buttons during transition
@@ -363,8 +363,8 @@ fetch('/core/messages.json')
 document.addEventListener('DOMContentLoaded', () => {
   const loadingScreen = document.getElementById('loadingScreen');
   const progressCircle = document.querySelector('.progress-circle circle');
-  const minDuration = 1000;
-  const maxDuration = 2500;
+  const minDuration = 3500;
+  const maxDuration = 7500;
   const duration = Math.random() * (maxDuration - minDuration) + minDuration;
 
   loadingScreen.style.animationDuration = `${duration}ms`;
