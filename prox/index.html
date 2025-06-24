@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proxcyou</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -29,8 +30,28 @@
             padding: 8px 16px;
             font-size: 16px;
         }
+        #statusMessage {
+            color: red;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        #toggleSearchButton {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 16px;
+            font-size: 16px;
+            z-index: 1002;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #toggleSearchButton:hover {
+            background: #0056b3;
+        }
         #contentFrame {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -51,10 +72,36 @@
             justify-content: center;
             color: white;
             font-size: 24px;
-            z-index: 1002;
+            z-index: 1003;
         }
         .hidden {
             display: none !important;
+        }
+        .error-page {
+            font-family: Impact, Poppins, sans-serif;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            padding: 50px;
+            background-color: #333;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .error-page button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .error-page button:hover {
+            background: #0056b3;
         }
     </style>
 </head>
@@ -62,75 +109,260 @@
     <div id="searchContainer">
         <input type="text" id="urlInput" placeholder="Where do you want to go?">
         <button id="loadButton">Go</button>
+        <div id="statusMessage"></div>
     </div>
+    <button id="toggleSearchButton">🔽</button>
     <iframe id="contentFrame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
     <div id="loadingOverlay" class="hidden">Loading...</div>
 
     <script>
-        async function proxyLoad(url, frame, loadingOverlay) {
-            if (loadingOverlay) loadingOverlay.classList.remove('hidden');
+        // Store Blob URL to prevent revocation
+        let currentBlobUrl = null;
 
-            // Normalize URL
-            let targetUrl = url.trim();
-            if (!/^https?:\/\//i.test(targetUrl)) {
-                targetUrl = 'https://' + targetUrl;
-            }
-
-            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
-
+        /**
+         * Utility function to decode Base64 strings (for Verdant proxy URLs).
+         * @param {string} encodedString - The Base64 encoded string.
+         * @returns {string} The decoded string.
+         */
+        function decodeBase64(encodedString) {
             try {
-                const response = await fetch(proxyUrl);
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch: ${response.status}`);
-                }
-                const html = await response.text();
-                const baseUrl = new URL(targetUrl).origin;
-                const processedHtml = html
-                    .replace(/<head>/i, `<head><base href="${baseUrl}/">`)
-                    .replace(/<body([^>]*)>/i, `<body$1 style="margin:0;">`);
-                const blob = new Blob([processedHtml], { type: 'text/html' });
-                const blobUrl = URL.createObjectURL(blob);
-                frame.src = blobUrl;
-
-                frame.onload = () => {
-                    if (loadingOverlay) loadingOverlay.classList.add('hidden');
-                    const iframeDoc = frame.contentDocument;
-                    if (iframeDoc) {
-                        iframeDoc.addEventListener('click', (e) => {
-                            const target = e.target.closest('a');
-                            if (target && target.href) {
-                                e.preventDefault();
-                                const newUrl = target.href;
-                                proxyLoad(newUrl, frame, loadingOverlay);
-                            }
-                        });
-                    }
-                };
-            } catch (error) {
-                if (loadingOverlay) loadingOverlay.classList.add('hidden');
-                frame.srcdoc = `<div style="color:white;text-align:center;font-size:20px;padding:50px;background:#333;">Error: ${error.message}</div>`;
+                return atob(encodedString);
+            } catch (e) {
+                console.error("Base64 decoding error:", e);
+                return null;
             }
         }
 
+        /**
+         * Loads a given URL into an iframe using a proxy service.
+         * @param {string} url - The URL or search query to load.
+         * @param {HTMLIFrameElement} frame - The iframe element to load the content into.
+         * @param {HTMLElement} loadingOverlay - The loading overlay element to show/hide.
+         * @param {HTMLElement} statusElement - Element to display status messages.
+         */
+        async function proxyLoad(url, frame, loadingOverlay, statusElement) {
+            console.log('Starting proxyLoad for URL:', url);
+            if (statusElement) statusElement.textContent = '';
+            if (loadingOverlay) {
+                console.log('Showing loading overlay');
+                loadingOverlay.classList.remove('hidden');
+            }
+
+            // Timeout to force-hide overlay
+            const overlayTimeout = setTimeout(() => {
+                console.warn('Loading overlay timeout reached');
+                if (loadingOverlay) {
+                    console.log('Force hiding overlay');
+                    loadingOverlay.classList.add('hidden');
+                }
+                if (statusElement) statusElement.textContent = 'Loading timed out. Try a different URL.';
+            }, 30000);
+
+            let actualTargetUrl = url;
+            const verdantProxyPrefix = window.location.origin + '/route/';
+
+            // Handle Verdant proxy URLs
+            if (url.startsWith(verdantProxyPrefix)) {
+                const encodedPart = url.substring(verdantProxyPrefix.length);
+                const decodedUrl = decodeBase64(encodedPart);
+                if (decodedUrl) {
+                    actualTargetUrl = decodedUrl;
+                    console.log(`Decoded Verdant proxy URL: ${actualTargetUrl}`);
+                } else {
+                    console.warn(`Could not decode Verdant proxy URL. Using: ${url}`);
+                    actualTargetUrl = url;
+                }
+            } else {
+                actualTargetUrl = actualTargetUrl.replace(/^(https?:\/\/)?/, '');
+                console.log('Cleaned URL:', actualTargetUrl);
+            }
+
+            // Determine if URL is direct or a search query
+            const urlToFetch = actualTargetUrl.includes('.')
+                ? `https://${actualTargetUrl}`
+                : `https://html.duckduckgo.com/html?q=${encodeURIComponent(actualTargetUrl)}`;
+            console.log('URL to fetch:', urlToFetch);
+
+            // Prevent proxying blob: URLs
+            if (urlToFetch.startsWith('blob:')) {
+                console.warn('Attempted to proxy blob: URL, skipping');
+                clearTimeout(overlayTimeout);
+                if (loadingOverlay) loadingOverlay.classList.add('hidden');
+                if (statusElement) statusElement.textContent = 'Cannot proxy blob: URLs';
+                return;
+            }
+
+            // Single reliable proxy for testing
+            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(urlToFetch)}`;
+            console.log('Proxy URL:', proxyUrl);
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 25000);
+                const response = await fetch(proxyUrl, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`Proxy failed with status ${response.status} ${response.statusText}`);
+                }
+
+                const html = await response.text();
+                console.log('Fetched HTML (first 200 chars):', html.substring(0, 200));
+                if (!html.trim()) {
+                    throw new Error('Empty HTML response from proxy');
+                }
+
+                const baseUrl = new URL(urlToFetch).origin;
+                console.log('Base URL for relative paths:', baseUrl);
+                const processed = html
+                    .replace(/<head>/i, `<head><base href="${baseUrl}/">`)
+                    .replace(/<body([^>]*)>/i, `<body$1 style="margin:0;">`);
+                const blob = new Blob([processed], { type: 'text/html' });
+
+                // Revoke previous Blob URL
+                if (currentBlobUrl) {
+                    console.log('Revoking previous Blob URL:', currentBlobUrl);
+                    URL.revokeObjectURL(currentBlobUrl);
+                }
+                currentBlobUrl = URL.createObjectURL(blob);
+                console.log('New Blob URL created:', currentBlobUrl);
+
+                if (frame) {
+                    frame.onload = null;
+                    frame.src = '';
+                    frame.src = currentBlobUrl;
+                    console.log('Iframe src set to:', frame.src);
+                    frame.onload = () => {
+                        console.log('Iframe loaded successfully');
+                        clearTimeout(overlayTimeout);
+                        if (loadingOverlay) {
+                            console.log('Hiding overlay on iframe load');
+                            loadingOverlay.classList.add('hidden');
+                        }
+                        try {
+                            const iframeDoc = frame.contentDocument;
+                            if (iframeDoc && iframeDoc.body) {
+                                iframeDoc.body.addEventListener('click', (e) => {
+                                    let targetElement = e.target;
+                                    let urlToRedirect = '';
+                                    let isHandled = false;
+
+                                    while (targetElement && targetElement !== iframeDoc.body) {
+                                        if (targetElement.tagName === 'A' && targetElement.href) {
+                                            urlToRedirect = targetElement.href;
+                                            isHandled = true;
+                                            break;
+                                        }
+                                        if (targetElement.onclick || targetElement.hasAttribute('data-href') || targetElement.hasAttribute('data-url')) {
+                                            urlToRedirect = targetElement.getAttribute('data-href') || targetElement.getAttribute('data-url') || '';
+                                            if (!urlToRedirect && targetElement.onclick) {
+                                                const onclickString = targetElement.onclick.toString();
+                                                const match = /(?:location\.href|window\.location|location\.assign|window\.open)\s*=\s*['"]([^'"]+)['"]/.exec(onclickString);
+                                                if (match && match[1]) {
+                                                    urlToRedirect = match[1];
+                                                }
+                                            }
+                                            if (urlToRedirect) {
+                                                isHandled = true;
+                                                break;
+                                            }
+                                        }
+                                        targetElement = targetElement.parentElement;
+                                    }
+
+                                    if (isHandled && urlToRedirect) {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        if (urlToRedirect.startsWith('blob:')) {
+                                            console.warn('Skipping blob: URL navigation:', urlToRedirect);
+                                            return;
+                                        }
+                                        try {
+                                            const absoluteUrl = new URL(urlToRedirect, new URL(frame.srcdoc ? frame.src : frame.src).origin).href;
+                                            console.log(`Intercepted navigation to: ${absoluteUrl}`);
+                                            proxyLoad(absoluteUrl, frame, loadingOverlay, statusElement);
+                                        } catch (urlError) {
+                                            console.warn("Invalid URL for interception, attempting fallback:", urlToRedirect, urlError);
+                                            proxyLoad(urlToRedirect, frame, loadingOverlay, statusElement);
+                                        }
+                                    }
+                                }, true);
+                            }
+                        } catch (e) {
+                            console.warn('Frame access error (expected for cross-origin iframes):', e);
+                        }
+                    };
+                    // Timeout for iframe load failure
+                    setTimeout(() => {
+                        if (frame.src === currentBlobUrl && !frame.contentDocument) {
+                            console.warn('Iframe failed to load within 10 seconds');
+                            clearTimeout(overlayTimeout);
+                            if (loadingOverlay) {
+                                console.log('Hiding overlay due to iframe load failure');
+                                loadingOverlay.classList.add('hidden');
+                            }
+                            if (statusElement) statusElement.textContent = 'Iframe failed to load. Try a different URL.';
+                        }
+                    }, 10000);
+                }
+            } catch (error) {
+                console.error('Error processing HTML:', error);
+                clearTimeout(overlayTimeout);
+                if (loadingOverlay) {
+                    console.log('Hiding overlay due to error');
+                    loadingOverlay.classList.add('hidden');
+                }
+                if (statusElement) statusElement.textContent = `Error: ${error.message}`;
+                if (frame) {
+                    frame.srcdoc = `
+                        <div class="error-page">
+                            <div>Error: ${error.message}</div>
+                            <button onclick="window.top.location.reload()">Go back</button>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Initialize elements and event listeners
         document.addEventListener('DOMContentLoaded', () => {
             const urlInput = document.getElementById('urlInput');
             const loadButton = document.getElementById('loadButton');
             const contentFrame = document.getElementById('contentFrame');
             const loadingOverlay = document.getElementById('loadingOverlay');
             const searchContainer = document.getElementById('searchContainer');
+            const statusMessage = document.getElementById('statusMessage');
+            const toggleSearchButton = document.getElementById('toggleSearchButton');
 
             function loadUrl() {
                 const url = urlInput.value.trim();
-                if (url) {
-                    searchContainer.style.display = 'none';
-                    contentFrame.style.display = 'block';
-                    proxyLoad(url, contentFrame, loadingOverlay);
+                if (!url) {
+                    statusMessage.textContent = 'Please enter a valid URL.';
+                    return;
                 }
+                const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/.*)?$/i;
+                if (!urlPattern.test(url) && !url.includes(' ')) {
+                    statusMessage.textContent = 'Invalid URL format. Try something like "example.com".';
+                    return;
+                }
+                console.log('Loading URL:', url);
+                proxyLoad(url, contentFrame, loadingOverlay, statusMessage);
             }
 
             loadButton.addEventListener('click', loadUrl);
             urlInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') loadUrl();
+            });
+
+            toggleSearchButton.addEventListener('click', () => {
+                if (searchContainer.classList.contains('hidden')) {
+                    searchContainer.classList.remove('hidden');
+                    toggleSearchButton.innerHTML = '🔽'; // Hide Search
+                } else {
+                    searchContainer.classList.add('hidden');
+                    toggleSearchButton.innerHTML = '🔼'; // Show Search
+                }
             });
         });
     </script>
