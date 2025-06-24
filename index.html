@@ -137,6 +137,24 @@ function buttonClick(buttonNumber) {
   }
 
   // Show loading screen
+  // Fetch a new random loading message before showing the loading screen
+fetch('/messages.json')
+  .then(response => response.json())
+  .then(data => {
+    const messages = data.messages;
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    const loadingText = document.getElementById('loading-text');
+    if (loadingText) {
+      loadingText.textContent = randomMessage;
+    }
+  })
+  .catch(() => {
+    const loadingText = document.getElementById('loading-text');
+    if (loadingText) {
+      loadingText.textContent = "Loading Wilway...";
+    }
+  });
+
   loadingScreen.style.display = 'flex';
   loadingScreen.style.animation = 'none';
   progressCircle.style.animation = 'none';
@@ -385,28 +403,5 @@ document.addEventListener('DOMContentLoaded', () => {
       detectImpactFont();
     });
   </script>
-  <script>
-document.addEventListener('DOMContentLoaded', () => {
-  fetch('/core/messages.json')
-    .then(response => response.json())
-    .then(data => {
-      const messages = data.messages;
-      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-      
-      // Insert message into loading text element
-      const loadingText = document.getElementById('loading-text');
-      if (loadingText) {
-        loadingText.textContent = randomMessage;
-      }
-    })
-    .catch(error => {
-      console.error('Could not load messages.json:', error);
-      const fallback = document.getElementById('loading-text');
-      if (fallback) {
-        fallback.textContent = "Loading Wilway...";
-      }
-    });
-});
-</script>
 </body>
 </html>
