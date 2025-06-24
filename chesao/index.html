@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Apply Impact first, then Poppins, then sans-serif */
+body {
+  font-family: Impact, 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  /* darkblue to darkcyan gradient */
+  background: linear-gradient(135deg, #00008B, #008B8B);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Main text styling—using a cyan-ish accent */
+.motw-text {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00CED1; /* DarkTurquoise accent */
+  text-shadow: 0 0 2px #00CED1, 0 0 4px #00CED1;
+  margin-top: 20px;
+  text-align: center;
+}
+.motw-text a {
+  color: #00CED1;
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: underline;
+  text-shadow: 0 0 10px #00CED1, 0 0 2px #00CED1;
+}
+.motw-text a:hover {
+  color: #ffffff;
+  text-shadow: 0 0 15px #00CED1, 0 0 20px #00CED1;
+}
+
+/* Form container */
+.form-container {
+  margin-top: 20px;
+  text-align: center;
+}
+.form-container input {
+  padding: 10px;
+  font-size: 1.2rem;
+  background-color: #111; /* very dark background for input */
+  color: #00CED1;
+  border: 1px solid #00CED1;
+  border-radius: 5px;
+}
+.form-container input::placeholder {
+  color: #555; /* optional: muted placeholder */
+}
+.form-container button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #00CED1;
+  color: #000; /* black text on cyan button */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.form-container button:hover {
+  background-color: #008B8B; /* darkcyan on hover */
+  color: #fff;
+}
+  </style>
+</head>
+<body>
+  <p class="motw-text">Sorry, but Chesao is password protected.</p>
+
+  <div class="form-container">
+    <form id="answerForm" autocomplete="off">
+      <input type="password" id="answer" name="answer" required autocomplete="off">
+      <button type="submit">Let me in!</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById('answerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const answer = document.getElementById('answer').value;
+      const data = JSON.stringify({ answer });
+
+      try {
+        const response = await fetch('https://chesao-worker.stilla-rrms-wlwv-k12-or-us.workers.dev/verify', {
+          method: 'POST',
+          headers: { "Content-Type": "application/json" },
+          body: data
+        });
+
+        const result = await response.json();
+
+        if (result.success && result.redirect) {
+          // Create overlay
+          const overlay = document.createElement('div');
+          overlay.style.position = 'fixed';
+          overlay.style.top = 0;
+          overlay.style.left = 0;
+          overlay.style.width = '100%';
+          overlay.style.height = '100%';
+          overlay.style.backgroundColor = 'black';
+          overlay.style.color = 'white';
+          overlay.style.display = 'flex';
+          overlay.style.alignItems = 'center';
+          overlay.style.justifyContent = 'center';
+          overlay.style.fontWeight = 'bold';
+          overlay.style.fontSize = '1.5rem';
+          overlay.style.zIndex = 9999;  /* Ensure this is on top */
+          overlay.textContent = "...";
+
+          document.body.appendChild(overlay);
+
+          setTimeout(() => {
+            const newTab = window.open('about:blank', '_blank');
+            if (newTab) {
+              newTab.document.write(`
+                <html>
+                <head>
+                  <title>‎ </title>
+                  <style>
+                    html, body {
+                      margin: 0;
+                      padding: 0;
+                      height: 100%;
+                      overflow: hidden;
+                      background-color: black;
+                      display: flex;
+                    }
+                    body {
+                      flex: 1;
+                    }
+                    iframe {
+                      flex: 1;
+                      border: none;
+                    }
+                  </style>
+                </head>
+                <body>
+                  <iframe src="${result.redirect}" allowfullscreen></iframe>
+                </body>
+                </html>
+              `);
+              newTab.document.close();
+              setTimeout(() => {
+                window.close();
+              }, 500);
+            } else {
+              alert("Popup blocked.");
+            }
+          }, 0);
+        } else {
+          alert(result.message || 'Wrong!');
+        }
+      } catch (error) {
+        alert('Server error. Try again later (Takes about 1-2 days to fix).');
+      }
+    });
+  </script>
+</html>
