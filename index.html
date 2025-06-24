@@ -370,10 +370,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let minDuration, maxDuration;
 
   if (isReturningUser) {
-    minDuration = 2000;  // 2 seconds
-    maxDuration = 2500;  // 2.5 seconds
+    minDuration = 1800;
+    maxDuration = 2000;
   } else {
-    minDuration = 3200;  // First time: longer
+    minDuration = 3400;  // First time: longer
     maxDuration = 4000;
     setCookie('visitedBefore', 'true', 32); // Set cookie to expire in 32 days
   }
