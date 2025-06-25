@@ -363,13 +363,12 @@ fetch('/core/messages.json')
     let initialLoadDone = false;
 
     let autoHideEnabled = false;
-const AUTOHIDE_THRESHOLD = 50; // px from bottom to show bar
+const AUTOHIDE_THRESHOLD = 50;
+let isHoveringBottomBar = false;
 
 function toggleAutoHide() {
   autoHideEnabled = !autoHideEnabled;
   const btn = document.getElementById('autoHideBtn');
-  const bottomBar = document.querySelector('.bottom-bar');
-  // Show or hide immediately
   if (autoHideEnabled) {
     hideBottomBar();
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
@@ -384,41 +383,36 @@ function toggleAutoHide() {
 function handleMouseMoveForAutoHide(e) {
   const y = e.clientY;
   const height = window.innerHeight;
+
   if (y > height - AUTOHIDE_THRESHOLD) {
     showBottomBar();
-  } else {
+  } else if (!isHoveringBottomBar) {
     hideBottomBar();
   }
 }
 
 function hideBottomBar() {
   const bottomBar = document.querySelector('.bottom-bar');
-  const hoverArea = document.querySelector('.hover-area');
-  if (bottomBar) {
+  if (bottomBar && !bottomBar.classList.contains('hidden')) {
     bottomBar.classList.add('hidden');
-    // after CSS transition delay, also set display none
-    bottomBar.style.display = 'none';
-  }
-  if (hoverArea) {
-    // optional: keep hoverArea active so user can still trigger via mousemove
-    hoverArea.style.display = 'block';
   }
 }
 
 function showBottomBar() {
   const bottomBar = document.querySelector('.bottom-bar');
-  const hoverArea = document.querySelector('.hover-area');
-  if (bottomBar) {
-    bottomBar.style.display = 'flex';
-    // force reflow then remove hidden so any CSS animation applies
-    bottomBar.offsetHeight;
+  if (bottomBar && bottomBar.classList.contains('hidden')) {
     bottomBar.classList.remove('hidden');
   }
-  if (hoverArea) {
-    // optional: you may hide hoverArea if not needed
-    // hoverArea.style.display = 'none';
-  }
 }
+
+// Detect if user is hovering over the bar
+const bottomBar = document.querySelector('.bottom-bar');
+bottomBar.addEventListener('mouseenter', () => {
+  isHoveringBottomBar = true;
+});
+bottomBar.addEventListener('mouseleave', () => {
+  isHoveringBottomBar = false;
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   const loadingScreen = document.getElementById('loadingScreen');
