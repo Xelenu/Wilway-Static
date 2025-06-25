@@ -195,8 +195,10 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
         return;
     }
 
-    const proxyUrl = `https://toothpaste.bekekes390.workers.dev/?url=${encodeURIComponent(urlToFetch)}`;
-    console.log('Proxy URL:', proxyUrl);
+    // Add cache-busting query parameter
+    const cacheBust = `t=${Date.now()}`;
+    const proxyUrl = `https://toothpaste.bekekes390.workers.dev/?url=${encodeURIComponent(urlToFetch)}&${cacheBust}`;
+    console.log('Proxy URL with cache-bust:', proxyUrl);
 
     try {
         const controller = new AbortController();
@@ -221,7 +223,7 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
         function rewriteUrl(originalUrl, base) {
             try {
                 const absoluteUrl = new URL(originalUrl, base).href;
-                return `https://toothpaste.bekekes390.workers.dev/?url=${encodeURIComponent(absoluteUrl)}`;
+                return `https://toothpaste.bekekes390.workers.dev/?url=${encodeURIComponent(absoluteUrl)}&${cacheBust}`;
             } catch (e) {
                 console.warn(`Skipping invalid URL: ${originalUrl}`, e);
                 return originalUrl;
@@ -274,7 +276,6 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
                 try {
                     const iframeDoc = frame.contentDocument;
                     if (iframeDoc && iframeDoc.body) {
-                        // Add CORS error detection
                         iframeDoc.addEventListener('error', (e) => {
                             if (e.target.tagName === 'IMG' || e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK' || 
                                 e.target.tagName === 'IFRAME' || e.target.tagName === 'SOURCE' || e.target.tagName === 'VIDEO' || 
@@ -436,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        console.log('Loading URL:', url);
+        console.log('Loading URL with cache cleared:', url);
         proxyLoad(url, contentFrame, loadingOverlay, statusMessage);
     }
 
