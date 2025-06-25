@@ -146,21 +146,9 @@ body {
     <div id="loadingOverlay" class="hidden">Loading...</div>
 
     <script>
-    let currentBlobUrl = null;
+    'use strict';
 
-/**
- * Utility function to decode Base64 strings (for Verdant proxy URLs).
- * @param {string} encodedString - The Base64 encoded string.
- * @returns {string} The decoded string.
- */
-function decodeBase64(encodedString) {
-    try {
-        return atob(encodedString);
-    } catch (e) {
-        console.error("Base64 decoding error:", e);
-        return null;
-    }
-}
+let currentBlobUrl = null;
 
 /**
  * Loads a given URL into an iframe using a proxy service.
@@ -177,7 +165,6 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
         loadingOverlay.classList.remove('hidden');
     }
 
-    // Timeout to force-hide overlay
     const overlayTimeout = setTimeout(() => {
         console.warn('Loading overlay timeout reached');
         if (loadingOverlay) {
@@ -185,34 +172,19 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
             loadingOverlay.classList.add('hidden');
         }
         if (statusElement) statusElement.textContent = 'Loading timed out. Try a different URL.';
-    }, 30000);
+    }, 5000);
 
-    let actualTargetUrl = url;
-    const verdantProxyPrefix = window.location.origin + '/route/';
-
-    // Handle Verdant proxy URLs
-    if (url.startsWith(verdantProxyPrefix)) {
-        const encodedPart = url.substring(verdantProxyPrefix.length);
-        const decodedUrl = decodeBase64(encodedPart);
-        if (decodedUrl) {
-            actualTargetUrl = decodedUrl;
-            console.log(`Decoded Verdant proxy URL: ${actualTargetUrl}`);
-        } else {
-            console.warn(`Could not decode Verdant proxy URL. Using: ${url}`);
-            actualTargetUrl = url;
-        }
-    } else {
-        actualTargetUrl = actualTargetUrl.replace(/^(https?:\/\/)?/, '');
-        console.log('Cleaned URL:', actualTargetUrl);
+    let actualTargetUrl = url.trim();
+    if (!actualTargetUrl.match(/^https?:\/\//)) {
+        actualTargetUrl = 'https://' + actualTargetUrl;
     }
+    console.log('Cleaned URL:', actualTargetUrl);
 
-    // Determine if URL is direct or a search query
     const urlToFetch = actualTargetUrl.includes('.')
-        ? `https://${actualTargetUrl}`
+        ? actualTargetUrl
         : `https://html.duckduckgo.com/html?q=${encodeURIComponent(actualTargetUrl)}`;
     console.log('URL to fetch:', urlToFetch);
 
-    // Prevent proxying blob: URLs
     if (urlToFetch.startsWith('blob:')) {
         console.warn('Attempted to proxy blob: URL, skipping');
         clearTimeout(overlayTimeout);
@@ -221,13 +193,12 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
         return;
     }
 
-    // Single reliable proxy for testing
     const proxyUrl = `https://toothpaste.bekekes390.workers.dev/?url=${encodeURIComponent(urlToFetch)}`;
     console.log('Proxy URL:', proxyUrl);
 
     try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 25000);
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
         const response = await fetch(proxyUrl, { signal: controller.signal });
         clearTimeout(timeoutId);
         console.log('Response status:', response.status);
@@ -245,36 +216,32 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
         const baseUrl = new URL(urlToFetch).origin;
         console.log('Base URL for relative paths:', baseUrl);
 
-        // Function to rewrite URLs to use the proxy
         function rewriteUrl(originalUrl, base) {
             try {
                 const absoluteUrl = new URL(originalUrl, base).href;
                 return `https://toothpaste.bekekes390.workers.dev/?url=${encodeURIComponent(absoluteUrl)}`;
             } catch (e) {
                 console.warn(`Skipping invalid URL: ${originalUrl}`, e);
-                return originalUrl; // Fallback to original if invalid
+                return originalUrl;
             }
         }
 
-        // Process HTML: Add base tag, adjust body, and rewrite resource URLs
         html = html.replace(/<head>/i, `<head><base href="${baseUrl}/">`);
         html = html.replace(/<body([^>]*)>/i, `<body$1 style="margin:0;">`);
 
-        // Rewrite URLs in resource-related tags and attributes
         html = html.replace(
             /<(link|script|img|iframe|source|video|audio|object|embed|track)\s+[^>]*?(href|src|data|poster)=["']([^"']+)["']/gi,
             (match, tag, attr, url) => {
-                if (url.startsWith('data:') || url.startsWith('blob:')) return match; // Skip data URLs and blobs
+                if (url.startsWith('data:') || url.startsWith('blob:')) return match;
                 const proxiedUrl = rewriteUrl(url, baseUrl);
                 return match.replace(url, proxiedUrl);
             }
         );
 
-        // Rewrite URLs in inline CSS (style tags and attributes)
         html = html.replace(
             /(style\s*=\s*["'][^"']*url\s*\(['"]?)([^)'"]+)(['"]?\)[^"']*["']|<\/style>)/gi,
             (match, prefix, url, suffix) => {
-                if (url.startsWith('data:') || url.startsWith('blob:')) return match; // Skip data URLs and blobs
+                if (url.startsWith('data:') || url.startsWith('blob:')) return match;
                 const proxiedUrl = rewriteUrl(url, baseUrl);
                 return `${prefix}${proxiedUrl}${suffix}`;
             }
@@ -282,7 +249,6 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
 
         const blob = new Blob([html], { type: 'text/html' });
 
-        // Revoke previous Blob URL
         if (currentBlobUrl) {
             console.log('Revoking previous Blob URL:', currentBlobUrl);
             URL.revokeObjectURL(currentBlobUrl);
@@ -294,6 +260,7 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
             frame.onload = null;
             frame.src = '';
             frame.src = currentBlobUrl;
+            frame.style.display = 'block';
             console.log('Iframe src set to:', frame.src);
             frame.onload = () => {
                 console.log('Iframe loaded successfully');
@@ -341,10 +308,8 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
                                     return;
                                 }
                                 try {
-                                    // Resolve URL against the proxied site's origin
                                     let absoluteUrl = new URL(urlToRedirect, baseUrl).href;
                                     console.log(`Resolved URL: ${urlToRedirect} -> ${absoluteUrl} (using base: ${baseUrl})`);
-                                    // Append trailing slash for potential directories
                                     if (!absoluteUrl.match(/\/[^\/.]*\.[^\/.]*$/) && !absoluteUrl.endsWith('/')) {
                                         absoluteUrl += '/';
                                         console.log(`Appended slash for directory: ${absoluteUrl}`);
@@ -353,18 +318,16 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
                                     proxyLoad(absoluteUrl, frame, loadingOverlay, statusElement);
                                 } catch (urlError) {
                                     console.warn("Invalid URL for interception, attempting fallback:", urlToRedirect, urlError);
-                                    // Fallback with trailing slash if it looks like a directory
                                     let fallbackUrl = urlToRedirect;
                                     if (!fallbackUrl.match(/\/[^\/.]*\.[^\/.]*$/) && !fallbackUrl.endsWith('/')) {
                                         fallbackUrl += '/';
                                         console.log(`Fallback appended slash: ${fallbackUrl}`);
                                     }
-                                    // Resolve fallback URL against proxied origin
                                     try {
                                         fallbackUrl = new URL(fallbackUrl, baseUrl).href;
                                         console.log(`Resolved fallback URL: ${fallbackUrl}`);
-                                    } catch (e) {
-                                        console.warn("Fallback URL resolution failed:", e);
+                                    } catch (err) {
+                                        console.warn("Fallback URL resolution failed:", err);
                                     }
                                     proxyLoad(fallbackUrl, frame, loadingOverlay, statusElement);
                                 }
@@ -375,19 +338,17 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
                     console.warn('Frame access error (expected for cross-origin iframes):', e);
                 }
             };
-            // Timeout for iframe load failure
             setTimeout(() => {
-                // Note: contentDocument may not be accessible cross-origin; this is a best-effort check
-                if (frame.src === currentBlobUrl) {
+                if (frame.src === currentBlobUrl && !frame.contentDocument) {
                     console.warn('Iframe load check timeout');
                     clearTimeout(overlayTimeout);
                     if (loadingOverlay) {
                         console.log('Hiding overlay due to iframe load failure');
                         loadingOverlay.classList.add('hidden');
                     }
-                    if (statusElement) statusElement.textContent = 'Iframe may have failed to load. Try a different URL.';
+                    if (statusElement) statusElement.textContent = 'Iframe failed to load. Try a different URL.';
                 }
-            }, 10000);
+            }, 5000);
         }
     } catch (error) {
         console.error('Error processing HTML:', error);
@@ -404,6 +365,7 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
                     <button onclick="window.top.location.reload()">Go back</button>
                 </div>
             `;
+            frame.style.display = 'block';
         }
     }
 }
@@ -418,7 +380,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusMessage = document.getElementById('statusMessage');
     const toggleSearchButton = document.getElementById('toggleSearchButton');
 
-    // Updated loadUrl: domain check on submit, hides toggle & bar if match
     function loadUrl() {
         let url = urlInput.value.trim();
         if (!url) {
@@ -426,7 +387,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Normalize for domain check
         let normalized = url.toLowerCase();
         if (normalized.startsWith('http://')) {
             normalized = normalized.slice(7);
@@ -434,8 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
             normalized = normalized.slice(8);
         }
 
-        if (normalized.includes("nuhuh.learnstats.xyz")) {
-            // Hide both toggle button and search container
+        if (normalized.includes('nuhuh.learnstats.xyz')) {
             if (toggleSearchButton) {
                 toggleSearchButton.classList.add('hidden');
                 toggleSearchButton.style.display = 'none';
@@ -445,7 +404,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchContainer.style.display = 'none';
             }
         } else {
-            // Ensure they are visible otherwise
             if (toggleSearchButton) {
                 toggleSearchButton.classList.remove('hidden');
                 toggleSearchButton.style.display = 'block';
@@ -456,7 +414,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Validate URL format before proxying
         const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/.*)?$/i;
         if (!urlPattern.test(url) && !url.includes(' ')) {
             statusMessage.textContent = 'Invalid URL format. Try something like "example.com".';
@@ -478,10 +435,10 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleSearchButton.addEventListener('click', () => {
         if (searchContainer.classList.contains('hidden')) {
             searchContainer.classList.remove('hidden');
-            toggleSearchButton.innerHTML = '🔼'; // Hide Search
+            toggleSearchButton.innerHTML = '🔽';
         } else {
             searchContainer.classList.add('hidden');
-            toggleSearchButton.innerHTML = '🔽'; // Show Search
+            toggleSearchButton.innerHTML = '🔼';
         }
     });
 });
