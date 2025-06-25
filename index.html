@@ -366,6 +366,8 @@ fetch('/core/messages.json')
     let autoHideEnabled = false;
 const AUTOHIDE_THRESHOLD = 50;
 let isHoveringBottomBar = false;
+let isHoveringToggleButton = false;
+let hideTimeout = null;
 
 function toggleAutoHide() {
   autoHideEnabled = !autoHideEnabled;
@@ -389,40 +391,88 @@ function handleMouseMoveForAutoHide(e) {
   const y = e.clientY;
   const height = window.innerHeight;
 
+  // Show if near bottom
   if (y > height - AUTOHIDE_THRESHOLD) {
     showBottomBar();
-  } else if (!isHoveringBottomBar) {
-    hideBottomBar();
+    clearTimeout(hideTimeout);
+  } else {
+    // Delay hiding to allow for hover re-checks
+    clearTimeout(hideTimeout);
+    hideTimeout = setTimeout(() => {
+      if (!isHoveringBottomBar && !isHoveringToggleButton) {
+        hideBottomBar();
+      }
+    }, 300); // 300ms delay
   }
 }
 
 function hideBottomBar() {
   const bottomBar = document.querySelector('.bottom-bar');
-  if (bottomBar && !bottomBar.classList.contains('hidden')) {
+  const toggleBtn = document.querySelector('.toggle-bar-button');
+
+  if (bottomBar) {
     bottomBar.classList.add('hidden');
+    bottomBar.style.display = 'none';
+  }
+
+  if (toggleBtn) {
+    toggleBtn.classList.add('hidden');
+    toggleBtn.style.display = 'none';
   }
 }
 
 function showBottomBar() {
   const bottomBar = document.querySelector('.bottom-bar');
-  if (bottomBar && bottomBar.classList.contains('hidden')) {
+  const toggleBtn = document.querySelector('.toggle-bar-button');
+
+  if (bottomBar) {
+    bottomBar.style.display = 'flex';
+    bottomBar.offsetHeight;
     bottomBar.classList.remove('hidden');
+  }
+
+  if (toggleBtn) {
+    toggleBtn.style.display = 'block';
+    toggleBtn.offsetHeight;
+    toggleBtn.classList.remove('hidden');
   }
 }
 
-// Track if user is hovering over bottom bar
+// Hover detection on both the bar and toggle button
 const bottomBar = document.querySelector('.bottom-bar');
-bottomBar.addEventListener('mouseenter', () => {
-  isHoveringBottomBar = true;
-});
-bottomBar.addEventListener('mouseleave', () => {
-  isHoveringBottomBar = false;
-});
+const toggleBtn = document.querySelector('.toggle-bar-button');
 
-// Initialize auto-hide state from cookie on page load
+if (bottomBar) {
+  bottomBar.addEventListener('mouseenter', () => {
+    isHoveringBottomBar = true;
+    clearTimeout(hideTimeout);
+  });
+  bottomBar.addEventListener('mouseleave', () => {
+    isHoveringBottomBar = false;
+    hideTimeout = setTimeout(() => {
+      if (autoHideEnabled && !isHoveringToggleButton) hideBottomBar();
+    }, 300);
+  });
+}
+
+if (toggleBtn) {
+  toggleBtn.addEventListener('mouseenter', () => {
+    isHoveringToggleButton = true;
+    clearTimeout(hideTimeout);
+  });
+  toggleBtn.addEventListener('mouseleave', () => {
+    isHoveringToggleButton = false;
+    hideTimeout = setTimeout(() => {
+      if (autoHideEnabled && !isHoveringBottomBar) hideBottomBar();
+    }, 300);
+  });
+}
+
+// Restore state from cookie on page load
 document.addEventListener('DOMContentLoaded', () => {
   const autoHideBtn = document.getElementById('autoHideBtn');
   const autoHideCookie = getCookie('autoHideBar');
+
   if (autoHideBtn && autoHideCookie === 'true') {
     autoHideEnabled = true;
     autoHideBtn.textContent = 'Disable Auto-Hide Bar';
