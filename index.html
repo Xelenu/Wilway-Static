@@ -48,6 +48,7 @@
   <div class="settings-panel" id="settingsPanel">
   <button onclick="toggleAnimation()">Pause Animation</button>
   <button id="autoHideBtn" onclick="toggleAutoHide()">Enable Auto-Hide Bar</button>
+    <button id="fsHideSettingsBtn" onclick="toggleFsHideSettings()">Hide Settings button in Fullscreen</button>
   <button class="close-button" onclick="toggleSettingsPanel()">Close</button>
 </div>
   <script>
@@ -428,6 +429,50 @@ document.addEventListener('DOMContentLoaded', () => {
     hideBottomBar();
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
   }
+});
+
+    let fsHideSettingsEnabled = false;
+
+function toggleFsHideSettings() {
+  fsHideSettingsEnabled = !fsHideSettingsEnabled;
+  const btn = document.getElementById('fsHideSettingsBtn');
+
+  // Save state to cookie for 30 days
+  setCookie('fsHideSettings', fsHideSettingsEnabled ? 'true' : 'false', 30);
+
+  updateSettingsButtonVisibility();
+
+  btn.textContent = fsHideSettingsEnabled ? 'Show Settings in Fullscreen' : 'Hide Settings in Fullscreen';
+}
+
+// Check fullscreen status and update settings button visibility accordingly
+function updateSettingsButtonVisibility() {
+  const settingsBtn = document.querySelector('.settings-button');
+  if (!settingsBtn) return;
+
+  if (fsHideSettingsEnabled && document.fullscreenElement) {
+    settingsBtn.style.display = 'none';
+  } else {
+    settingsBtn.style.display = 'flex';
+  }
+}
+
+// Listen to fullscreen change events to update visibility live
+['fullscreenchange', 'mozfullscreenchange', 'webkitfullscreenchange', 'MSFullscreenChange'].forEach(eventType => {
+  document.addEventListener(eventType, () => {
+    updateSettingsButtonVisibility();
+  });
+});
+
+// On page load, restore the toggle state from cookie and apply visibility
+document.addEventListener('DOMContentLoaded', () => {
+  const fsHideSettingsBtn = document.getElementById('fsHideSettingsBtn');
+  const cookieVal = getCookie('fsHideSettings');
+  if (fsHideSettingsBtn && cookieVal === 'true') {
+    fsHideSettingsEnabled = true;
+    fsHideSettingsBtn.textContent = 'Show Settings in Fullscreen';
+  }
+  updateSettingsButtonVisibility();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
