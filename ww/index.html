@@ -21,13 +21,29 @@
       content="#434c5e"
     />
     <meta name="googlebot" content="index, follow, snippet" />
-    <link rel="shortcut icon" content="favicon.ico" />
+    <link rel="shortcut icon" href="favicon.ico" />
     <link rel="stylesheet" href="index.css" />
-    <script src="uv/uv.bundle.js" defer></script>
-    <script src="uv/uv.config.js" defer></script>
-    <script src="register-sw.js" defer></script>
-    <script src="search.js" defer></script>
-    <script src="index.js" defer></script>
+
+    <!-- UV config: must be before any UV scripts -->
+    <script>
+      self.__uv$config = {
+        prefix: "/ww/loading/",
+        bare: "https://prox-ww.learnstats.xyz",  // replace with your actual worker URL
+        encodeUrl: Ultraviolet.codec.xor.encode,
+        decodeUrl: Ultraviolet.codec.xor.decode,
+        handler: "/ww/loading/uv.handler.js",
+        client: "/ww/loading/uv.client.js",
+        bundle: "/ww/loading/uv.bundle.js",
+        config: "/ww/loading/uv.config.js",
+        sw: "/ww/loading/uv.sw.js",
+      };
+    </script>
+
+    <script src="/ww/loading/uv.bundle.js" defer></script>
+    <script src="/ww/loading/uv.config.js" defer></script>
+    <script src="/ww/loading/register-sw.js" defer></script>
+    <script src="/ww/loading/search.js" defer></script>
+    <script src="/ww/loading/index.js" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
