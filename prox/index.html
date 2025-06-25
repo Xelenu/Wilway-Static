@@ -354,6 +354,26 @@ body {
             }
         }
 
+        urlInput.addEventListener('input', () => {
+  const value = urlInput.value.trim().toLowerCase();
+
+  // Remove protocol if present to standardize input for checking
+  let normalized = value;
+  if (normalized.startsWith('http://')) {
+    normalized = normalized.slice(7);
+  } else if (normalized.startsWith('https://')) {
+    normalized = normalized.slice(8);
+  }
+
+  if (normalized.includes("nuhuh.learnstats.xyz")) {
+    toggleSearchButton.classList.add('hidden');
+    toggleSearchButton.style.display = 'none';
+  } else {
+    toggleSearchButton.classList.remove('hidden');
+    toggleSearchButton.style.display = 'block';
+  }
+});
+
         // Initialize elements and event listeners
         document.addEventListener('DOMContentLoaded', () => {
             const urlInput = document.getElementById('urlInput');
