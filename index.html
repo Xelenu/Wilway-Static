@@ -46,9 +46,9 @@
   <button type="button" class="fullscreen-button" onclick="toggleFullscreen()">⛶</button>
   <button type="button" class="toggle-bar-button" onclick="toggleBottomBar()">🔽</button>
   <div class="settings-panel" id="settingsPanel">
-  <button onclick="toggleAnimation()">Pause Animation</button>
-  <button id="autoHideBtn" onclick="toggleAutoHide()">Enable Auto-Hide Bar</button>
-    <button id="fsHideSettingsBtn" onclick="toggleFsHideSettings()">Hide Settings button in Fullscreen</button>
+  <button onclick="toggleAnimation()">🟢 Animation</button>
+  <button id="autoHideBtn" onclick="toggleAutoHide()">🔴 Auto-Hide Bar</button>
+    <button id="fsHideSettingsBtn" onclick="toggleFsHideSettings()">🟢 Settings in fullscreen</button>
   <button class="close-button" onclick="toggleSettingsPanel()">Close</button>
 </div>
   <script>
@@ -475,7 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (autoHideBtn && autoHideCookie === 'true') {
     autoHideEnabled = true;
-    autoHideBtn.textContent = '🔁 Disable Auto-Hide Bar';
+    autoHideBtn.textContent = '🟢 Auto-Hide Bar';
     hideBottomBar();
     hideToggleButton();
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
@@ -493,7 +493,7 @@ function toggleFsHideSettings() {
 
   updateSettingsButtonVisibility();
 
-  btn.textContent = fsHideSettingsEnabled ? 'Show Settings in Fullscreen' : 'Hide Settings in Fullscreen';
+  btn.textContent = fsHideSettingsEnabled ? '🔴 Settings in Fullscreen' : '🟢 Settings in Fullscreen';
 }
 
 // Check fullscreen status and update settings button visibility accordingly
