@@ -189,7 +189,7 @@ function startSessionTimer() {
     console.error('Session timer element (#session-timer) not found.');
     return;
   }
-  let seconds = 60 * 60; // 60 minutes
+  let seconds = 45 * 40; // 60 minutes
   timerElement.style.display = 'block'; // Ensure visibility
   updateTimerDisplay(seconds);
   const interval = setInterval(() => {
