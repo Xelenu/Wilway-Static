@@ -369,6 +369,10 @@ let isHoveringBottomBar = false;
 function toggleAutoHide() {
   autoHideEnabled = !autoHideEnabled;
   const btn = document.getElementById('autoHideBtn');
+
+  // Save state in cookie for 30 days
+  setCookie('autoHideBar', autoHideEnabled ? 'true' : 'false', 30);
+
   if (autoHideEnabled) {
     hideBottomBar();
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
@@ -405,13 +409,25 @@ function showBottomBar() {
   }
 }
 
-// Detect if user is hovering over the bar
+// Track if user is hovering over bottom bar
 const bottomBar = document.querySelector('.bottom-bar');
 bottomBar.addEventListener('mouseenter', () => {
   isHoveringBottomBar = true;
 });
 bottomBar.addEventListener('mouseleave', () => {
   isHoveringBottomBar = false;
+});
+
+// Initialize auto-hide state from cookie on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const autoHideBtn = document.getElementById('autoHideBtn');
+  const autoHideCookie = getCookie('autoHideBar');
+  if (autoHideBtn && autoHideCookie === 'true') {
+    autoHideEnabled = true;
+    autoHideBtn.textContent = 'Disable Auto-Hide Bar';
+    hideBottomBar();
+    document.addEventListener('mousemove', handleMouseMoveForAutoHide);
+  }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
