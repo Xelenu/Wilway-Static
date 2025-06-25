@@ -10,7 +10,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Impact, 'Poppins', "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #e0f7fa; /* Light cyan text for contrast */
+    color: #e0f7fa;
 }
 
 #searchContainer {
@@ -18,9 +18,9 @@ body {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 600px; /* Fixed width for floating effect */
-    max-width: 90%; /* Responsive width */
-    background: #1c3d4f; /* Dark blue container */
+    width: 600px;
+    max-width: 90%;
+    background: #1c3d4f;
     z-index: 1001;
     padding: 8px;
     border-radius: 6px;
@@ -31,7 +31,7 @@ body {
     width: 75%;
     padding: 6px;
     font-size: 14px;
-    background: #2a5a75; /* Dark cyan input */
+    background: #2a5a75;
     color: #e0f7fa;
     border: 1px solid #4b8aa6;
     border-radius: 4px;
@@ -40,7 +40,7 @@ body {
 #loadButton {
     padding: 6px 12px;
     font-size: 14px;
-    background: darkcyan; /* Dark cyan button */
+    background: darkcyan;
     color: #e0f7fa;
     border: none;
     border-radius: 4px;
@@ -48,11 +48,11 @@ body {
 }
 
 #loadButton:hover {
-    background: #004d4d; /* Darker cyan on hover */
+    background: #004d4d;
 }
 
 #statusMessage {
-    color: #ff6b6b; /* Bright red for errors */
+    color: #ff6b6b;
     font-size: 12px;
     margin: 5px 0;
 }
@@ -64,7 +64,7 @@ body {
     padding: 6px 12px;
     font-size: 14px;
     z-index: 1002;
-    background: #006666; /* Dark cyan button */
+    background: #006666;
     color: #e0f7fa;
     border: none;
     border-radius: 2px;
@@ -72,7 +72,7 @@ body {
 }
 
 #toggleSearchButton:hover {
-    background: #004d4d; /* Darker cyan on hover */
+    background: #004d4d;
 }
 
 #contentFrame {
@@ -83,6 +83,7 @@ body {
     height: 100vh;
     border: none;
     z-index: 1000;
+    display: none;
 }
 
 #loadingOverlay {
@@ -91,7 +92,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(10, 30, 43, 0.7); /* Dark blue overlay */
+    background: rgba(10, 30, 43, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,7 +111,7 @@ body {
     text-align: center;
     font-size: 18px;
     padding: 50px;
-    background-color: #1c3d4f; /* Dark blue error page */
+    background-color: #1c3d4f;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -122,7 +123,7 @@ body {
     margin-top: 20px;
     padding: 8px 16px;
     font-size: 14px;
-    background: #006666; /* Dark cyan button */
+    background: #006666;
     color: #e0f7fa;
     border: none;
     border-radius: 4px;
@@ -130,7 +131,7 @@ body {
 }
 
 .error-page button:hover {
-    background: #004d4d; /* Darker cyan on hover */
+    background: #004d4d;
 }
     </style>
 </head>
@@ -144,220 +145,226 @@ body {
     <iframe id="contentFrame"></iframe>
     <div id="loadingOverlay" class="hidden">Loading...</div>
 
-<script>
+    <script>
     'use strict';
 
-const iframe = document.querySelector('iframe') || createIframe();
-const loadingOverlay = createLoadingOverlay();
-const urlInput = document.querySelector('#url-input'); // Assumes existing input
-const baseProxyUrl = 'https://toothpaste.bekekes390.workers.dev/?url=';
+    const iframe = document.querySelector('#contentFrame');
+    const loadingOverlay = document.querySelector('#loadingOverlay');
+    const urlInput = document.querySelector('#urlInput');
+    const loadButton = document.querySelector('#loadButton');
+    const statusMessage = document.querySelector('#statusMessage');
+    const toggleSearchButton = document.querySelector('#toggleSearchButton');
+    const searchContainer = document.querySelector('#searchContainer');
+    const baseProxyUrl = 'https://toothpaste.bekekes390.workers.dev/?url=';
 
-function createIframe() {
-  const iframe = document.createElement('iframe');
-  iframe.id = 'proxy-iframe';
-  iframe.style.cssText = 'width: 100%; height: 80vh; border: none; display: none;';
-  iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups';
-  document.body.appendChild(iframe);
-  return iframe;
-}
-
-function createLoadingOverlay() {
-  const overlay = document.createElement('div');
-  overlay.id = 'loading-overlay';
-  overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); color: white; display: none; z-index: 9999; text-align: center; line-height: 100vh;';
-  overlay.textContent = 'Loading...';
-  document.body.appendChild(overlay);
-  return overlay;
-}
-
-function showLoadingOverlay() {
-  console.log('Showing loading overlay');
-  loadingOverlay.style.display = 'block';
-}
-
-function hideLoadingOverlay() {
-  console.log('Hiding loading overlay');
-  loadingOverlay.style.display = 'none';
-}
-
-function loadIframe(url) {
-  if (!url) {
-    console.log('No URL provided, keeping iframe blank');
-    return;
-  }
-  if (!url.match(/^https?:\/\//)) {
-    url = 'https://' + url;
-  }
-  showLoadingOverlay();
-  console.log(`Loading URL: ${url}`);
-
-  try {
-    const proxyUrl = `${baseProxyUrl}${encodeURIComponent(url)}`;
-    console.log(`Proxy URL: ${proxyUrl}`);
-
-    iframe.src = proxyUrl;
-    iframe.style.display = 'block';
-
-    iframe.onload = () => {
-      console.log('Iframe loaded successfully');
-      injectFixes(url);
-      hideLoadingOverlay();
-    };
-
-    iframe.onerror = (error) => {
-      console.error(`Iframe failed to load: ${error}`);
-      hideLoadingOverlay();
-    };
-
-    setTimeout(() => {
-      if (!iframe.contentDocument) {
-        console.warn('Iframe load check timeout');
-        hideLoadingOverlay();
-      }
-    }, 15000);
-  } catch (error) {
-    console.error(`Error loading iframe: ${error.message}`);
-    hideLoadingOverlay();
-  }
-}
-
-function injectFixes(baseUrl) {
-  try {
-    const script = document.createElement('script');
-    script.textContent = `
-      (function() {
-        const proxyBase = '${baseProxyUrl}';
-        const baseUrl = '${baseUrl}';
-
-        // Load particles.js
-        const particlesScript = document.createElement('script');
-        particlesScript.src = 'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js';
-        particlesScript.onload = () => {
-          if (typeof particlesJS !== 'undefined') {
-            particlesJS('particles-js', {
-              particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: '#ffffff' },
-                shape: { type: 'circle' },
-                opacity: { value: 0.5, random: false },
-                size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.4, width: 1 },
-                move: { enable: true, speed: 6, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
-              },
-              interactivity: {
-                detect_on: 'canvas',
-                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
-                modes: { repulse: { distance: 200, duration: 0.4 }, push: { particles_nb: 4 } }
-              },
-              retina_detect: true
-            });
-            console.log('particles.js initialized');
-          }
-        };
-        document.head.appendChild(particlesScript);
-
-        // Load cursoreffects
-        const cursorScript = document.createElement('script');
-        cursorScript.src = 'https://cdn.jsdelivr.net/npm/cursor-effects@1.1.1/dist/cursor-effects.min.js';
-        cursorScript.onload = () => {
-          if (typeof cursorEffects !== 'undefined') {
-            new cursorEffects.rainbowCursor();
-            console.log('cursoreffects initialized');
-          }
-        };
-        document.head.appendChild(cursorScript);
-
-        // Proxy fetch requests
-        const originalFetch = window.fetch;
-        window.fetch = function(url, options) {
-          if (url.includes('discord.com/api')) {
-            console.log('Proxying Discord API: ' + url);
-            url = 'https://cors-anywhere.herokuapp.com/' + url;
-            return originalFetch(url, options).then(res => {
-              if (!res.ok) {
-                console.error('Discord API fetch failed');
-                return { ok: false, text: () => Promise.resolve('') };
-              }
-              return res;
-            });
-          }
-          if (!url.startsWith('http') && !url.startsWith('//')) {
-            console.log('Rewriting relative URL: ' + url);
-            url = proxyBase + encodeURIComponent(new URL(url, baseUrl).href);
-          }
-          return originalFetch(url, options).catch(err => {
-            console.error('Fetch error: ' + err);
-            return { ok: false, text: () => Promise.resolve('') };
-          });
-        };
-
-        // Rewrite resource URLs
-        function rewriteUrls() {
-          ['img', 'script', 'link', 'a'].forEach(tag => {
-            document.querySelectorAll(tag).forEach(el => {
-              const attr = tag === 'a' ? 'href' : (tag === 'img' || tag === 'script') ? 'src' : 'href';
-              const value = el.getAttribute(attr);
-              if (value && !value.startsWith('http') && !value.startsWith('//') && !value.startsWith('#')) {
-                const absoluteUrl = new URL(value, baseUrl).href;
-                el.setAttribute(attr, proxyBase + encodeURIComponent(absoluteUrl));
-                console.log(\`Rewrote \${tag} \${attr}: \${value} -> \${absoluteUrl}\`);
-              }
-            });
-          });
-        }
-
-        // Intercept navigation
-        document.addEventListener('click', e => {
-          const link = e.target.closest('a');
-          if (link && link.href && !link.href.startsWith('#')) {
-            e.preventDefault();
-            console.log('Intercepted navigation to: ' + link.href);
-            window.parent.postMessage({ type: 'navigate', url: link.href }, '*');
-          }
-        });
-
-        // Intercept form submissions
-        document.addEventListener('submit', e => {
-          const form = e.target.closest('form');
-          if (form) {
-            e.preventDefault();
-            const formData = new FormData(form);
-            const action = form.action || baseUrl;
-            const newUrl = new URL(action);
-            formData.forEach((value, key) => newUrl.searchParams.append(key, value));
-            console.log('Intercepted form submission to: ' + newUrl.href);
-            window.parent.postMessage({ type: 'navigate', url: newUrl.href }, '*');
-          }
-        });
-
-        // Run URL rewriting
-        rewriteUrls();
-        new MutationObserver(rewriteUrls).observe(document.body, { childList: true, subtree: true });
-      })();
-    `;
-    document.head.appendChild(script);
-  } catch (error) {
-    console.error(`Error injecting fixes: ${error.message}`);
-  }
-}
-
-window.addEventListener('message', e => {
-  if (e.data.type === 'navigate') {
-    console.log(`Intercepted navigation to: ${e.data.url}`);
-    if (urlInput) urlInput.value = e.data.url;
-    loadIframe(e.data.url);
-  }
-});
-
-// Bind to existing input, if present
-if (urlInput) {
-  urlInput.addEventListener('keypress', e => {
-    if (e.key === 'Enter' && urlInput.value.trim()) {
-      loadIframe(urlInput.value.trim());
+    function showLoadingOverlay() {
+        console.log('Showing loading overlay');
+        loadingOverlay.classList.remove('hidden');
     }
-  });
-}
-</script>
-</script>
+
+    function hideLoadingOverlay() {
+        console.log('Hiding loading overlay');
+        loadingOverlay.classList.add('hidden');
+    }
+
+    function setStatusMessage(message, isError = false) {
+        statusMessage.textContent = message;
+        statusMessage.style.color = isError ? '#ff6b6b' : '#e0f7fa';
+    }
+
+    function loadIframe(url) {
+        if (!url) {
+            setStatusMessage('Please enter a URL', true);
+            return;
+        }
+        if (!url.match(/^https?:\/\//)) {
+            url = 'https://' + url;
+        }
+        showLoadingOverlay();
+        setStatusMessage('');
+        console.log(`Loading URL: ${url}`);
+
+        try {
+            const proxyUrl = `${baseProxyUrl}${encodeURIComponent(url)}`;
+            console.log(`Proxy URL: ${proxyUrl}`);
+
+            iframe.src = proxyUrl;
+            iframe.style.display = 'block';
+
+            iframe.onload = () => {
+                console.log('Iframe loaded successfully');
+                injectFixes(url);
+                hideLoadingOverlay();
+            };
+
+            iframe.onerror = (error) => {
+                console.error(`Iframe failed to load: ${error}`);
+                setStatusMessage('Failed to load URL', true);
+                hideLoadingOverlay();
+            };
+
+            setTimeout(() => {
+                if (!iframe.contentDocument) {
+                    console.warn('Iframe load check timeout');
+                    setStatusMessage('Load timed out', true);
+                    hideLoadingOverlay();
+                }
+            }, 15000);
+        } catch (error) {
+            console.error(`Error loading iframe: ${error.message}`);
+            setStatusMessage('Error loading URL', true);
+            hideLoadingOverlay();
+        }
+    }
+
+    function injectFixes(baseUrl) {
+        try {
+            const script = document.createElement('script');
+            script.textContent = `
+                (function() {
+                    const proxyBase = '${baseProxyUrl}';
+                    const baseUrl = '${baseUrl}';
+
+                    // Load particles.js
+                    const particlesScript = document.createElement('script');
+                    particlesScript.src = 'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js';
+                    particlesScript.onload = () => {
+                        if (typeof particlesJS !== 'undefined') {
+                            particlesJS('particles-js', {
+                                particles: {
+                                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                                    color: { value: '#ffffff' },
+                                    shape: { type: 'circle' },
+                                    opacity: { value: 0.5, random: false },
+                                    size: { value: 3, random: true },
+                                    line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.4, width: 1 },
+                                    move: { enable: true, speed: 6, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
+                                },
+                                interactivity: {
+                                    detect_on: 'canvas',
+                                    events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                                    modes: { repulse: { distance: 200, duration: 0.4 }, push: { particles_nb: 4 } }
+                                },
+                                retina_detect: true
+                            });
+                            console.log('particles.js initialized');
+                        }
+                    };
+                    document.head.appendChild(particlesScript);
+
+                    // Load cursoreffects
+                    const cursorScript = document.createElement('script');
+                    cursorScript.src = 'https://cdn.jsdelivr.net/npm/cursor-effects@1.1.1/dist/cursor-effects.min.js';
+                    cursorScript.onload = () => {
+                        if (typeof cursorEffects !== 'undefined') {
+                            new cursorEffects.rainbowCursor();
+                            console.log('cursoreffects initialized');
+                        }
+                    };
+                    document.head.appendChild(cursorScript);
+
+                    // Proxy fetch requests
+                    const originalFetch = window.fetch;
+                    window.fetch = function(url, options) {
+                        if (url.includes('discord.com/api')) {
+                            console.log('Proxying Discord API: ' + url);
+                            url = 'https://cors-anywhere.herokuapp.com/' + url;
+                            return originalFetch(url, options).then(res => {
+                                if (!res.ok) {
+                                    console.error('Discord API fetch failed');
+                                    return { ok: false, text: () => Promise.resolve('') };
+                                }
+                                return res;
+                            });
+                        }
+                        if (!url.startsWith('http') && !url.startsWith('//')) {
+                            console.log('Rewriting relative URL: ' + url);
+                            url = proxyBase + encodeURIComponent(new URL(url, baseUrl).href);
+                        }
+                        return originalFetch(url, options).catch(err => {
+                            console.error('Fetch error: ' + err);
+                            return { ok: false, text: () => Promise.resolve('') };
+                        });
+                    };
+
+                    // Rewrite resource URLs
+                    function rewriteUrls() {
+                        ['img', 'script', 'link', 'a'].forEach(tag => {
+                            document.querySelectorAll(tag).forEach(el => {
+                                const attr = tag === 'a' ? 'href' : (tag === 'img' || tag === 'script') ? 'src' : 'href';
+                                const value = el.getAttribute(attr);
+                                if (value && !value.startsWith('http') && !value.startsWith('//') && !value.startsWith('#')) {
+                                    const absoluteUrl = new URL(value, baseUrl).href;
+                                    el.setAttribute(attr, proxyBase + encodeURIComponent(absoluteUrl));
+                                    console.log(\`Rewrote \${tag} \${attr}: \${value} -> \${absoluteUrl}\`);
+                                }
+                            });
+                        });
+                    }
+
+                    // Intercept navigation
+                    document.addEventListener('click', e => {
+                        const link = e.target.closest('a');
+                        if (link && link.href && !link.href.startsWith('#')) {
+                            e.preventDefault();
+                            console.log('Intercepted navigation to: ' + link.href);
+                            window.parent.postMessage({ type: 'navigate', url: link.href }, '*');
+                        }
+                    });
+
+                    // Intercept form submissions
+                    document.addEventListener('submit', e => {
+                        const form = e.target.closest('form');
+                        if (form) {
+                            e.preventDefault();
+                            const formData = new FormData(form);
+                            const action = form.action || baseUrl;
+                            const newUrl = new URL(action);
+                            formData.forEach((value, key) => newUrl.searchParams.append(key, value));
+                            console.log('Intercepted form submission to: ' + newUrl.href);
+                            window.parent.postMessage({ type: 'navigate', url: newUrl.href }, '*');
+                        }
+                    });
+
+                    // Run URL rewriting
+                    rewriteUrls();
+                    new MutationObserver(rewriteUrls).observe(document.body, { childList: true, subtree: true });
+                })();
+            `;
+            document.head.appendChild(script);
+        } catch (error) {
+            console.error(`Error injecting fixes: ${error.message}`);
+            setStatusMessage('Error applying fixes', true);
+        }
+    }
+
+    // Bind events
+    urlInput.addEventListener('keypress', e => {
+        if (e.key === 'Enter' && urlInput.value.trim()) {
+            loadIframe(urlInput.value.trim());
+        }
+    });
+
+    loadButton.addEventListener('click', () => {
+        if (urlInput.value.trim()) {
+            loadIframe(urlInput.value.trim());
+        } else {
+            setStatusMessage('Please enter a URL', true);
+        }
+    });
+
+    toggleSearchButton.addEventListener('click', () => {
+        searchContainer.classList.toggle('hidden');
+        toggleSearchButton.textContent = searchContainer.classList.contains('hidden') ? '🔼' : '🔽';
+    });
+
+    window.addEventListener('message', e => {
+        if (e.data.type === 'navigate') {
+            console.log(`Intercepted navigation to: ${e.data.url}`);
+            urlInput.value = e.data.url;
+            loadIframe(e.data.url);
+        }
+    });
+    </script>
 </body>
 </html>
