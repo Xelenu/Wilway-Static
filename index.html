@@ -509,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cookieVal = getCookie('fsHideSettings');
   if (fsHideSettingsBtn) {
     fsHideSettingsEnabled = (cookieVal === 'true');
-    fsHideSettingsBtn.textContent = `${fsHideSettingsEnabled ? '🟢' : '🔴'} Settings in Fullscreen`;
+    fsHideSettingsBtn.textContent = `${fsHideSettingsEnabled ? '🔴' : '🟢'} Settings in Fullscreen`;
   }
 
   updateSettingsButtonVisibility();
