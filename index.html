@@ -380,12 +380,12 @@ function toggleAutoHide() {
     hideBottomBar();
     hideToggleButton();
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
-    btn.textContent = '🔁 Disable Auto-Hide Bar';
+    btn.textContent = 'Disable Auto-Hide Bar';
   } else {
     document.removeEventListener('mousemove', handleMouseMoveForAutoHide);
     showBottomBar();
     showToggleButton();
-    btn.textContent = '🔁 Enable Auto-Hide Bar';
+    btn.textContent = 'Enable Auto-Hide Bar';
   }
 }
 
