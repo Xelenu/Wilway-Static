@@ -379,11 +379,11 @@ function toggleAutoHide() {
   if (autoHideEnabled) {
     hideBottomBar();
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
-    btn.textContent = 'Disable Auto-Hide Bar';
+    btn.textContent = '🔁 Disable Auto-Hide Bar';
   } else {
     document.removeEventListener('mousemove', handleMouseMoveForAutoHide);
     showBottomBar();
-    btn.textContent = 'Enable Auto-Hide Bar';
+    btn.textContent = '🔁 Enable Auto-Hide Bar';
   }
 }
 
@@ -391,18 +391,16 @@ function handleMouseMoveForAutoHide(e) {
   const y = e.clientY;
   const height = window.innerHeight;
 
-  // Show if near bottom
   if (y > height - AUTOHIDE_THRESHOLD) {
     showBottomBar();
     clearTimeout(hideTimeout);
   } else {
-    // Delay hiding to allow for hover re-checks
     clearTimeout(hideTimeout);
     hideTimeout = setTimeout(() => {
       if (!isHoveringBottomBar && !isHoveringToggleButton) {
         hideBottomBar();
       }
-    }, 300); // 300ms delay
+    }, 300); // Delay to prevent flicker
   }
 }
 
@@ -427,21 +425,19 @@ function showBottomBar() {
 
   if (bottomBar) {
     bottomBar.style.display = 'flex';
-    bottomBar.offsetHeight;
+    bottomBar.offsetHeight; // Force reflow
     bottomBar.classList.remove('hidden');
   }
 
   if (toggleBtn) {
     toggleBtn.style.display = 'block';
-    toggleBtn.offsetHeight;
+    toggleBtn.offsetHeight; // Force reflow
     toggleBtn.classList.remove('hidden');
   }
 }
 
-// Hover detection on both the bar and toggle button
+// Hover detection for bottom bar
 const bottomBar = document.querySelector('.bottom-bar');
-const toggleBtn = document.querySelector('.toggle-bar-button');
-
 if (bottomBar) {
   bottomBar.addEventListener('mouseenter', () => {
     isHoveringBottomBar = true;
@@ -455,6 +451,8 @@ if (bottomBar) {
   });
 }
 
+// Hover detection for toggle bar button
+const toggleBtn = document.querySelector('.toggle-bar-button');
 if (toggleBtn) {
   toggleBtn.addEventListener('mouseenter', () => {
     isHoveringToggleButton = true;
@@ -468,14 +466,14 @@ if (toggleBtn) {
   });
 }
 
-// Restore state from cookie on page load
+// Restore auto-hide state on page load
 document.addEventListener('DOMContentLoaded', () => {
   const autoHideBtn = document.getElementById('autoHideBtn');
   const autoHideCookie = getCookie('autoHideBar');
 
   if (autoHideBtn && autoHideCookie === 'true') {
     autoHideEnabled = true;
-    autoHideBtn.textContent = 'Disable Auto-Hide Bar';
+    autoHideBtn.textContent = '🔁 Disable Auto-Hide Bar';
     hideBottomBar();
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
   }
