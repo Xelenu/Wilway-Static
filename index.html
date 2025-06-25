@@ -351,11 +351,11 @@ fetch('/core/messages.json')
 
   if (isPaused) {
     background.classList.remove('paused');
-    pauseButton.textContent = '🟢 Pause Animation';
+    pauseButton.textContent = '🟢 Animation';
     setCookie('animationPaused', 'false', 30);
   } else {
     background.classList.add('paused');
-    pauseButton.textContent = '🔴 Resume Animation';
+    pauseButton.textContent = '🔴 Animation';
     setCookie('animationPaused', 'true', 30);
   }
 }
