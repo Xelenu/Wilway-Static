@@ -373,7 +373,6 @@ function toggleAutoHide() {
   autoHideEnabled = !autoHideEnabled;
   const btn = document.getElementById('autoHideBtn');
 
-  // Save state in cookie for 30 days
   setCookie('autoHideBar', autoHideEnabled ? 'true' : 'false', 30);
 
   if (autoHideEnabled) {
@@ -387,10 +386,10 @@ function toggleAutoHide() {
     showToggleButton();
     btn.textContent = 'Enable Auto-Hide Bar';
 
-    // Set cookie explicitly to false again (redundant but safe)
     setCookie('autoHideBar', 'false', 30);
-    // Reload page immediately when re-enabled (toggled off)
-    location.reload();
+
+    // Delay reload slightly to allow animations to complete
+    setTimeout(() => location.reload(), 200);
   }
 }
 
@@ -414,8 +413,12 @@ function handleMouseMoveForAutoHide(e) {
 function hideBottomBar() {
   const bottomBar = document.querySelector('.bottom-bar');
   if (bottomBar) {
-    bottomBar.classList.add('hidden');
-    bottomBar.style.display = 'none';
+    bottomBar.style.transition = 'opacity 0.3s ease';
+    bottomBar.style.opacity = '0';
+    // After fade out, set display none to remove from layout
+    setTimeout(() => {
+      bottomBar.style.display = 'none';
+    }, 300);
   }
 }
 
@@ -423,16 +426,20 @@ function showBottomBar() {
   const bottomBar = document.querySelector('.bottom-bar');
   if (bottomBar) {
     bottomBar.style.display = 'flex';
-    bottomBar.offsetHeight;
-    bottomBar.classList.remove('hidden');
+    bottomBar.offsetHeight; // force reflow
+    bottomBar.style.transition = 'opacity 0.3s ease';
+    bottomBar.style.opacity = '1';
   }
 }
 
 function hideToggleButton() {
   const toggleBtn = document.querySelector('.toggle-bar-button');
   if (toggleBtn) {
-    toggleBtn.classList.add('hidden');
-    toggleBtn.style.display = 'none';
+    toggleBtn.style.transition = 'opacity 0.3s ease';
+    toggleBtn.style.opacity = '0';
+    setTimeout(() => {
+      toggleBtn.style.display = 'none';
+    }, 300);
   }
 }
 
@@ -440,12 +447,13 @@ function showToggleButton() {
   const toggleBtn = document.querySelector('.toggle-bar-button');
   if (toggleBtn) {
     toggleBtn.style.display = 'block';
-    toggleBtn.offsetHeight;
-    toggleBtn.classList.remove('hidden');
+    toggleBtn.offsetHeight; // force reflow
+    toggleBtn.style.transition = 'opacity 0.3s ease';
+    toggleBtn.style.opacity = '1';
   }
 }
 
-// Hover logic (bottom bar only — toggle button hover detection removed on purpose)
+// Hover logic (bottom bar only — toggle button hover detection removed intentionally)
 const bottomBar = document.querySelector('.bottom-bar');
 if (bottomBar) {
   bottomBar.addEventListener('mouseenter', () => {
@@ -473,6 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
   }
 });
+
     let fsHideSettingsEnabled = false;
 
 function toggleFsHideSettings() {
