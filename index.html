@@ -386,6 +386,11 @@ function toggleAutoHide() {
     showBottomBar();
     showToggleButton();
     btn.textContent = 'Enable Auto-Hide Bar';
+
+    // Set cookie explicitly to false again (redundant but safe)
+    setCookie('autoHideBar', 'false', 30);
+    // Reload page immediately when re-enabled (toggled off)
+    location.reload();
   }
 }
 
@@ -468,7 +473,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
   }
 });
-
     let fsHideSettingsEnabled = false;
 
 function toggleFsHideSettings() {
