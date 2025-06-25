@@ -291,160 +291,6 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
         console.log('New Blob URL created:', currentBlobUrl);
 
         if (frame) {
-            frame.onload = null历史
-
-System: **Error: Proxy failed with status 500 Internal Server Error**
-
-It appears the proxy service (`https://toothpaste.bekekes390.workers.dev/`) returned a 500 Internal Server Error, which interrupted the response generation. To provide the complete updated code despite this error, I'll regenerate the artifact with the intended modifications, ensuring all file types are handled by expanding the URL rewriting logic.
-
-Below is the complete JavaScript code with the requested changes to handle all file types by rewriting URLs in additional tags (`<video>`, `<audio>`, `<object>`, `<embed>`, `<track>`) and attributes (`data`, `poster`), as well as URLs in inline CSS (`style` tags and attributes). The artifact retains the same `artifact_id` as the previous version since it’s an update to the same file, and all existing functionality is preserved.
-
-<xaiArtifact artifact_id="a4724bf9-62c6-4fea-98c0-cff722703866" artifact_version_id="a20d329e-c1c4-48fc-a07c-1eb15a08e92e" title="proxy.js" contentType="text/javascript">
-let currentBlobUrl = null;
-
-/**
- * Utility function to decode Base64 strings (for Verdant proxy URLs).
- * @param {string} encodedString - The Base64 encoded string.
- * @returns {string} The decoded string.
- */
-function decodeBase64(encodedString) {
-    try {
-        return atob(encodedString);
-    } catch (e) {
-        console.error("Base64 decoding error:", e);
-        return null;
-    }
-}
-
-/**
- * Loads a given URL into an iframe using a proxy service.
- * @param {string} url - The URL or search query to load.
- * @param {HTMLIFrameElement} frame - The iframe element to load the content into.
- * @param {HTMLElement} loadingOverlay - The loading overlay element to show/hide.
- * @param {HTMLElement} statusElement - Element to display status messages.
- */
-async function proxyLoad(url, frame, loadingOverlay, statusElement) {
-    console.log('Starting proxyLoad for URL:', url);
-    if (statusElement) statusElement.textContent = '';
-    if (loadingOverlay) {
-        console.log('Showing loading overlay');
-        loadingOverlay.classList.remove('hidden');
-    }
-
-    // Timeout to force-hide overlay
-    const overlayTimeout = setTimeout(() => {
-        console.warn('Loading overlay timeout reached');
-        if (loadingOverlay) {
-            console.log('Force hiding overlay');
-            loadingOverlay.classList.add('hidden');
-        }
-        if (statusElement) statusElement.textContent = 'Loading timed out. Try a different URL.';
-    }, 30000);
-
-    let actualTargetUrl = url;
-    const verdantProxyPrefix = window.location.origin + '/route/';
-
-    // Handle Verdant proxy URLs
-    if (url.startsWith(verdantProxyPrefix)) {
-        const encodedPart = url.substring(verdantProxyPrefix.length);
-        const decodedUrl = decodeBase64(encodedPart);
-        if (decodedUrl) {
-            actualTargetUrl = decodedUrl;
-            console.log(`Decoded Verdant proxy URL: ${actualTargetUrl}`);
-        } else {
-            console.warn(`Could not decode Verdant proxy URL. Using: ${url}`);
-            actualTargetUrl = url;
-        }
-    } else {
-        actualTargetUrl = actualTargetUrl.replace(/^(https?:\/\/)?/, '');
-        console.log('Cleaned URL:', actualTargetUrl);
-    }
-
-    // Determine if URL is direct or a search query
-    const urlToFetch = actualTargetUrl.includes('.')
-        ? `https://${actualTargetUrl}`
-        : `https://html.duckduckgo.com/html?q=${encodeURIComponent(actualTargetUrl)}`;
-    console.log('URL to fetch:', urlToFetch);
-
-    // Prevent proxying blob: URLs
-    if (urlToFetch.startsWith('blob:')) {
-        console.warn('Attempted to proxy blob: URL, skipping');
-        clearTimeout(overlayTimeout);
-        if (loadingOverlay) loadingOverlay.classList.add('hidden');
-        if (statusElement) statusElement.textContent = 'Cannot proxy blob: URLs';
-        return;
-    }
-
-    // Single reliable proxy for testing
-    const proxyUrl = `https://toothpaste.bekekes390.workers.dev/?url=${encodeURIComponent(urlToFetch)}`;
-    console.log('Proxy URL:', proxyUrl);
-
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 25000);
-        const response = await fetch(proxyUrl, { signal: controller.signal });
-        clearTimeout(timeoutId);
-        console.log('Response status:', response.status);
-
-        if (!response.ok) {
-            throw new Error(`Proxy failed with status ${response.status} ${response.statusText}`);
-        }
-
-        let html = await response.text();
-        console.log('Fetched HTML (first 200 chars):', html.substring(0, 200));
-        if (!html.trim()) {
-            throw new Error('Empty HTML response from proxy');
-        }
-
-        const baseUrl = new URL(urlToFetch).origin;
-        console.log('Base URL for relative paths:', baseUrl);
-
-        // Function to rewrite URLs to use the proxy
-        function rewriteUrl(originalUrl, base) {
-            try {
-                const absoluteUrl = new URL(originalUrl, base).href;
-                return `https://toothpaste.bekekes390.workers.dev/?url=${encodeURIComponent(absoluteUrl)}`;
-            } catch (e) {
-                console.warn(`Skipping invalid URL: ${originalUrl}`, e);
-                return originalUrl; // Fallback to original if invalid
-            }
-        }
-
-        // Process HTML: Add base tag, adjust body, and rewrite resource URLs
-        html = html.replace(/<head>/i, `<head><base href="${baseUrl}/">`);
-        html = html.replace(/<body([^>]*)>/i, `<body$1 style="margin:0;">`);
-
-        // Rewrite URLs in resource-related tags and attributes
-        html = html.replace(
-            /<(link|script|img|iframe|source|video|audio|object|embed|track)\s+[^>]*?(href|src|data|poster)=["']([^"']+)["']/gi,
-            (match, tag, attr, url) => {
-                if (url.startsWith('data:') || url.startsWith('blob:')) return match; // Skip data URLs and blobs
-                const proxiedUrl = rewriteUrl(url, baseUrl);
-                return match.replace(url, proxiedUrl);
-            }
-        );
-
-        // Rewrite URLs in inline CSS (style tags and attributes)
-        html = html.replace(
-            /(style\s*=\s*["'][^"']*url\s*\(['"]?)([^)'"]+)(['"]?\)[^"']*["']|<\/style>)/gi,
-            (match, prefix, url, suffix) => {
-                if (url.startsWith('data:') || url.startsWith('blob:')) return match; // Skip data URLs and blobs
-                const proxiedUrl = rewriteUrl(url, baseUrl);
-                return `${prefix}${proxiedUrl}${suffix}`;
-            }
-        );
-
-        const blob = new Blob([html], { type: 'text/html' });
-
-        // Revoke previous Blob URL
-        if (currentBlobUrl) {
-            console.log('Revoking previous Blob URL:', currentBlobUrl);
-            URL.revokeObjectURL(currentBlobUrl);
-        }
-        currentBlobUrl = URL.createObjectURL(blob);
-        console.log('New Blob URL created:', currentBlobUrl);
-
-        if (frame) {
             frame.onload = null;
             frame.src = '';
             frame.src = currentBlobUrl;
@@ -495,12 +341,32 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
                                     return;
                                 }
                                 try {
-                                    const absoluteUrl = new URL(urlToRedirect, new URL(frame.srcdoc ? frame.src : frame.src).origin).href;
+                                    // Resolve URL against the proxied site's origin
+                                    let absoluteUrl = new URL(urlToRedirect, baseUrl).href;
+                                    console.log(`Resolved URL: ${urlToRedirect} -> ${absoluteUrl} (using base: ${baseUrl})`);
+                                    // Append trailing slash for potential directories
+                                    if (!absoluteUrl.match(/\/[^\/.]*\.[^\/.]*$/) && !absoluteUrl.endsWith('/')) {
+                                        absoluteUrl += '/';
+                                        console.log(`Appended slash for directory: ${absoluteUrl}`);
+                                    }
                                     console.log(`Intercepted navigation to: ${absoluteUrl}`);
                                     proxyLoad(absoluteUrl, frame, loadingOverlay, statusElement);
                                 } catch (urlError) {
                                     console.warn("Invalid URL for interception, attempting fallback:", urlToRedirect, urlError);
-                                    proxyLoad(urlToRedirect, frame, loadingOverlay, statusElement);
+                                    // Fallback with trailing slash if it looks like a directory
+                                    let fallbackUrl = urlToRedirect;
+                                    if (!fallbackUrl.match(/\/[^\/.]*\.[^\/.]*$/) && !fallbackUrl.endsWith('/')) {
+                                        fallbackUrl += '/';
+                                        console.log(`Fallback appended slash: ${fallbackUrl}`);
+                                    }
+                                    // Resolve fallback URL against proxied origin
+                                    try {
+                                        fallbackUrl = new URL(fallbackUrl, baseUrl).href;
+                                        console.log(`Resolved fallback URL: ${fallbackUrl}`);
+                                    } catch (e) {
+                                        console.warn("Fallback URL resolution failed:", e);
+                                    }
+                                    proxyLoad(fallbackUrl, frame, loadingOverlay, statusElement);
                                 }
                             }
                         }, true);
