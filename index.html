@@ -378,11 +378,13 @@ function toggleAutoHide() {
 
   if (autoHideEnabled) {
     hideBottomBar();
+    hideToggleButton();
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
     btn.textContent = '🔁 Disable Auto-Hide Bar';
   } else {
     document.removeEventListener('mousemove', handleMouseMoveForAutoHide);
     showBottomBar();
+    showToggleButton();
     btn.textContent = '🔁 Enable Auto-Hide Bar';
   }
 }
@@ -400,43 +402,45 @@ function handleMouseMoveForAutoHide(e) {
       if (!isHoveringBottomBar && !isHoveringToggleButton) {
         hideBottomBar();
       }
-    }, 300); // Delay to prevent flicker
+    }, 300);
   }
 }
 
 function hideBottomBar() {
   const bottomBar = document.querySelector('.bottom-bar');
-  const toggleBtn = document.querySelector('.toggle-bar-button');
-
   if (bottomBar) {
     bottomBar.classList.add('hidden');
     bottomBar.style.display = 'none';
   }
+}
 
+function showBottomBar() {
+  const bottomBar = document.querySelector('.bottom-bar');
+  if (bottomBar) {
+    bottomBar.style.display = 'flex';
+    bottomBar.offsetHeight;
+    bottomBar.classList.remove('hidden');
+  }
+}
+
+function hideToggleButton() {
+  const toggleBtn = document.querySelector('.toggle-bar-button');
   if (toggleBtn) {
     toggleBtn.classList.add('hidden');
     toggleBtn.style.display = 'none';
   }
 }
 
-function showBottomBar() {
-  const bottomBar = document.querySelector('.bottom-bar');
+function showToggleButton() {
   const toggleBtn = document.querySelector('.toggle-bar-button');
-
-  if (bottomBar) {
-    bottomBar.style.display = 'flex';
-    bottomBar.offsetHeight; // Force reflow
-    bottomBar.classList.remove('hidden');
-  }
-
   if (toggleBtn) {
     toggleBtn.style.display = 'block';
-    toggleBtn.offsetHeight; // Force reflow
+    toggleBtn.offsetHeight;
     toggleBtn.classList.remove('hidden');
   }
 }
 
-// Hover detection for bottom bar
+// Hover logic (bottom bar only — toggle button hover detection removed on purpose)
 const bottomBar = document.querySelector('.bottom-bar');
 if (bottomBar) {
   bottomBar.addEventListener('mouseenter', () => {
@@ -446,27 +450,12 @@ if (bottomBar) {
   bottomBar.addEventListener('mouseleave', () => {
     isHoveringBottomBar = false;
     hideTimeout = setTimeout(() => {
-      if (autoHideEnabled && !isHoveringToggleButton) hideBottomBar();
+      if (autoHideEnabled) hideBottomBar();
     }, 300);
   });
 }
 
-// Hover detection for toggle bar button
-const toggleBtn = document.querySelector('.toggle-bar-button');
-if (toggleBtn) {
-  toggleBtn.addEventListener('mouseenter', () => {
-    isHoveringToggleButton = true;
-    clearTimeout(hideTimeout);
-  });
-  toggleBtn.addEventListener('mouseleave', () => {
-    isHoveringToggleButton = false;
-    hideTimeout = setTimeout(() => {
-      if (autoHideEnabled && !isHoveringBottomBar) hideBottomBar();
-    }, 300);
-  });
-}
-
-// Restore auto-hide state on page load
+// On load, restore state
 document.addEventListener('DOMContentLoaded', () => {
   const autoHideBtn = document.getElementById('autoHideBtn');
   const autoHideCookie = getCookie('autoHideBar');
@@ -475,6 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
     autoHideEnabled = true;
     autoHideBtn.textContent = '🔁 Disable Auto-Hide Bar';
     hideBottomBar();
+    hideToggleButton();
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
   }
 });
