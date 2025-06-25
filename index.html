@@ -46,9 +46,10 @@
   <button type="button" class="fullscreen-button" onclick="toggleFullscreen()">⛶</button>
   <button type="button" class="toggle-bar-button" onclick="toggleBottomBar()">🔽</button>
   <div class="settings-panel" id="settingsPanel">
-    <button onclick="toggleAnimation()">Pause Animation</button>
-    <button class="close-button" onclick="toggleSettingsPanel()">Close</button>
-  </div>
+  <button onclick="toggleAnimation()">Pause Animation</button>
+  <button id="autoHideBtn" onclick="toggleAutoHide()">Enable Auto-Hide Bar</button>
+  <button class="close-button" onclick="toggleSettingsPanel()">Close</button>
+</div>
   <script>
     let isLoading = false;
 const TAB_COOLDOWN = 800;
@@ -360,6 +361,64 @@ fetch('/core/messages.json')
 
     // Initialize loading screen and other features
     let initialLoadDone = false;
+
+    let autoHideEnabled = false;
+const AUTOHIDE_THRESHOLD = 50; // px from bottom to show bar
+
+function toggleAutoHide() {
+  autoHideEnabled = !autoHideEnabled;
+  const btn = document.getElementById('autoHideBtn');
+  const bottomBar = document.querySelector('.bottom-bar');
+  // Show or hide immediately
+  if (autoHideEnabled) {
+    hideBottomBar();
+    document.addEventListener('mousemove', handleMouseMoveForAutoHide);
+    btn.textContent = 'Disable Auto-Hide Bar';
+  } else {
+    document.removeEventListener('mousemove', handleMouseMoveForAutoHide);
+    showBottomBar();
+    btn.textContent = 'Enable Auto-Hide Bar';
+  }
+}
+
+function handleMouseMoveForAutoHide(e) {
+  const y = e.clientY;
+  const height = window.innerHeight;
+  if (y > height - AUTOHIDE_THRESHOLD) {
+    showBottomBar();
+  } else {
+    hideBottomBar();
+  }
+}
+
+function hideBottomBar() {
+  const bottomBar = document.querySelector('.bottom-bar');
+  const hoverArea = document.querySelector('.hover-area');
+  if (bottomBar) {
+    bottomBar.classList.add('hidden');
+    // after CSS transition delay, also set display none
+    bottomBar.style.display = 'none';
+  }
+  if (hoverArea) {
+    // optional: keep hoverArea active so user can still trigger via mousemove
+    hoverArea.style.display = 'block';
+  }
+}
+
+function showBottomBar() {
+  const bottomBar = document.querySelector('.bottom-bar');
+  const hoverArea = document.querySelector('.hover-area');
+  if (bottomBar) {
+    bottomBar.style.display = 'flex';
+    // force reflow then remove hidden so any CSS animation applies
+    bottomBar.offsetHeight;
+    bottomBar.classList.remove('hidden');
+  }
+  if (hoverArea) {
+    // optional: you may hide hoverArea if not needed
+    // hoverArea.style.display = 'none';
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const loadingScreen = document.getElementById('loadingScreen');
