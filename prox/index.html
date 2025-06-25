@@ -149,6 +149,7 @@ body {
     'use strict';
 
 let currentBlobUrl = null;
+let corsErrorCount = 0;
 
 /**
  * Loads a given URL into an iframe using a proxy service.
@@ -159,6 +160,7 @@ let currentBlobUrl = null;
  */
 async function proxyLoad(url, frame, loadingOverlay, statusElement) {
     console.log('Starting proxyLoad for URL:', url);
+    corsErrorCount = 0; // Reset CORS error count
     if (statusElement) statusElement.textContent = '';
     if (loadingOverlay) {
         console.log('Showing loading overlay');
@@ -272,6 +274,20 @@ async function proxyLoad(url, frame, loadingOverlay, statusElement) {
                 try {
                     const iframeDoc = frame.contentDocument;
                     if (iframeDoc && iframeDoc.body) {
+                        // Add CORS error detection
+                        iframeDoc.addEventListener('error', (e) => {
+                            if (e.target.tagName === 'IMG' || e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK' || 
+                                e.target.tagName === 'IFRAME' || e.target.tagName === 'SOURCE' || e.target.tagName === 'VIDEO' || 
+                                e.target.tagName === 'AUDIO' || e.target.tagName === 'OBJECT' || e.target.tagName === 'EMBED' || 
+                                e.target.tagName === 'TRACK') {
+                                console.warn(`CORS error detected for ${e.target.tagName}:`, e.target.src || e.target.href);
+                                corsErrorCount++;
+                                if (statusElement) {
+                                    statusElement.textContent = `CORS has blocked ${corsErrorCount} element(s)`;
+                                }
+                            }
+                        }, true);
+
                         iframeDoc.body.addEventListener('click', (e) => {
                             let targetElement = e.target;
                             let urlToRedirect = '';
