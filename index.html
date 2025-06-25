@@ -345,25 +345,25 @@ fetch('/core/messages.json')
 
     // Toggle animation and save state
     function toggleAnimation() {
-      const background = document.querySelector('.background');
-      const pauseButton = document.querySelector('#settingsPanel button');
-      const isPaused = background.classList.contains('paused');
-      
-      if (isPaused) {
-        background.classList.remove('paused');
-        pauseButton.textContent = 'Pause Animation';
-        setCookie('animationPaused', 'false', 30);
-      } else {
-        background.classList.add('paused');
-        pauseButton.textContent = 'Resume Animation';
-        setCookie('animationPaused', 'true', 30);
-      }
-    }
+  const background = document.querySelector('.background');
+  const pauseButton = document.querySelector('#settingsPanel button');
+  const isPaused = background.classList.contains('paused');
 
-    // Initialize loading screen and other features
-    let initialLoadDone = false;
+  if (isPaused) {
+    background.classList.remove('paused');
+    pauseButton.textContent = '🟢 Pause Animation';
+    setCookie('animationPaused', 'false', 30);
+  } else {
+    background.classList.add('paused');
+    pauseButton.textContent = '🔴 Resume Animation';
+    setCookie('animationPaused', 'true', 30);
+  }
+}
 
-    let autoHideEnabled = false;
+// Initialize loading screen and other features
+let initialLoadDone = false;
+
+let autoHideEnabled = false;
 const AUTOHIDE_THRESHOLD = 50;
 let isHoveringBottomBar = false;
 let isHoveringToggleButton = false;
@@ -379,18 +379,14 @@ function toggleAutoHide() {
     hideBottomBar();
     hideToggleButton();
     document.addEventListener('mousemove', handleMouseMoveForAutoHide);
-    btn.textContent = 'Disable Auto-Hide Bar';
   } else {
     document.removeEventListener('mousemove', handleMouseMoveForAutoHide);
     showBottomBar();
     showToggleButton();
-    btn.textContent = 'Enable Auto-Hide Bar';
-
-    setCookie('autoHideBar', 'false', 30);
-
-    // Delay reload slightly to allow animations to complete
     setTimeout(() => location.reload(), 200);
   }
+
+  btn.textContent = `${autoHideEnabled ? '🟢' : '🔴'} Auto-Hide Bar`;
 }
 
 function handleMouseMoveForAutoHide(e) {
@@ -415,7 +411,6 @@ function hideBottomBar() {
   if (bottomBar) {
     bottomBar.style.transition = 'opacity 0.3s ease';
     bottomBar.style.opacity = '0';
-    // After fade out, set display none to remove from layout
     setTimeout(() => {
       bottomBar.style.display = 'none';
     }, 300);
@@ -426,7 +421,7 @@ function showBottomBar() {
   const bottomBar = document.querySelector('.bottom-bar');
   if (bottomBar) {
     bottomBar.style.display = 'flex';
-    bottomBar.offsetHeight; // force reflow
+    bottomBar.offsetHeight;
     bottomBar.style.transition = 'opacity 0.3s ease';
     bottomBar.style.opacity = '1';
   }
@@ -447,13 +442,12 @@ function showToggleButton() {
   const toggleBtn = document.querySelector('.toggle-bar-button');
   if (toggleBtn) {
     toggleBtn.style.display = 'block';
-    toggleBtn.offsetHeight; // force reflow
+    toggleBtn.offsetHeight;
     toggleBtn.style.transition = 'opacity 0.3s ease';
     toggleBtn.style.opacity = '1';
   }
 }
 
-// Hover logic (bottom bar only — toggle button hover detection removed intentionally)
 const bottomBar = document.querySelector('.bottom-bar');
 if (bottomBar) {
   bottomBar.addEventListener('mouseenter', () => {
@@ -468,35 +462,18 @@ if (bottomBar) {
   });
 }
 
-// On load, restore state
-document.addEventListener('DOMContentLoaded', () => {
-  const autoHideBtn = document.getElementById('autoHideBtn');
-  const autoHideCookie = getCookie('autoHideBar');
-
-  if (autoHideBtn && autoHideCookie === 'true') {
-    autoHideEnabled = true;
-    autoHideBtn.textContent = '🟢 Auto-Hide Bar';
-    hideBottomBar();
-    hideToggleButton();
-    document.addEventListener('mousemove', handleMouseMoveForAutoHide);
-  }
-});
-
-    let fsHideSettingsEnabled = false;
+let fsHideSettingsEnabled = false;
 
 function toggleFsHideSettings() {
   fsHideSettingsEnabled = !fsHideSettingsEnabled;
   const btn = document.getElementById('fsHideSettingsBtn');
 
-  // Save state to cookie for 30 days
   setCookie('fsHideSettings', fsHideSettingsEnabled ? 'true' : 'false', 30);
-
   updateSettingsButtonVisibility();
 
-  btn.textContent = fsHideSettingsEnabled ? '🔴 Settings in Fullscreen' : '🟢 Settings in Fullscreen';
+  btn.textContent = `${fsHideSettingsEnabled ? '🟢' : '🔴'} Settings in Fullscreen`;
 }
 
-// Check fullscreen status and update settings button visibility accordingly
 function updateSettingsButtonVisibility() {
   const settingsBtn = document.querySelector('.settings-button');
   if (!settingsBtn) return;
@@ -508,41 +485,48 @@ function updateSettingsButtonVisibility() {
   }
 }
 
-// Listen to fullscreen change events to update visibility live
 ['fullscreenchange', 'mozfullscreenchange', 'webkitfullscreenchange', 'MSFullscreenChange'].forEach(eventType => {
   document.addEventListener(eventType, () => {
     updateSettingsButtonVisibility();
   });
 });
 
-// On page load, restore the toggle state from cookie and apply visibility
 document.addEventListener('DOMContentLoaded', () => {
+  const autoHideBtn = document.getElementById('autoHideBtn');
+  const autoHideCookie = getCookie('autoHideBar');
+
+  if (autoHideBtn) {
+    autoHideEnabled = (autoHideCookie === 'true');
+    autoHideBtn.textContent = `${autoHideEnabled ? '🟢' : '🔴'} Auto-Hide Bar`;
+    if (autoHideEnabled) {
+      hideBottomBar();
+      hideToggleButton();
+      document.addEventListener('mousemove', handleMouseMoveForAutoHide);
+    }
+  }
+
   const fsHideSettingsBtn = document.getElementById('fsHideSettingsBtn');
   const cookieVal = getCookie('fsHideSettings');
-  if (fsHideSettingsBtn && cookieVal === 'true') {
-    fsHideSettingsEnabled = true;
-    fsHideSettingsBtn.textContent = 'Show Settings in Fullscreen';
+  if (fsHideSettingsBtn) {
+    fsHideSettingsEnabled = (cookieVal === 'true');
+    fsHideSettingsBtn.textContent = `${fsHideSettingsEnabled ? '🟢' : '🔴'} Settings in Fullscreen`;
   }
-  updateSettingsButtonVisibility();
-});
 
-document.addEventListener('DOMContentLoaded', () => {
+  updateSettingsButtonVisibility();
+
   const loadingScreen = document.getElementById('loadingScreen');
   const progressCircle = document.querySelector('.progress-circle circle');
 
-  // Check if user is new
   const isReturningUser = getCookie('visitedBefore') === 'true';
-
-  // Duration logic
   let minDuration, maxDuration;
 
   if (isReturningUser) {
     minDuration = 1800;
     maxDuration = 2000;
   } else {
-    minDuration = 3400;  // First time: longer
+    minDuration = 3400;
     maxDuration = 4000;
-    setCookie('visitedBefore', 'true', 32); // Set cookie to expire in 32 days
+    setCookie('visitedBefore', 'true', 32);
   }
 
   const duration = Math.random() * (maxDuration - minDuration) + minDuration;
@@ -557,27 +541,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeContainer = document.querySelector('.home-container');
     buttons.forEach(btn => btn.classList.remove('selected'));
     buttons[0].classList.add('selected');
-    // iframe.style.display = 'none';
-    // homeContainer.classList.remove('hidden');
   });
-  
-      const animationPaused = getCookie('animationPaused');
-      const background = document.querySelector('.background');
-      
-      if (animationPaused === 'true') {
-        background.classList.add('paused');
-      } else {
-        background.classList.remove('paused');
-      }
 
-      const toggleButton = document.querySelector('.toggle-bar-button');
-      toggleButton.textContent = '🔽';
-      if (!toggleButton.textContent.match(/🔽/)) {
-        toggleButton.textContent = '▼';
-      }
+  const animationPaused = getCookie('animationPaused');
+  const background = document.querySelector('.background');
+  const pauseButton = document.querySelector('#settingsPanel button');
 
-      detectImpactFont();
-    });
+  if (animationPaused === 'true') {
+    background.classList.add('paused');
+    if (pauseButton) pauseButton.textContent = '🔴 Resume Animation';
+  } else {
+    background.classList.remove('paused');
+    if (pauseButton) pauseButton.textContent = '🟢 Pause Animation';
+  }
+
+  const toggleButton = document.querySelector('.toggle-bar-button');
+  toggleButton.textContent = '🔽';
+  if (!toggleButton.textContent.match(/🔽/)) {
+    toggleButton.textContent = '▼';
+  }
+
+  detectImpactFont();
+});
   </script>
 </body>
 </html>
