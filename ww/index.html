@@ -28,22 +28,23 @@
     <script>
       self.__uv$config = {
         prefix: "/ww/loading/",
-        bare: "https://prox-ww.learnstats.xyz",  // replace with your actual worker URL
+        bare: "https://bare-server.yourusername.workers.dev",  // replace with your actual worker URL
         encodeUrl: Ultraviolet.codec.xor.encode,
         decodeUrl: Ultraviolet.codec.xor.decode,
         handler: "/ww/loading/uv.handler.js",
-        client: "/ww/loading/uv.client.js",
-        bundle: "/ww/loading/uv.bundle.js",
+        client: "/ww/uv.client.js",
+        bundle: "/ww/uv.bundle.js",
         config: "/ww/loading/uv.config.js",
-        sw: "/ww/loading/uv.sw.js",
+        sw: "/ww/uv.sw.js",
       };
     </script>
 
     <script src="/ww/uv.bundle.js" defer></script>
-    <script src="/ww/uv.config.js" defer></script>
+    <script src="/ww/loading/uv.config.js" defer></script>
     <script src="/ww/register-sw.js" defer></script>
     <script src="/ww/search.js" defer></script>
     <script src="/ww/index.js" defer></script>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
