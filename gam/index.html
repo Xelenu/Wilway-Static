@@ -5,74 +5,75 @@
   <title>Gam</title>
   <style>
     /*========== Base Styles ==========*/
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Impact, sans-serif;
-      color: white;
-      background: black;
-      overflow-y: scroll;
-    }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Impact, sans-serif;
+  color: white;
+  background: black;
+  overflow-y: scroll;
+}
 
-    ::-webkit-scrollbar { width: 12px; }
-    ::-webkit-scrollbar-track { background: black; }
-    ::-webkit-scrollbar-thumb {
-      background: cyan;
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: #00e6e6; }
-    html {
-      scrollbar-width: thin;
-      scrollbar-color: cyan black;
-    }
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: black; }
+::-webkit-scrollbar-thumb {
+  background: cyan;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover { background: #00e6e6; }
+html {
+  scrollbar-width: thin;
+  scrollbar-color: cyan black;
+}
 
-    .background {
-      background: linear-gradient(to bottom right, darkblue, darkcyan, darkblue);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px 0;
-    }
+.background {
+  background: linear-gradient(to bottom right, darkblue, darkcyan, darkblue);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 0;
+}
 
-    .content {
-      text-align: center;
-      width: 95vw;
-      max-width: 1200px;
-    }
+.content {
+  text-align: center;
+  width: 95vw;
+  max-width: 1200px;
+}
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      background: linear-gradient(to bottom right, darkblue, darkcyan);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -webkit-text-stroke: 3px black;
-      transform: rotate(2deg);
-    }
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  background: linear-gradient(to bottom right, darkblue, darkcyan);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 3px black;
+  transform: rotate(2deg);
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 4 columns */
-      gap: 30px;
-    }
+/* ✅ Updated for 2 columns per row */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 30px;
+}
 
-    .box {
-      height: 300px;
-      background: rgba(0, 255, 255, 0.1);
-      border: 2px solid cyan;
-      border-radius: 20px;
-      box-shadow: 0 0 8px rgba(0,255,255,0.3);
-      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-    }
+.box {
+  height: 300px;
+  background: rgba(0, 255, 255, 0.1);
+  border: 2px solid cyan;
+  border-radius: 20px;
+  box-shadow: 0 0 8px rgba(0,255,255,0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
 
-    .box:hover {
+.box:hover {
   transform: scale(1.07);
   box-shadow: 0 0 20px rgba(0,255,255,0.9), 0 0 40px rgba(0,255,255,0.6);
   border-color: #00ffff;
 }
 
-    .box-content {
+.box-content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -82,6 +83,7 @@
   box-sizing: border-box;
   text-align: center;
 }
+
 .box-content img {
   width: 100%;
   height: auto;
@@ -90,11 +92,13 @@
   margin-bottom: 10px;
   object-fit: contain;
 }
+
 .box-content p {
   color: white;
   font-size: 1rem;
   margin: 5px 0;
 }
+
 .box-content button {
   background: linear-gradient(to right, darkblue, darkcyan);
   color: white;
@@ -106,6 +110,7 @@
   cursor: pointer;
   transition: background 0.3s, transform 0.2s;
 }
+
 .box-content button:hover {
   transform: scale(1.1);
 }
