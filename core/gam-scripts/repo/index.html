@@ -24,35 +24,70 @@
     </div>
   </div>
   <script>
+  const canvas = document.querySelector("#unity-canvas");
+  const loadingBar = document.querySelector("#unity-loading-bar");
+  const progressBarFull = document.querySelector("#unity-progress-bar-full");
+  const fullscreenButton = document.querySelector("#unity-fullscreen-button");
+
+  function mergeFiles(fileParts) {
+    return new Promise((resolve, reject) => {
+      let buffers = [];
+
+      function fetchPart(index) {
+        if (index >= fileParts.length) {
+          const mergedBlob = new Blob(buffers);
+          const mergedFileUrl = URL.createObjectURL(mergedBlob);
+          resolve(mergedFileUrl);
+          return;
+        }
+        fetch(fileParts[index])
+          .then((response) => response.arrayBuffer())
+          .then((data) => {
+            buffers.push(data);
+            fetchPart(index + 1);
+          })
+          .catch(reject);
+      }
+
+      fetchPart(0);
+    });
+  }
+
+  function getParts(basePath, count) {
+    const parts = [];
+    for (let i = 1; i <= count; i++) {
+      parts.push(`${basePath}.part${i}`);
+    }
+    return parts;
+  }
+
+  Promise.all([
+    mergeFiles(getParts("/core/gam-scripts/NewestBuild.wasm.gz", 3)),
+    mergeFiles(getParts("NewestBuild.data.gz", 16))
+  ]).then(([wasmUrl, dataUrl]) => {
     const config = {
-      dataUrl: "/core/gam-scripts/repo/NewestBuild.data.gz",
+      dataUrl: dataUrl,
       frameworkUrl: "/core/gam-scripts/NewestBuild.framework.js",
-      codeUrl: "/core/gam-scripts/NewestBuild.wasm.gz",
+      codeUrl: wasmUrl,
       streamingAssetsUrl: "StreamingAssets",
       companyName: "Crazim",
       productName: "R.E.P.O.",
       productVersion: "0.1"
     };
 
-    const canvas = document.querySelector("#unity-canvas");
-    const loadingBar = document.querySelector("#unity-loading-bar");
-    const progressBarFull = document.querySelector("#unity-progress-bar-full");
-    const fullscreenButton = document.querySelector("#unity-fullscreen-button");
-
     const script = document.createElement("script");
     script.src = "/core/gam-scripts/NewestBuild.loader.js";
     script.onload = () => {
       createUnityInstance(canvas, config, (progress) => {
-        progressBarFull.style.width = 100 * progress + "%";
+        progressBarFull.style.width = `${100 * progress}%`;
       }).then((unityInstance) => {
-        fullscreenButton.onclick = () => {
-          unityInstance.SetFullscreen(1);
-        };
-      }).catch((message) => {
-        alert("Error: " + message);
+        fullscreenButton.onclick = () => unityInstance.SetFullscreen(1);
+      }).catch((err) => {
+        alert("Unity failed: " + err);
       });
     };
     document.body.appendChild(script);
-  </script>
+  });
+</script>
 </body>
 </html>
