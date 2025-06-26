@@ -34,7 +34,6 @@
 const loadingOverlay = document.getElementById("loading-overlay");
 const loadingBar = document.getElementById("loading-bar");
 const fullscreenButton = document.querySelector("#unity-fullscreen-button");
-const progressBarFull = document.querySelector("#unity-progress-bar-full"); // if you still want this too
 
 function mergeFiles(fileParts) {
   return new Promise((resolve, reject) => {
@@ -73,7 +72,7 @@ function getParts(basePath, count) {
 
 Promise.all([
   mergeFiles(getParts("/core/gam-scripts/NewestBuild.wasm.gz", 3)),
-  mergeFiles(getParts("NewestBuild.data.gz", 16))
+  mergeFiles(getParts("/core/gam-scripts/repo/NewestBuild.data.gz", 16))
 ]).then(([wasmUrl, dataUrl]) => {
   const config = {
     dataUrl: dataUrl,
@@ -90,11 +89,8 @@ Promise.all([
   script.onload = () => {
     createUnityInstance(canvas, config, (progress) => {
       loadingBar.style.width = `${progress * 100}%`;
-      if (progressBarFull) {
-        progressBarFull.style.width = `${progress * 100}%`;
-      }
     }).then((unityInstance) => {
-      loadingOverlay.style.display = "none"; // Hide loading overlay after loading
+      loadingOverlay.style.display = "none"; // Hide loading overlay once loaded
       fullscreenButton.onclick = () => unityInstance.SetFullscreen(1);
     }).catch((err) => {
       alert("Unity failed: " + err);
