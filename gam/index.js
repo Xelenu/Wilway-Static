@@ -30,7 +30,7 @@ if (specialBox) {
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/repo.png" alt="R.E.P.O." draggable="false">
       <p>R.E.P.O.</p>
-      <button onclick="window.location.href='${siteUrl}/load?id=1'">Let's go!</button>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=1'">Let's go!</button>
     </div>
   `;
 }
