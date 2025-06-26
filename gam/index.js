@@ -22,16 +22,18 @@ function createBox(row, col, index) {
 
     createGrid(20, 2);
 
-    const specialBox = document.getElementById('box-1');
-    if (specialBox) {
-      specialBox.innerHTML = `
-        <div class="box-content">
-          <img src="https://nuhuh.learnstats.xyz/core/gam-image/repo.png" alt="R.E.P.O." draggable="false">
-          <p>R.E.P.O.</p>
-          <button onclick="window.location.href='https://example.com/game?id=1'">Let's go!</button>
-        </div>
-      `;
-    }
+const siteUrl = window.location.origin;
+
+const specialBox = document.getElementById('box-1');
+if (specialBox) {
+  specialBox.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/repo.png" alt="R.E.P.O." draggable="false">
+      <p>R.E.P.O.</p>
+      <button onclick="window.location.href='${siteUrl}/load?id=1'">Let's go!</button>
+    </div>
+  `;
+}
 
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
