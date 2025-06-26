@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>R.E.P.O.</title>
+  <link rel="stylesheet" href="/core/gam-scripts/repo/style.css">
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; }
+    #unity-container { width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
+      </div>
+    </div>
+    <div id="unity-warning"></div>
+    <div id="unity-footer">
+      <div id="unity-fullscreen-button"></div>
+    </div>
+  </div>
+  <script>
+    const config = {
+      dataUrl: "/core/gam-scripts/repo/NewestBuild.data.gz",
+      frameworkUrl: "/core/gam-scripts/repo/NewestBuild.framework.js",
+      codeUrl: "/core/gam-scripts/repo/NewestBuild.wasm.gz",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Crazim",
+      productName: "R.E.P.O.",
+      productVersion: "0.1"
+    };
+
+    const canvas = document.querySelector("#unity-canvas");
+    const loadingBar = document.querySelector("#unity-loading-bar");
+    const progressBarFull = document.querySelector("#unity-progress-bar-full");
+    const fullscreenButton = document.querySelector("#unity-fullscreen-button");
+
+    const script = document.createElement("script");
+    script.src = "/core/gam-scripts/repo/NewestBuild.loader.js";
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        progressBarFull.style.width = 100 * progress + "%";
+      }).then((unityInstance) => {
+        fullscreenButton.onclick = () => {
+          unityInstance.SetFullscreen(1);
+        };
+      }).catch((message) => {
+        alert("Error: " + message);
+      });
+    };
+    document.body.appendChild(script);
+  </script>
+</body>
+</html>
