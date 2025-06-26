@@ -86,16 +86,41 @@ Promise.all([
 
   const script = document.createElement("script");
   script.src = "/core/gam-scripts/NewestBuild.loader.js";
+
   script.onload = () => {
+    let displayedProgress = 0;    // Current progress shown to user (0..1)
+    let realProgress = 0;         // Actual progress reported by Unity
+    let fakeProgressInterval;
+
     createUnityInstance(canvas, config, (progress) => {
-      loadingBar.style.width = `${progress * 100}%`;
+      realProgress = progress;
+
+      // Move displayedProgress towards realProgress smoothly
+      if (realProgress > displayedProgress) {
+        displayedProgress = realProgress;
+      }
+
+      loadingBar.style.width = `${displayedProgress * 100}%`;
     }).then((unityInstance) => {
-      loadingOverlay.style.display = "none"; // Hide loading overlay once loaded
+      // Stop fake progress bump on load complete
+      clearInterval(fakeProgressInterval);
+      loadingOverlay.style.display = "none"; // Hide overlay
+
       fullscreenButton.onclick = () => unityInstance.SetFullscreen(1);
     }).catch((err) => {
+      clearInterval(fakeProgressInterval);
       alert("Unity failed: " + err);
     });
+
+    // Fake progress bump — moves loading bar forward slowly when stalled
+    fakeProgressInterval = setInterval(() => {
+      if (displayedProgress < 0.95 && displayedProgress >= realProgress) {
+        displayedProgress += 0.005; // bump up by 0.5%
+        loadingBar.style.width = `${displayedProgress * 100}%`;
+      }
+    }, 100); // every 100ms
   };
+
   document.body.appendChild(script);
 }).catch(err => {
   alert("Failed to load game parts: " + err);
