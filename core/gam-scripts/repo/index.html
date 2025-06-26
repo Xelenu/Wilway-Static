@@ -26,8 +26,8 @@
   <script>
     const config = {
       dataUrl: "/core/gam-scripts/repo/NewestBuild.data.gz",
-      frameworkUrl: "/core/gam-scripts/repo/NewestBuild.framework.js",
-      codeUrl: "/core/gam-scripts/repo/NewestBuild.wasm.gz",
+      frameworkUrl: "/core/gam-scripts/NewestBuild.framework.js",
+      codeUrl: "/core/gam-scripts/NewestBuild.wasm.gz",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "Crazim",
       productName: "R.E.P.O.",
@@ -40,7 +40,7 @@
     const fullscreenButton = document.querySelector("#unity-fullscreen-button");
 
     const script = document.createElement("script");
-    script.src = "/core/gam-scripts/repo/NewestBuild.loader.js";
+    script.src = "/core/gam-scripts/NewestBuild.loader.js";
     script.onload = () => {
       createUnityInstance(canvas, config, (progress) => {
         progressBarFull.style.width = 100 * progress + "%";
