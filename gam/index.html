@@ -71,6 +71,42 @@
       box-shadow: 0 0 20px rgba(0,255,255,0.9), 0 0 40px rgba(0,255,255,0.6);
       border-color: #00ffff;
     }
+
+    .box-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.box-content img {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.box-content p {
+  color: white;
+  font-size: 1rem;
+  margin: 5px 0;
+}
+.box-content button {
+  background: linear-gradient(to right, darkblue, darkcyan);
+  color: white;
+  border: 2px solid cyan;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-family: Impact, sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+.box-content button:hover {
+  transform: scale(1.1);
+}
   </style>
 </head>
 <body>
@@ -105,6 +141,39 @@
         }
       }
     }
+
+    // Customize box-5 with image, description, and themed button
+const specialBox = document.getElementById('box-5');
+if (specialBox) {
+  specialBox.innerHTML = `
+    <div style="
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      text-align: center;
+    ">
+      <img src="https://via.placeholder.com/100" alt="Icon" style="width: 80px; height: 80px; border-radius: 10px; margin-bottom: 10px;">
+      <p style="color: white; font-size: 1rem; margin: 5px 0;">Custom Feature</p>
+      <button style="
+        background: linear-gradient(to right, darkblue, darkcyan);
+        color: white;
+        border: 2px solid cyan;
+        border-radius: 12px;
+        padding: 8px 14px;
+        font-family: Impact, sans-serif;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+      " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        Let's go!
+      </button>
+    </div>
+  `;
+}
 
     // Create 10 rows × 4 columns = 40 boxes
     createGrid(10, 4);
