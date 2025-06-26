@@ -77,8 +77,6 @@
       overflow: hidden;
       box-shadow: 0 0 8px rgba(0,255,255,0.3);
       transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-
-      /* Placeholder text style - will be overridden by box-content if customized */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -198,21 +196,34 @@
 
     createGrid(20, 2);
 
+    /* ========== CUSTOMIZE SPECIFIC BOX HERE ========== */
+    const targetBox = document.getElementById('box-17'); // example: customize box #17
+    if (targetBox) {
+      targetBox.style.background = 'darkred';
+      targetBox.textContent = "I'm #17!";
+      targetBox.style.color = 'white';
+      targetBox.style.display = 'flex';
+      targetBox.style.justifyContent = 'center';
+      targetBox.style.alignItems = 'center';
+      targetBox.style.fontSize = '1.5rem';
+      targetBox.style.fontStyle = 'normal';
+      targetBox.style.webkitTextStroke = '0';
+    }
+
     const specialBox = document.getElementById('box-1');
     if (specialBox) {
       specialBox.innerHTML = `
         <div class="box-content">
           <img src="https://nuhuh.learnstats.xyz/core/gam-image/repo.png" alt="R.E.P.O." draggable="false">
           <p>R.E.P.O.</p>
-          <button>Let's go!</button>
+          <button onclick="window.location.href='https://example.com/game?id=1'">Let's go!</button>
         </div>
       `;
     }
 
-    // Fill all boxes without custom content with placeholder "Soon!"
+    // Fill empty boxes with "Soon!"
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
-      // If box has no children or empty
       if (!box.hasChildNodes() || box.children.length === 0) {
         box.textContent = "Soon!";
       }
