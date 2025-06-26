@@ -10,6 +10,12 @@
   </style>
 </head>
 <body>
+  <div id="loading-overlay">
+  Loading...
+  <div id="loading-bar-container">
+    <div id="loading-bar"></div>
+  </div>
+</div>
   <div id="unity-container" class="unity-desktop">
     <canvas id="unity-canvas" tabindex="-1"></canvas>
     <div id="unity-loading-bar">
@@ -25,69 +31,79 @@
   </div>
   <script>
   const canvas = document.querySelector("#unity-canvas");
-  const loadingBar = document.querySelector("#unity-loading-bar");
-  const progressBarFull = document.querySelector("#unity-progress-bar-full");
-  const fullscreenButton = document.querySelector("#unity-fullscreen-button");
+const loadingOverlay = document.getElementById("loading-overlay");
+const loadingBar = document.getElementById("loading-bar");
+const fullscreenButton = document.querySelector("#unity-fullscreen-button");
+const progressBarFull = document.querySelector("#unity-progress-bar-full"); // if you still want this too
 
-  function mergeFiles(fileParts) {
-    return new Promise((resolve, reject) => {
-      let buffers = [];
+function mergeFiles(fileParts) {
+  return new Promise((resolve, reject) => {
+    let buffers = [];
 
-      function fetchPart(index) {
-        if (index >= fileParts.length) {
-          const mergedBlob = new Blob(buffers);
-          const mergedFileUrl = URL.createObjectURL(mergedBlob);
-          resolve(mergedFileUrl);
-          return;
-        }
-        fetch(fileParts[index])
-          .then((response) => response.arrayBuffer())
-          .then((data) => {
-            buffers.push(data);
-            fetchPart(index + 1);
-          })
-          .catch(reject);
+    function fetchPart(index) {
+      if (index >= fileParts.length) {
+        const mergedBlob = new Blob(buffers);
+        const mergedFileUrl = URL.createObjectURL(mergedBlob);
+        resolve(mergedFileUrl);
+        return;
       }
-
-      fetchPart(0);
-    });
-  }
-
-  function getParts(basePath, count) {
-    const parts = [];
-    for (let i = 1; i <= count; i++) {
-      parts.push(`${basePath}.part${i}`);
+      fetch(fileParts[index])
+        .then(response => {
+          if (!response.ok) throw new Error(`Failed to fetch ${fileParts[index]}`);
+          return response.arrayBuffer();
+        })
+        .then(data => {
+          buffers.push(data);
+          fetchPart(index + 1);
+        })
+        .catch(reject);
     }
-    return parts;
-  }
 
-  Promise.all([
-    mergeFiles(getParts("/core/gam-scripts/NewestBuild.wasm.gz", 3)),
-    mergeFiles(getParts("NewestBuild.data.gz", 16))
-  ]).then(([wasmUrl, dataUrl]) => {
-    const config = {
-      dataUrl: dataUrl,
-      frameworkUrl: "/core/gam-scripts/NewestBuild.framework.js",
-      codeUrl: wasmUrl,
-      streamingAssetsUrl: "StreamingAssets",
-      companyName: "Crazim",
-      productName: "R.E.P.O.",
-      productVersion: "0.1"
-    };
-
-    const script = document.createElement("script");
-    script.src = "/core/gam-scripts/NewestBuild.loader.js";
-    script.onload = () => {
-      createUnityInstance(canvas, config, (progress) => {
-        progressBarFull.style.width = `${100 * progress}%`;
-      }).then((unityInstance) => {
-        fullscreenButton.onclick = () => unityInstance.SetFullscreen(1);
-      }).catch((err) => {
-        alert("Unity failed: " + err);
-      });
-    };
-    document.body.appendChild(script);
+    fetchPart(0);
   });
+}
+
+function getParts(basePath, count) {
+  const parts = [];
+  for (let i = 1; i <= count; i++) {
+    parts.push(`${basePath}.part${i}`);
+  }
+  return parts;
+}
+
+Promise.all([
+  mergeFiles(getParts("/core/gam-scripts/NewestBuild.wasm.gz", 3)),
+  mergeFiles(getParts("NewestBuild.data.gz", 16))
+]).then(([wasmUrl, dataUrl]) => {
+  const config = {
+    dataUrl: dataUrl,
+    frameworkUrl: "/core/gam-scripts/NewestBuild.framework.js",
+    codeUrl: wasmUrl,
+    streamingAssetsUrl: "StreamingAssets",
+    companyName: "Crazim",
+    productName: "R.E.P.O.",
+    productVersion: "0.1"
+  };
+
+  const script = document.createElement("script");
+  script.src = "/core/gam-scripts/NewestBuild.loader.js";
+  script.onload = () => {
+    createUnityInstance(canvas, config, (progress) => {
+      loadingBar.style.width = `${progress * 100}%`;
+      if (progressBarFull) {
+        progressBarFull.style.width = `${progress * 100}%`;
+      }
+    }).then((unityInstance) => {
+      loadingOverlay.style.display = "none"; // Hide loading overlay after loading
+      fullscreenButton.onclick = () => unityInstance.SetFullscreen(1);
+    }).catch((err) => {
+      alert("Unity failed: " + err);
+    });
+  };
+  document.body.appendChild(script);
+}).catch(err => {
+  alert("Failed to load game parts: " + err);
+});
 </script>
 </body>
 </html>
