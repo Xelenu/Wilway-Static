@@ -1,1 +1,125 @@
-skib
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gam</title>
+  <style>
+    /*========== Base Styles ==========*/
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Impact, sans-serif;
+      color: white;
+      background: black;
+      overflow-y: scroll;
+    }
+
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { background: black; }
+    ::-webkit-scrollbar-thumb {
+      background: cyan;
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: #00e6e6; }
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: cyan black;
+    }
+
+    .background {
+      background: linear-gradient(to bottom right, darkblue, darkcyan, darkblue);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 0;
+    }
+
+    .content {
+      text-align: center;
+      width: 95vw;
+      max-width: 1200px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      background: linear-gradient(to bottom right, darkblue, darkcyan);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke: 3px black;
+      transform: rotate(2deg);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* 4 columns */
+      gap: 20px;
+    }
+
+    .box {
+      height: 200px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 2px solid cyan;
+      border-radius: 20px;
+      box-shadow: 0 0 8px rgba(0,255,255,0.3);
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    .box:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 20px rgba(0,255,255,0.9), 0 0 40px rgba(0,255,255,0.6);
+      border-color: #00ffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="background">
+    <div class="content">
+      <h1>Gam</h1>
+      <div class="grid" id="gridContainer"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ========== JS FUNCTIONS ========== */
+
+    function createBox(row, col, index) {
+      const box = document.createElement('div');
+      box.classList.add('box');
+      box.setAttribute('data-row', row);
+      box.setAttribute('data-col', col);
+      box.setAttribute('data-index', index);
+      box.id = `box-${index}`;
+      return box;
+    }
+
+    function createGrid(rows, cols) {
+      const container = document.getElementById('gridContainer');
+      let index = 0;
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          const box = createBox(row, col, index);
+          container.appendChild(box);
+          index++;
+        }
+      }
+    }
+
+    // Create 10 rows × 4 columns = 40 boxes
+    createGrid(10, 4);
+
+    /* ========== CUSTOMIZE SPECIFIC BOX HERE ========== */
+    const targetBox = document.getElementById('box-17'); // example: customize box #17
+    if (targetBox) {
+      targetBox.style.background = 'darkred';
+      targetBox.textContent = "I'm #17!";
+      targetBox.style.color = 'white';
+      targetBox.style.display = 'flex';
+      targetBox.style.justifyContent = 'center';
+      targetBox.style.alignItems = 'center';
+      targetBox.style.fontSize = '1.5rem';
+    }
+  </script>
+</body>
+</html>
