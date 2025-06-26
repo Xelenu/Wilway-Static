@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>R.E.P.O.</title>
+  <link rel="stylesheet" href="/core/gam-scripts/repo/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; }
+    #unity-container { width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <div id="loading-overlay">
+  Loading...
+  <div id="loading-bar-container">
+    <div id="loading-bar"></div>
+  </div>
+</div>
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
+      </div>
+    </div>
+    <div id="unity-warning"></div>
+    <div id="unity-footer">
+      <div id="unity-fullscreen-button"></div>
+    </div>
+  </div>
+  <script>
+  const canvas = document.querySelector("#unity-canvas");
+const loadingOverlay = document.getElementById("loading-overlay");
+const loadingBar = document.getElementById("loading-bar");
+const fullscreenButton = document.querySelector("#unity-fullscreen-button");
+
+function mergeFiles(fileParts) {
+  return new Promise((resolve, reject) => {
+    let buffers = [];
+
+    function fetchPart(index) {
+      if (index >= fileParts.length) {
+        const mergedBlob = new Blob(buffers);
+        const mergedFileUrl = URL.createObjectURL(mergedBlob);
+        resolve(mergedFileUrl);
+        return;
+      }
+      fetch(fileParts[index])
+        .then(response => {
+          if (!response.ok) throw new Error(`Failed to fetch ${fileParts[index]}`);
+          return response.arrayBuffer();
+        })
+        .then(data => {
+          buffers.push(data);
+          fetchPart(index + 1);
+        })
+        .catch(reject);
+    }
+
+    fetchPart(0);
+  });
+}
+
+function getParts(basePath, count) {
+  const parts = [];
+  for (let i = 1; i <= count; i++) {
+    parts.push(`${basePath}.part${i}`);
+  }
+  return parts;
+}
+
+Promise.all([
+  mergeFiles(getParts("/core/gam-scripts/NewestBuild.wasm.gz", 3)),
+  mergeFiles(getParts("/core/gam-scripts/repo/NewestBuild.data.gz", 16))
+]).then(([wasmUrl, dataUrl]) => {
+  const config = {
+    dataUrl: dataUrl,
+    frameworkUrl: "/core/gam-scripts/NewestBuild.framework.js",
+    codeUrl: wasmUrl,
+    streamingAssetsUrl: "StreamingAssets",
+    companyName: "Crazim",
+    productName: "R.E.P.O.",
+    productVersion: "0.1"
+  };
+
+  const script = document.createElement("script");
+  script.src = "/core/gam-scripts/NewestBuild.loader.js";
+
+  script.onload = () => {
+    let displayedProgress = 0;    // Current progress shown to user (0..1)
+    let realProgress = 0;         // Actual progress reported by Unity
+    let fakeProgressInterval;
+
+    createUnityInstance(canvas, config, (progress) => {
+      realProgress = progress;
+
+      // Move displayedProgress towards realProgress smoothly
+      if (realProgress > displayedProgress) {
+        displayedProgress = realProgress;
+      }
+
+      loadingBar.style.width = `${displayedProgress * 100}%`;
+    }).then((unityInstance) => {
+      // Stop fake progress bump on load complete
+      clearInterval(fakeProgressInterval);
+      loadingOverlay.style.display = "none"; // Hide overlay
+
+      fullscreenButton.onclick = () => unityInstance.SetFullscreen(1);
+    }).catch((err) => {
+      clearInterval(fakeProgressInterval);
+      alert("Unity failed: " + err);
+    });
+
+    // Fake progress bump — moves loading bar forward slowly when stalled
+    fakeProgressInterval = setInterval(() => {
+      if (displayedProgress < 0.95 && displayedProgress >= realProgress) {
+        displayedProgress += 0.005; // bump up by 0.5%
+        loadingBar.style.width = `${displayedProgress * 100}%`;
+      }
+    }, 100); // every 100ms
+  };
+
+  document.body.appendChild(script);
+}).catch(err => {
+  alert("Failed to load game parts: " + err);
+});
+</script>
+</body>
+</html>
