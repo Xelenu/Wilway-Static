@@ -54,11 +54,11 @@
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr); /* 4 columns */
-      gap: 20px;
+      gap: 30px;
     }
 
     .box {
-      height: 200px;
+      height: 300px;
       background: rgba(0, 255, 255, 0.1);
       border: 2px solid cyan;
       border-radius: 20px;
@@ -67,10 +67,10 @@
     }
 
     .box:hover {
-      transform: scale(1.07);
-      box-shadow: 0 0 20px rgba(0,255,255,0.9), 0 0 40px rgba(0,255,255,0.6);
-      border-color: #00ffff;
-    }
+  transform: scale(1.07);
+  box-shadow: 0 0 20px rgba(0,255,255,0.9), 0 0 40px rgba(0,255,255,0.6);
+  border-color: #00ffff;
+}
 
     .box-content {
   display: flex;
@@ -145,8 +145,7 @@
     }
 
 
-    // Create 10 rows × 4 columns = 40 boxes
-    createGrid(10, 4);
+    createGrid(20, 2);
 
     /* ========== CUSTOMIZE SPECIFIC BOX HERE ========== */
     const targetBox = document.getElementById('box-17'); // example: customize box #17
