@@ -132,7 +132,7 @@
 
     function createGrid(rows, cols) {
       const container = document.getElementById('gridContainer');
-      let index = 0;
+      let index = 1;
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
           const box = createBox(row, col, index);
@@ -142,38 +142,6 @@
       }
     }
 
-    // Customize box-5 with image, description, and themed button
-const specialBox = document.getElementById('box-5');
-if (specialBox) {
-  specialBox.innerHTML = `
-    <div style="
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      padding: 10px;
-      box-sizing: border-box;
-      text-align: center;
-    ">
-      <img src="https://via.placeholder.com/100" alt="Icon" style="width: 80px; height: 80px; border-radius: 10px; margin-bottom: 10px;">
-      <p style="color: white; font-size: 1rem; margin: 5px 0;">Custom Feature</p>
-      <button style="
-        background: linear-gradient(to right, darkblue, darkcyan);
-        color: white;
-        border: 2px solid cyan;
-        border-radius: 12px;
-        padding: 8px 14px;
-        font-family: Impact, sans-serif;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background 0.3s, transform 0.2s;
-      " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-        Let's go!
-      </button>
-    </div>
-  `;
-}
 
     // Create 10 rows × 4 columns = 40 boxes
     createGrid(10, 4);
@@ -189,6 +157,17 @@ if (specialBox) {
       targetBox.style.alignItems = 'center';
       targetBox.style.fontSize = '1.5rem';
     }
+
+    const specialBox = document.getElementById('box-0');
+if (specialBox) {
+  specialBox.innerHTML = `
+    <div class="box-content">
+      <img src="https://via.placeholder.com/100" alt="Icon">
+      <p>Custom Feature</p>
+      <button>Let's go!</button>
+    </div>
+  `;
+}
   </script>
 </body>
 </html>
