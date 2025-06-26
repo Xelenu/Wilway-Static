@@ -91,9 +91,10 @@
         <p>Check back later.</p>
         <button id="black-ok">OK</button>
         <script>
-  document.getElementById('black-ok').addEventListener('click', function () {
-    window.location.href = 'https://nuhuh.learnstats.xyz/';
-  });
+          const siteUrl = window.location.origin;
+document.getElementById('black-ok').addEventListener('click', function () {
+  window.location.href = `${siteUrl}/`;
+});
 </script>
       </div>
     </div>
