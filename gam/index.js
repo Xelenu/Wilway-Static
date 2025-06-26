@@ -1,0 +1,41 @@
+function createBox(row, col, index) {
+      const box = document.createElement('div');
+      box.classList.add('box');
+      box.setAttribute('data-row', row);
+      box.setAttribute('data-col', col);
+      box.setAttribute('data-index', index);
+      box.id = `box-${index}`;
+      return box;
+    }
+
+    function createGrid(rows, cols) {
+      const container = document.getElementById('gridContainer');
+      let index = 1;
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          const box = createBox(row, col, index);
+          container.appendChild(box);
+          index++;
+        }
+      }
+    }
+
+    createGrid(20, 2);
+
+    const specialBox = document.getElementById('box-1');
+    if (specialBox) {
+      specialBox.innerHTML = `
+        <div class="box-content">
+          <img src="https://nuhuh.learnstats.xyz/core/gam-image/repo.png" alt="R.E.P.O." draggable="false">
+          <p>R.E.P.O.</p>
+          <button onclick="window.location.href='https://example.com/game?id=1'">Let's go!</button>
+        </div>
+      `;
+    }
+
+    const allBoxes = document.querySelectorAll('.box');
+    allBoxes.forEach(box => {
+      if (!box.hasChildNodes() || box.children.length === 0) {
+        box.textContent = "Soon!";
+      }
+    });
