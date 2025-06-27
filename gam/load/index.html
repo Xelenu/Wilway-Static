@@ -21,33 +21,37 @@
                 <span class="special-text">:c</span>
             </div>
             <div class="control-bar">
-                <button class="image-button" id="image-button">
-                    <img src="/images/1.png" alt="...">
-                </button>
+                <div class="credits">
+                    <img src="/images/1.png" alt="Credits Icon" class="credits-icon" draggable="false">
+                    <span class="credits-text" id="credits-text"></span>
+                </div>
                 <button class="fullscreen-button" id="fullscreen-button">
-                    <img src="/images/fullscreen.png" alt="...">
+                    <img src="/images/fullscreen.png" alt="Fullscreen" draggable="false">
                 </button>
             </div>
         </div>
     </div>
     <script>
-        // Object to map video IDs to iframe sources and notification settings
+        // Object to map video IDs to iframe sources, notification, and credits settings
         const videoSources = {
             '1': {
-                url: '/gam/frame/repo.html',
+                url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
                 showNotification: true,
-                notificationText: 'test'
+                notificationText: 'test',
+                creditsText: 'Video by Example Creator'
             },
             '2': {
                 url: 'https://www.youtube.com/embed/9bZkp7q19f0',
                 showNotification: false,
-                notificationText: ''
+                notificationText: '',
+                creditsText: 'Another Creator'
             },
             // Add more video IDs and their settings here, e.g.:
             // 'video3': {
             //     url: 'https://www.youtube.com/embed/VIDEO_ID',
             //     showNotification: true,
-            //     notificationText: 'Custom text for video3'
+            //     notificationText: 'Custom text for video3',
+            //     creditsText: 'Custom Creator'
             // },
         };
 
@@ -68,7 +72,7 @@
                 iframe.frameBorder = '0';
                 iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
                 iframe.allowFullscreen = true;
-                iframe.id = 'video-iframe'; // Add ID for fullscreen targeting
+                iframe.id = 'video-iframe';
                 container.appendChild(iframe);
             }
             // If no valid ID, keep the default ":c" text
@@ -87,6 +91,19 @@
             if (videoId && videoSources[videoId] && videoSources[videoId].showNotification) {
                 notificationText.textContent = videoSources[videoId].notificationText;
                 notification.style.display = 'flex';
+            }
+        }
+
+        // New function to load credits text based on URL parameter
+        function loadCredits() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const videoId = urlParams.get('id');
+            const creditsText = document.getElementById('credits-text');
+
+            if (videoId && videoSources[videoId] && videoSources[videoId].creditsText) {
+                creditsText.textContent = `Credits: ${videoSources[videoId].creditsText}`;
+            } else {
+                creditsText.textContent = 'Credits: Unknown';
             }
         }
 
@@ -114,15 +131,12 @@
         window.onload = function() {
             loadVideo();
             loadNotification();
+            loadCredits();
             // Add event listener for fullscreen button
             document.getElementById('fullscreen-button').addEventListener('click', toggleFullscreen);
             // Add event listener to close the notification
             document.getElementById('close-notification').addEventListener('click', function() {
                 document.getElementById('notification').style.display = 'none';
-            });
-            // Optional: Add event listener for the new image button if functionality is needed
-            document.getElementById('image-button').addEventListener('click', function() {
-                // Add custom functionality here, e.g., alert('Custom button clicked');
             });
         };
     </script>
