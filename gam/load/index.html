@@ -3,17 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gam</title>
-    <link rel="stylesheet" href="/gam/load/styles.css">
+    <title>Animated Background with Video Container</title>
+    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="background">
         <div class="content">
-            <div class="video-box">
+            <div class="video-box" id="video-container">
                 <span class="special-text">:c</span>
             </div>
         </div>
     </div>
+    <script>
+        // Object to map video IDs to iframe sources
+        const videoSources = {
+            'video1': 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Example: Rick Astley
+            'video2': 'https://www.youtube.com/embed/9bZkp7q19f0', // Example: PSY - Gangnam Style
+            // Add more video IDs and URLs here, e.g.:
+            // 'video3': 'https://www.youtube.com/embed/VIDEO_ID',
+        };
+
+        // Function to load iframe based on URL parameter
+        function loadVideo() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const videoId = urlParams.get('id');
+            const container = document.getElementById('video-container');
+
+            if (videoId && videoSources[videoId]) {
+                // Clear the default ":c" text
+                container.innerHTML = '';
+                // Create iframe
+                const iframe = document.createElement('iframe');
+                iframe.src = videoSources[videoId];
+                iframe.width = '100%';
+                iframe.height = '100%';
+                iframe.frameBorder = '0';
+                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                iframe.allowFullscreen = true;
+                container.appendChild(iframe);
+            }
+            // If no valid ID, keep the default ":c" text
+        }
+
+        // Run the function when the page loads
+        window.onload = loadVideo;
+    </script>
 </body>
 </html>
