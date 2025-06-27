@@ -24,26 +24,36 @@ window.onload = function() {
     if (contentId && contentSources[contentId]) {
         const content = contentSources[contentId];
         videoBox.innerHTML = `<iframe width="100%" height="100%" src="${content.url}" frameborder="0" allowfullscreen class="video-iframe"></iframe>`;
-        creditsText.textContent = `Credits: ${content.creditsText}`;
-        if (content.showMessage) {
+        if (creditsText) {
+            creditsText.textContent = `Credits: ${content.creditsText}`;
+        } else {
+            console.warn('Credits text element not found');
+        }
+        if (content.showMessage && message && messageText) {
             messageText.textContent = content.messageText;
             message.style.display = 'flex';
         }
+    } else {
+        console.warn('Invalid content ID or no content found for ID:', contentId);
     }
 
-    closeMessage.addEventListener('click', () => {
-        message.style.display = 'none';
-    });
+    if (closeMessage) {
+        closeMessage.addEventListener('click', () => {
+            message.style.display = 'none';
+        });
+    }
 
     const fullscreenButton = document.querySelector('.fullscreen-button');
-    fullscreenButton.addEventListener('click', () => {
-        const iframe = document.querySelector('.video-box .video-iframe');
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        } else if (iframe) {
-            iframe.requestFullscreen();
-        }
-    });
+    if (fullscreenButton) {
+        fullscreenButton.addEventListener('click', () => {
+            const iframe = document.querySelector('.video-box .video-iframe');
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else if (iframe) {
+                iframe.requestFullscreen();
+            }
+        });
+    }
 
     window.addEventListener('beforeunload', (event) => {
         event.preventDefault();
