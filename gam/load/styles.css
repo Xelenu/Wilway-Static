@@ -176,7 +176,7 @@ html {
 }
 
 .credits-text {
-    font-size: 1.36em;
+    font-size: 1.00em;
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
