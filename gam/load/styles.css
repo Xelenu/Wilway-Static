@@ -9,7 +9,7 @@ body {
 ::-webkit-scrollbar {
     width: 12px;
 }
-::-ම::webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: black;
 }
 ::-webkit-scrollbar-thumb {
@@ -17,7 +17,7 @@ body {
     border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #00e6e6; /* Slightly darker cyan'' on hover */
+    background: #00e6e6; /* Slightly darker cyan on hover */
 }
 /* Custom scrollbar for Firefox */
 html {
@@ -128,23 +128,23 @@ html {
 .control-bar {
     width: 1200px; /* Match video-box width */
     height: 50px;
-    background: linear-gradient(to bottom right, #000066, #003333); /* Darker darkblue to darkcyan */
+    background: linear-gradient(to bottom right, #1e90ff, #00ced1); /* Brighter blue to cyan */
     border-radius: 10px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between; /* Space buttons on left and right */
     align-items: center;
     margin-top: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.fullscreen-button {
+.fullscreen-button, .image-button {
     background: none;
     border: none;
     cursor: pointer;
     padding: 10px;
 }
 
-.fullscreen-button img {
+.fullscreen-button img, .image-button img {
     width: 40px;
     height: 40px;
 }
