@@ -20,13 +20,18 @@
             <div class="video-box" id="video-container">
                 <span class="special-text">:c</span>
             </div>
+            <div class="control-bar">
+                <button class="fullscreen-button" id="fullscreen-button">
+                    <img src="/images/fullscreen.png" alt="Fullscreen">
+                </button>
+            </div>
         </div>
     </div>
     <script>
         // Object to map video IDs to iframe sources and notification settings
         const videoSources = {
             '1': {
-                url: '/gam/frame/repo.html',
+                url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
                 showNotification: true,
                 notificationText: 'test'
             },
@@ -54,12 +59,13 @@
                 container.innerHTML = '';
                 // Create iframe
                 const iframe = document.createElement('iframe');
-                iframe.src = videoSources[videoId].url;
+                iframe.src = videoSources[videoId在于].url;
                 iframe.width = '100%';
                 iframe.height = '100%';
                 iframe.frameBorder = '0';
                 iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
                 iframe.allowFullscreen = true;
+                iframe.id = 'video-iframe'; // Add ID for fullscreen targeting
                 container.appendChild(iframe);
             }
             // If no valid ID, keep the default ":c" text
@@ -81,16 +87,37 @@
             }
         }
 
-        // Run both functions when the page loads
+        // Function to trigger fullscreen for the iframe
+        function toggleFullscreen() {
+            const iframe = document.getElementById('video-iframe');
+            if (iframe) {
+                if (!document.fullscreenElement) {
+                    iframe.requestFullscreen().catch(err => {
+                        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Add event listener for beforeunload to show exit warning
+        window.addEventListener('beforeunload', function(event) {
+            event.preventDefault();
+            event.returnValue = 'Changes made may not be saved';
+        });
+
+        // Run functions when the page loads
         window.onload = function() {
             loadVideo();
             loadNotification();
+            // Add event listener for fullscreen button
+            document.getElementById('fullscreen-button').addEventListener('click', toggleFullscreen);
+            // Add event listener to close the notification
+            document.getElementById('close-notification').addEventListener('click', function() {
+                document.getElementById('notification').style.display = 'none';
+            });
         };
-
-        // Add event listener to close the notification
-        document.getElementById('close-notification').addEventListener('click', function() {
-            document.getElementById('notification').style.display = 'none';
-        });
     </script>
 </body>
 </html>
