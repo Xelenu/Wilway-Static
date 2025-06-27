@@ -47,7 +47,7 @@ html {
 
 .video-box {
     width: 1200px; /* Width for theater-mode look */
-    height: 450px; /* Height for theater-mode appearance */
+    height: 800px; /* Increased height for game-like container */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     border-radius: 20px;
     display: flex;
@@ -127,25 +127,45 @@ html {
 
 .control-bar {
     width: 1200px; /* Match video-box width */
-    height: 60px; /* Increased height to accommodate larger buttons */
+    height: 80px; /* Increased height for larger buttons */
     background: linear-gradient(to bottom right, #1e90ff, #00ced1); /* Brighter blue to cyan */
     border-radius: 10px;
     display: flex;
-    justify-content: space-between; /* Space buttons on left and right */
+    justify-content: space-between; /* Space content on left and right */
     align-items: center;
     margin-top: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.fullscreen-button, .image-button {
+.credits {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+    padding-left: 10px;
+}
+
+.credits-icon {
+    width: 60px; /* Match button size */
+    height: 60px;
+}
+
+.credits-text {
+    font-size: 1.5em;
+    background: linear-gradient(to bottom right, darkblue, darkcyan); /* Match notification h2 */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px black;
+}
+
+.fullscreen-button {
     background: none;
     border: none;
     cursor: pointer;
     padding: 10px;
 }
 
-.fullscreen-button img, .image-button img {
-    width: 60px; /* Increased size for larger buttons */
+.fullscreen-button img {
+    width: 60px; /* Larger button size */
     height: 60px;
 }
 
