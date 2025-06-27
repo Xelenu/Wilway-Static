@@ -47,7 +47,7 @@ html {
 
 .video-box {
     width: 1200px; /* Width for theater-mode look */
-    height: 800px; /* Increased height for game-like container */
+    height: 600px; /* Increased height for game-like container */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     border-radius: 20px;
     display: flex;
