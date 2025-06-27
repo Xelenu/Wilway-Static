@@ -7,14 +7,14 @@ body {
 
 /* Custom scrollbar for WebKit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-    width: 10px; /* Reduced from 12px */
+    width: 8px; /* Reduced from 10px */
 }
 ::-webkit-scrollbar-track {
     background: black;
 }
 ::-webkit-scrollbar-thumb {
     background: cyan;
-    border-radius: 5px; /* Reduced from 6px */
+    border-radius: 4px; /* Reduced from 5px */
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #00e6e6; /* Slightly darker cyan on hover */
@@ -40,35 +40,35 @@ html {
 .content {
     text-align: center;
     color: white;
-    padding: 8px; /* Reduced from 10px */
+    padding: 6px; /* Reduced from 8px */
     box-sizing: border-box; /* Include padding in dimensions */
     max-width: 100vw; /* Prevent horizontal overflow */
 }
 
 .video-box {
-    width: 1000px; /* Reduced from 1200px */
-    height: 600px; /* Reduced from 700px */
-    max-height: 85vh; /* Reduced from 90vh */
+    width: 850px; /* Reduced from 1000px */
+    height: 500px; /* Reduced from 600px */
+    max-height: 80vh; /* Reduced from 85vh */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
-    border-radius: 16px; /* Reduced from 20px */
+    border-radius: 12px; /* Reduced from 16px */
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.5); /* Reduced from 20px */
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.5); /* Reduced from 16px */
     overflow: hidden; /* Clip iframe corners */
 }
 
 .video-box iframe {
-    border-radius: 16px; /* Match container's border-radius */
+    border-radius: 12px; /* Match container's border-radius */
     border: none; /* Remove default border */
 }
 
 .special-text {
-    font-size: 3.2em; /* Reduced from 4em */
+    font-size: 2.6em; /* Reduced from 3.2em */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1.6px black; /* Reduced from 2px */
+    -webkit-text-stroke: 1.2px black; /* Reduced from 1.6px */
 }
 
 .notification {
@@ -78,8 +78,8 @@ html {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-    backdrop-filter: blur(8px); /* Reduced from 10px */
-    -webkit-backdrop-filter: blur(8px); /* For WebKit browsers */
+    backdrop-filter: blur(6px); /* Reduced from 8px */
+    -webkit-backdrop-filter: blur(6px); /* For WebKit browsers */
     display: none; /* Hidden by default */
     justify-content: center;
     align-items: center;
@@ -88,35 +88,35 @@ html {
 
 .notification-content {
     background: linear-gradient(to bottom right, darkblue, darkcyan);
-    border-radius: 12px; /* Reduced from 15px */
-    padding: 16px; /* Reduced from 20px */
-    max-width: 400px; /* Reduced from 500px */
-    width: 85%; /* Reduced from 90% */
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.7); /* Reduced from 15px */
+    border-radius: 10px; /* Reduced from 12px */
+    padding: 12px; /* Reduced from 16px */
+    max-width: 320px; /* Reduced from 400px */
+    width: 80%; /* Reduced from 85% */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Reduced from 12px */
     position: relative;
     text-align: center;
 }
 
 .notification h2 {
-    font-size: 1.6em; /* Reduced from 2em */
+    font-size: 1.3em; /* Reduced from 1.6em */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0.8px black; /* Reduced from 1px */
-    margin: 0 0 8px; /* Reduced from 10px */
+    -webkit-text-stroke: 0.6px black; /* Reduced from 0.8px */
+    margin: 0 0 6px; /* Reduced from 8px */
 }
 
 .notification p {
-    font-size: 1.2em; /* Reduced from 1.5em */
+    font-size: 1em; /* Reduced from 1.2em */
     color: white;
     margin: 0;
 }
 
 .close {
     position: absolute;
-    top: 8px; /* Reduced from 10px */
-    right: 12px; /* Reduced from 15px */
-    font-size: 1.2em; /* Reduced from 1.5em */
+    top: 6px; /* Reduced from 8px */
+    right: 10px; /* Reduced from 12px */
+    font-size: 1em; /* Reduced from 1.2em */
     color: white;
     cursor: pointer;
     user-select: none;
@@ -127,47 +127,47 @@ html {
 }
 
 .control-bar {
-    width: 1000px; /* Reduced from 1200px */
-    height: 70px; /* Reduced from 80px */
+    width: 850px; /* Reduced from 1000px */
+    height: 60px; /* Reduced from 70px */
     background: linear-gradient(to bottom right, #1e90ff, #00ced1); /* Brighter blue to cyan */
-    border-radius: 8px; /* Reduced from 10px */
+    border-radius: 6px; /* Reduced from 8px */
     display: flex;
     justify-content: space-between; /* Space content on left and right */
     align-items: center;
-    margin-top: 8px; /* Reduced from 10px */
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5); /* Reduced from 10px */
+    margin-top: 6px; /* Reduced from 8px */
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5); /* Reduced from 8px */
 }
 
 .credits {
     display: flex;
     align-items: center;
-    gap: 8px; /* Reduced from 10px */
-    padding-left: 8px; /* Reduced from 10px */
+    gap: 6px; /* Reduced from 8px */
+    padding-left: 6px; /* Reduced from 8px */
 }
 
 .credits-icon {
-    width: 50px; /* Reduced from 60px */
-    height: 50px;
+    width: 40px; /* Reduced from 50px */
+    height: 40px;
 }
 
 .credits-text {
-    font-size: 1.2em; /* Reduced from 1.5em */
+    font-size: 1em; /* Reduced from 1.2em */
     background: linear-gradient(to bottom right, darkblue, darkcyan); /* Match notification h2 */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0.8px black; /* Reduced from 1px */
+    -webkit-text-stroke: 0.6px black; /* Reduced from 0.8px */
 }
 
 .fullscreen-button {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px; /* Reduced from 10px */
+    padding: 6px; /* Reduced from 8px */
 }
 
 .fullscreen-button img {
-    width: 50px; /* Reduced from 60px */
-    height: 50px;
+    width: 40px; /* Reduced from 50px */
+    height: 40px;
 }
 
 @keyframes gradientShift {
