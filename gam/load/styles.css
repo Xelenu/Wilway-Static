@@ -31,6 +31,7 @@ html {
     background: linear-gradient(to bottom right, darkblue, darkcyan, darkblue);
     background-size: 200% 200%;
     display: flex;
+    flex-direction: column; /* Stack content and control-bar vertically */
     justify-content: center;
     align-items: center;
     animation: gradientShift 10s ease-in-out infinite;
@@ -43,7 +44,7 @@ html {
     padding: 7.7px;
     box-sizing: border-box; /* Include padding in dimensions */
     max-width: 100vw; /* Prevent horizontal overflow */
-    display: flex; /* Use flex to arrange video-box and ad containers */
+    display: flex; /* Arrange ad containers and video-box horizontally */
     align-items: center; /* Align items vertically */
     gap: 20px; /* Space between video-box and ad containers */
 }
@@ -114,7 +115,7 @@ html {
     border-radius: 13.6px;
     padding: 17.8px;
     max-width: 449.2px;
-    width: 100%; /* Adjusted to 100% to prevent overflow */
+    width: 100%; /* Prevent overflow */
     box-shadow: 0 0 13.6px rgba(0, 0, 0, 0.7);
     position: relative;
     text-align: center;
