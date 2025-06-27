@@ -46,8 +46,8 @@ html {
 }
 
 .video-box {
-    width: 700.6px; /* Increased from 468px by ~20% */
-    height: 500.4px; /* Increased from 274.5px by ~20% */
+    width: 900.6px; /* Increased from 468px by ~20% */
+    height: 650.4px; /* Increased from 274.5px by ~20% */
     max-height: 90vh; /* Unchanged for responsiveness */
     max-width: 95vw; /* Unchanged for responsiveness */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
