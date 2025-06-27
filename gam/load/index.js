@@ -1,14 +1,15 @@
 const videoSources = {
+    'rickroll': {
+        url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        showNotification: false,
+        creditsText: 'Rick Astley'
+    },
+    
     '1': {
         url: '/gam/frame/repo.html',
         showNotification: true,
         notificationText: '⚠️ Because this is a PC game, you will have to have some patience in order for this to load! ✨ This is a special game.',
         creditsText: 'Port by breadbb and 98corbins'
-    },
-    '2': {
-        url: 'https://www.youtube.com/embed/VIDEO_ID_2',
-        showNotification: false,
-        creditsText: 'Another Creator'
     }
 };
 
