@@ -46,8 +46,8 @@ html {
 }
 
 .video-box {
-    width: 800px; /* Increased width for a more landscape look */
-    height: 300px; /* Reduced height for a more landscape look */
+    width: 1000px; /* Increased width for a more landscape look */
+    height: 300px; /* Height unchanged */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     border-radius: 20px;
     display: flex;
