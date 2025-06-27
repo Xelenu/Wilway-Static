@@ -1,10 +1,10 @@
 // Object to map video IDs to iframe sources, notification, and credits settings
         const videoSources = {
             '1': {
-                url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                url: '/gam/frame/repo.html',
                 showNotification: true,
-                notificationText: 'test',
-                creditsText: 'Video by Example Creator'
+                notificationText: '⚠️ This game is very large, so you will have to be patient for it to load! ✨ This is a special game.',
+                creditsText: 'Port by breadbb and 98corbins'
             },
             '2': {
                 url: 'https://www.youtube.com/embed/9bZkp7q19f0',
