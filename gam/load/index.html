@@ -21,8 +21,11 @@
                 <span class="special-text">:c</span>
             </div>
             <div class="control-bar">
+                <button class="image-button" id="image-button">
+                    <img src="/images/1.png" alt="...">
+                </button>
                 <button class="fullscreen-button" id="fullscreen-button">
-                    <img src="/images/fullscreen.png" alt="Fullscreen">
+                    <img src="/images/fullscreen.png" alt="...">
                 </button>
             </div>
         </div>
@@ -35,7 +38,7 @@
                 showNotification: true,
                 notificationText: 'test'
             },
-            '1': {
+            '2': {
                 url: 'https://www.youtube.com/embed/9bZkp7q19f0',
                 showNotification: false,
                 notificationText: ''
@@ -59,7 +62,7 @@
                 container.innerHTML = '';
                 // Create iframe
                 const iframe = document.createElement('iframe');
-                iframe.src = videoSources[videoId].url; // Fixed syntax error
+                iframe.src = videoSources[videoId].url;
                 iframe.width = '100%';
                 iframe.height = '100%';
                 iframe.frameBorder = '0';
@@ -116,6 +119,10 @@
             // Add event listener to close the notification
             document.getElementById('close-notification').addEventListener('click', function() {
                 document.getElementById('notification').style.display = 'none';
+            });
+            // Optional: Add event listener for the new image button if functionality is needed
+            document.getElementById('image-button').addEventListener('click', function() {
+                // Add custom functionality here, e.g., alert('Custom button clicked');
             });
         };
     </script>
