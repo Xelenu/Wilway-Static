@@ -3,25 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lol</title>
+    <title>Animated Background with Video Container</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="background">
         <div class="content">
+            <div class="notification" style="display: none;">
+                <span class="close">&times;</span>
+                <h2>Attention:</h2>
+                <p id="notification-text"></p>
+            </div>
             <div class="video-box" id="video-container">
                 <span class="special-text">:c</span>
             </div>
         </div>
     </div>
     <script>
-        // Object to map video IDs to iframe sources
+        // Object to map video IDs to iframe sources and notification settings
         const videoSources = {
-            '1': 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Example: Rick Astley
-            '2': 'https://www.youtube.com/embed/9bZkp7q19f0', // Example: PSY - Gangnam Style
-            // Add more video IDs and URLs here, e.g.:
-            // 'video3': 'https://www.youtube.com/embed/VIDEO_ID',
+            'video1': {
+                url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                showNotification: true,
+                notificationText: 'test'
+            },
+            'video2': {
+                url: 'https://www.youtube.com/embed/9bZkp7q19f0',
+                showNotification: false,
+                notificationText: ''
+            },
+            // Add more video IDs and their settings here, e.g.:
+            // 'video3': {
+            //     url: 'https://www.youtube.com/embed/VIDEO_ID',
+            //     showNotification: true,
+            //     notificationText: 'Custom text for video3'
+            // },
         };
 
         // Function to load iframe based on URL parameter
@@ -35,7 +52,7 @@
                 container.innerHTML = '';
                 // Create iframe
                 const iframe = document.createElement('iframe');
-                iframe.src = videoSources[videoId];
+                iframe.src = videoSources[videoId].url;
                 iframe.width = '100%';
                 iframe.height = '100%';
                 iframe.frameBorder = '0';
@@ -46,8 +63,32 @@
             // If no valid ID, keep the default ":c" text
         }
 
-        // Run the function when the page loads
-        window.onload = loadVideo;
+        // New function to load notification based on URL parameter
+        function loadNotification() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const videoId = urlParams.get('id');
+            const notification = document.querySelector('.notification');
+            const notificationText = document.getElementById('notification-text');
+
+            // Hide notification by default
+            notification.style.display = 'none';
+
+            if (videoId && videoSources[videoId] && videoSources[videoId].showNotification) {
+                notificationText.textContent = videoSources[videoId].notificationText;
+                notification.style.display = 'block';
+            }
+        }
+
+        // Run both functions when the page loads
+        window.onload = function() {
+            loadVideo();
+            loadNotification();
+        };
+
+        // Add event listener to close the notification
+        document.querySelector('.close').addEventListener('click', function() {
+            document.querySelector('.notification').style.display = 'none';
+        });
     </script>
 </body>
 </html>
