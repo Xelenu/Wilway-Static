@@ -6,9 +6,15 @@ const contentSources = {
         creditsText: 'Port by breadbb and 98corbins'
     },
     '2': {
-        url: 'https://www.youtube.com/embed/VIDEO_ID_2',
+        url: '/gam/frame/webfishing.html',
+        showMessage: true,
+        messageText: '✨ This is a special game!',
+        creditsText: 'Port by breadbb and aukak'
+    },
+    '3': {
+        url: 'https://example.com',
         showMessage: false,
-        creditsText: 'Another Creator'
+        creditsText: '...'
     }
 };
 
