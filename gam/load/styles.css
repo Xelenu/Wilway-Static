@@ -7,14 +7,14 @@ body {
 
 /* Custom scrollbar for WebKit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-    width: 4px; /* Reduced from 4.5px by ~10% */
+    width: 4.8px; /* Increased from 4px by ~20% */
 }
 ::-webkit-scrollbar-track {
     background: black;
 }
 ::-webkit-scrollbar-thumb {
     background: cyan;
-    border-radius: 2.1px; /* Reduced from 2.3px by ~10% */
+    border-radius: 2.5px; /* Increased from 2.1px by ~20% */
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #00e6e6; /* Slightly darker cyan on hover */
@@ -40,36 +40,36 @@ html {
 .content {
     text-align: center;
     color: white;
-    padding: 3px; /* Reduced from 3.3px by ~10% */
+    padding: 3.6px; /* Increased from 3px by ~20% */
     box-sizing: border-box; /* Include padding in dimensions */
     max-width: 100vw; /* Prevent horizontal overflow */
 }
 
 .video-box {
-    width: 468px; /* Reduced from 520px by ~10% */
-    height: 274.5px; /* Reduced from 305px by ~10% */
+    width: 561.6px; /* Increased from 468px by ~20% */
+    height: 329.4px; /* Increased from 274.5px by ~20% */
     max-height: 90vh; /* Unchanged for responsiveness */
     max-width: 95vw; /* Unchanged for responsiveness */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
-    border-radius: 7px; /* Reduced from 7.8px by ~10% */
+    border-radius: 8.4px; /* Increased from 7px by ~20% */
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0 7px rgba(0, 0, 0, 0.5); /* Reduced from 7.8px by ~10% */
+    box-shadow: 0 0 8.4px rgba(0, 0, 0, 0.5); /* Increased from 7px by ~20% */
     overflow: hidden; /* Clip iframe corners */
 }
 
 .video-box iframe {
-    border-radius: 7px; /* Match container's border-radius */
+    border-radius: 8.4px; /* Match container's border-radius */
     border: none; /* Remove default border */
 }
 
 .special-text {
-    font-size: 1.4em; /* Reduced from 1.56em by ~10% */
+    font-size: 1.68em; /* Increased from 1.4em by ~20% */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0.7px black; /* Reduced from 0.78px by ~10% */
+    -webkit-text-stroke: 0.84px black; /* Increased from 0.7px by ~20% */
 }
 
 .notification {
@@ -79,8 +79,8 @@ html {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-    backdrop-filter: blur(3.5px); /* Reduced from 3.9px by ~10% */
-    -webkit-backdrop-filter: blur(3.5px); /* For WebKit browsers */
+    backdrop-filter: blur(4.2px); /* Increased from 3.5px by ~20% */
+    -webkit-backdrop-filter: blur(4.2px); /* For WebKit browsers */
     display: none; /* Hidden by default */
     justify-content: center;
     align-items: center;
@@ -89,35 +89,35 @@ html {
 
 .notification-content {
     background: linear-gradient(to bottom right, darkblue, darkcyan);
-    border-radius: 5.3px; /* Reduced from 5.85px by ~10% */
-    padding: 7px; /* Reduced from 7.8px by ~10% */
-    max-width: 175.5px; /* Reduced from 195px by ~10% */
-    width: 46.8%; /* Reduced from 52% by ~10% */
-    box-shadow: 0 0 5.3px rgba(0, 0, 0, 0.7); /* Reduced from 5.85px by ~10% */
+    border-radius: 6.4px; /* Increased from 5.3px by ~20% */
+    padding: 8.4px; /* Increased from 7px by ~20% */
+    max-width: 210.6px; /* Increased from 175.5px by ~20% */
+    width: 56.2%; /* Increased from 46.8% by ~20% */
+    box-shadow: 0 0 6.4px rgba(0, 0, 0, 0.7); /* Increased from 5.3px by ~20% */
     position: relative;
     text-align: center;
 }
 
 .notification h2 {
-    font-size: 0.76em; /* Reduced from 0.845em by ~10% */
+    font-size: 0.91em; /* Increased from 0.76em by ~20% */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0.35px black; /* Reduced from 0.39px by ~10% */
-    margin: 0 0 3.5px; /* Reduced from 3.9px by ~10% */
+    -webkit-text-stroke: 0.42px black; /* Increased from 0.35px by ~20% */
+    margin: 0 0 4.2px; /* Increased from 3.5px by ~20% */
 }
 
 .notification p {
-    font-size: 0.53em; /* Reduced from 0.585em by ~10% */
+    font-size: 0.64em; /* Increased from 0.53em by ~20% */
     color: white;
     margin: 0;
 }
 
 .close {
     position: absolute;
-    top: 3.5px; /* Reduced from 3.9px by ~10% */
-    right: 5.3px; /* Reduced from 5.85px by ~10% */
-    font-size: 0.53em; /* Reduced from 0.585em by ~10% */
+    top: 4.2px; /* Increased from 3.5px by ~20% */
+    right: 6.4px; /* Increased from 5.3px by ~20% */
+    font-size: 0.64em; /* Increased from 0.53em by ~20% */
     color: white;
     cursor: pointer;
     user-select: none;
@@ -128,48 +128,48 @@ html {
 }
 
 .control-bar {
-    width: 468px; /* Reduced from 520px by ~10% */
-    height: 32.2px; /* Reduced from 35.75px by ~10% */
+    width: 561.6px; /* Increased from 468px by ~20% */
+    height: 38.6px; /* Increased from 32.2px by ~20% */
     max-width: 95vw; /* Unchanged for responsiveness */
     background: linear-gradient(to bottom right, #1e90ff, #00ced1); /* Brighter blue to cyan */
-    border-radius: 3.5px; /* Reduced from 3.9px by ~10% */
+    border-radius: 4.2px; /* Increased from 3.5px by ~20% */
     display: flex;
     justify-content: space-between; /* Space content on left and right */
     align-items: center;
-    margin-top: 3.5px; /* Reduced from 3.9px by ~10% */
-    box-shadow: 0 0 3.5px rgba(0, 0, 0, 0.5); /* Reduced from 3.9px by ~10% */
+    margin-top: 4.2px; /* Increased from 3.5px by ~20% */
+    box-shadow: 0 0 4.2px rgba(0, 0, 0, 0.5); /* Increased from 3.5px by ~20% */
 }
 
 .credits {
     display: flex;
     align-items: center;
-    gap: 3.5px; /* Reduced from 3.9px by ~10% */
-    padding-left: 3.5px; /* Reduced from 3.9px by ~10% */
+    gap: 4.2px; /* Increased from 3.5px by ~20% */
+    padding-left: 4.2px; /* Increased from 3.5px by ~20% */
 }
 
 .credits-icon {
-    width: 22.2px; /* Reduced from 24.7px by ~10% */
-    height: 22.2px;
+    width: 26.6px; /* Increased from 22.2px by ~20% */
+    height: 26.6px;
 }
 
 .credits-text {
-    font-size: 0.53em; /* Reduced from 0.585em by ~10% */
+    font-size: 0.64em; /* Increased from 0.53em by ~20% */
     background: linear-gradient(to bottom right, darkblue, darkcyan); /* Match notification h2 */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0.35px black; /* Reduced from 0.39px by ~10% */
+    -webkit-text-stroke: 0.42px black; /* Increased from 0.35px by ~20% */
 }
 
 .fullscreen-button {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 3.5px; /* Reduced from 3.9px by ~10% */
+    padding: 4.2px; /* Increased from 3.5px by ~20% */
 }
 
 .fullscreen-button img {
-    width: 22.2px; /* Reduced from 24.7px by ~10% */
-    height: 22.2px;
+    width: 26.6px; /* Increased from 22.2px by ~20% */
+    height: 26.6px;
 }
 
 @keyframes gradientShift {
