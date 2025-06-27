@@ -35,6 +35,17 @@ if (specialBox) {
   `;
 }
 
+const specialBox = document.getElementById('box-2');
+if (specialBox) {
+  specialBox.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/webfishing.png" alt="Webfishing" draggable="false">
+      <p>Webfishing</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=2'">Let's go!</button>
+    </div>
+  `;
+}
+
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
       if (!box.hasChildNodes() || box.children.length === 0) {
