@@ -7,14 +7,14 @@ body {
 
 /* Custom scrollbar for WebKit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-    width: 10.3px; /* Increased from 7.7px by ~33.3% */
+    width: 10.3px;
 }
 ::-webkit-scrollbar-track {
     background: black;
 }
 ::-webkit-scrollbar-thumb {
     background: cyan;
-    border-radius: 5.3px; /* Increased from 4px by ~33.3% */
+    border-radius: 5.3px;
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #00e6e6; /* Slightly darker cyan on hover */
@@ -40,36 +40,58 @@ html {
 .content {
     text-align: center;
     color: white;
-    padding: 7.7px; /* Increased from 5.8px by ~33.3% */
+    padding: 7.7px;
     box-sizing: border-box; /* Include padding in dimensions */
     max-width: 100vw; /* Prevent horizontal overflow */
+    display: flex; /* Use flex to arrange video-box and ad containers */
+    align-items: center; /* Align items vertically */
+    gap: 20px; /* Space between video-box and ad containers */
 }
 
 .video-box {
-    width: 1200.6px; /* Increased from 900.6px by 300px as requested */
-    height: 650.4px; /* Unchanged as requested */
-    max-height: 90vh; /* Unchanged for responsiveness */
-    max-width: 95vw; /* Unchanged for responsiveness */
+    width: 1200.6px;
+    height: 650.4px;
+    max-height: 90vh;
+    max-width: 95vw;
     background: linear-gradient(to bottom right, darkblue, darkcyan);
-    border-radius: 11.2px; /* Increased from 8.4px by ~33.3% */
+    border-radius: 11.2px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0 11.2px rgba(0, 0, 0, 0.5); /* Increased from 8.4px by ~33.3% */
+    box-shadow: 0 0 11.2px rgba(0, 0, 0, 0.5);
     overflow: hidden; /* Clip iframe corners */
 }
 
 .video-box iframe {
-    border-radius: 11.2px; /* Match container's border-radius */
-    border: none; /* Remove default border */
+    border-radius: 11.2px;
+    border: none;
 }
 
 .special-text {
-    font-size: 3.6em; /* Increased from 2.7em by ~33.3% */
+    font-size: 3.6em;
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1.7px black; /* Increased from 1.3px by ~33.3% */
+    -webkit-text-stroke: 1.7px black;
+}
+
+.ad-container {
+    width: 200px; /* Fixed width for ad containers */
+    height: 650.4px; /* Match video-box height */
+    max-height: 90vh; /* Match video-box responsiveness */
+    background: linear-gradient(to bottom right, darkblue, darkcyan); /* Match page theme */
+    border-radius: 11.2px; /* Match video-box border-radius */
+    box-shadow: 0 0 11.2px rgba(0, 0, 0, 0.5); /* Glowing effect like video-box */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Clip ad image */
+}
+
+.ad-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure image fills container without distortion */
 }
 
 .notification {
@@ -78,46 +100,46 @@ html {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-    backdrop-filter: blur(8.9px); /* Increased from 6.7px by ~33.3% */
-    -webkit-backdrop-filter: blur(8.9px); /* For WebKit browsers */
-    display: none; /* Hidden by default */
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8.9px);
+    -webkit-backdrop-filter: blur(8.9px);
+    display: none;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Ensure it overlays everything */
+    z-index: 1000;
 }
 
 .notification-content {
     background: linear-gradient(to bottom right, darkblue, darkcyan);
-    border-radius: 13.6px; /* Increased from 10.2px by ~33.3% */
-    padding: 17.8px; /* Increased from 13.4px by ~33.3% */
-    max-width: 449.2px; /* Increased from 337px by ~33.3% */
-    width: 119.8%; /* Increased from 89.9% by ~33.3% */
-    box-shadow: 0 0 13.6px rgba(0, 0, 0, 0.7); /* Increased from 10.2px by ~33.3% */
+    border-radius: 13.6px;
+    padding: 17.8px;
+    max-width: 449.2px;
+    width: 100%; /* Adjusted to 100% to prevent overflow */
+    box-shadow: 0 0 13.6px rgba(0, 0, 0, 0.7);
     position: relative;
     text-align: center;
 }
 
 .notification h2 {
-    font-size: 1.95em; /* Increased from 1.46em by ~33.3% */
+    font-size: 1.95em;
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0.89px black; /* Increased from 0.67px by ~33.3% */
-    margin: 0 0 8.9px; /* Increased from 6.7px by ~33.3% */
+    -webkit-text-stroke: 0.89px black;
+    margin: 0 0 8.9px;
 }
 
 .notification p {
-    font-size: 1.36em; /* Increased from 1.02em by ~33.3% */
+    font-size: 1.36em;
     color: white;
     margin: 0;
 }
 
 .close {
     position: absolute;
-    top: 8.9px; /* Increased from 6.7px by ~33.3% */
-    right: 13.6px; /* Increased from 10.2px by ~33.3% */
-    font-size: 1.36em; /* Increased from 1.02em by ~33.3% */
+    top: 8.9px;
+    right: 13.6px;
+    font-size: 1.36em;
     color: white;
     cursor: pointer;
     user-select: none;
@@ -128,47 +150,47 @@ html {
 }
 
 .control-bar {
-    width: 1200.6px; /* Increased from 900.6px by ~33.3% to match video-box */
-    height: 82.4px; /* Increased from 61.8px by ~33.3% */
-    max-width: 95vw; /* Unchanged for responsiveness */
-    background: linear-gradient(to bottom right, #1e90ff, #00ced1); /* Brighter blue to cyan */
-    border-radius: 8.9px; /* Increased from 6.7px by ~33.3% */
+    width: 1200.6px;
+    height: 82.4px;
+    max-width: 95vw;
+    background: linear-gradient(to bottom right, #1e90ff, #00ced1);
+    border-radius: 8.9px;
     display: flex;
-    justify-content: space-between; /* Space content on left and right */
+    justify-content: space-between;
     align-items: center;
-    margin-top: 8.9px; /* Increased from 6.7px by ~33.3% */
-    box-shadow: 0 0 8.9px rgba(0, 0, 0, 0.5); /* Increased from 6.7px by ~33.3% */
+    margin-top: 8.9px;
+    box-shadow: 0 0 8.9px rgba(0, 0, 0, 0.5);
 }
 
 .credits {
     display: flex;
     align-items: center;
-    gap: 8.9px; /* Increased from 6.7px by ~33.3% */
-    padding-left: 8.9px; /* Increased from 6.7px by ~33.3% */
+    gap: 8.9px;
+    padding-left: 8.9px;
 }
 
 .credits-icon {
-    width: 56.8px; /* Increased from 42.6px by ~33.3% */
+    width: 56.8px;
     height: 56.8px;
 }
 
 .credits-text {
-    font-size: 1.36em; /* Increased from 1.02em by ~33.3% */
-    background: linear-gradient(to bottom right, darkblue, darkcyan); /* Match notification h2 */
+    font-size: 1.36em;
+    background: linear-gradient(to bottom right, darkblue, darkcyan);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0.89px black; /* Increased from 0.67px by ~33.3% */
+    -webkit-text-stroke: 0.89px black;
 }
 
 .fullscreen-button {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8.9px; /* Increased from 6.7px by ~33.3% */
+    padding: 8.9px;
 }
 
 .fullscreen-button img {
-    width: 56.8px; /* Increased from 42.6px by ~33.3% */
+    width: 56.8px;
     height: 56.8px;
 }
 
