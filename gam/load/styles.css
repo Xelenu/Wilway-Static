@@ -104,7 +104,7 @@ html {
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8.9px);
     -webkit-backdrop-filter: blur(8.9px);
-    display: none;
+    display: none; /* Initially hidden */
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -115,7 +115,7 @@ html {
     border-radius: 13.6px;
     padding: 17.8px;
     max-width: 449.2px;
-    width: 100%; /* Prevent overflow */
+    width: 90%; /* Prevent overflow */
     box-shadow: 0 0 13.6px rgba(0, 0, 0, 0.7);
     position: relative;
     text-align: center;
