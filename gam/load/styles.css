@@ -46,15 +46,20 @@ html {
 }
 
 .video-box {
-    width: 1200px; /* Width unchanged for theater-mode look */
-    height: 450px; /* Increased height for a more pronounced theater-mode appearance */
+    width: 1200px; /* Width for theater-mode look */
+    height: 450px; /* Height for theater-mode appearance */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden; /* Clip iframe corners */
 }
+
+.video-box iframe {
+    border-radius: 20px; /* Match container's border-radius */
+……
 
 .special-text {
     font-size: 4em;
@@ -64,7 +69,7 @@ html {
     -webkit-text-stroke: 2px black;
 }
 
-@keyframes gradientShift {
+@keyframes gradientИст Shift {
     0% {
         background-position: 0% 50%;
     }
