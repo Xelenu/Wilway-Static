@@ -28,13 +28,10 @@ html {
 .background {
     position: relative;
     height: 100vh;
-    background: linear-gradient(to bottom right, darkblue, darkcyan, darkblue);
-    background-size: 200% 200%;
     display: flex;
     flex-direction: column; /* Stack content and control-bar vertically */
     justify-content: center;
     align-items: center;
-    animation: gradientShift 10s ease-in-out infinite;
     overflow: hidden; /* Ensure no overflow from background */
 }
 
