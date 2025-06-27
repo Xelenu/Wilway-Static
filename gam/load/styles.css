@@ -7,14 +7,14 @@ body {
 
 /* Custom scrollbar for WebKit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-    width: 9px; /* Reduced from 11px */
+    width: 7px; /* Reduced from 9px */
 }
 ::-webkit-scrollbar-track {
     background: black;
 }
 ::-webkit-scrollbar-thumb {
     background: cyan;
-    border-radius: 4.5px; /* Reduced from 5.5px */
+    border-radius: 3.5px; /* Reduced from 4.5px */
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #00e6e6; /* Slightly darker cyan on hover */
@@ -40,36 +40,36 @@ html {
 .content {
     text-align: center;
     color: white;
-    padding: 7px; /* Reduced from 9px */
+    padding: 5px; /* Reduced from 7px */
     box-sizing: border-box; /* Include padding in dimensions */
     max-width: 100vw; /* Prevent horizontal overflow */
 }
 
 .video-box {
-    width: 950px; /* Reduced from 1150px */
-    height: 560px; /* Reduced from 680px */
+    width: 800px; /* Reduced from 950px */
+    height: 470px; /* Reduced from 560px */
     max-height: 90vh; /* Unchanged for responsiveness */
     max-width: 95vw; /* Unchanged for responsiveness */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
-    border-radius: 14px; /* Reduced from 17px */
+    border-radius: 12px; /* Reduced from 14px */
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0 14px rgba(0, 0, 0, 0.5); /* Reduced from 17px */
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.5); /* Reduced from 14px */
     overflow: hidden; /* Clip iframe corners */
 }
 
 .video-box iframe {
-    border-radius: 14px; /* Match container's border-radius */
+    border-radius: 12px; /* Match container's border-radius */
     border: none; /* Remove default border */
 }
 
 .special-text {
-    font-size: 2.9em; /* Reduced from 3.5em */
+    font-size: 2.4em; /* Reduced from 2.9em */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1.4px black; /* Reduced from 1.7px */
+    -webkit-text-stroke: 1.2px black; /* Reduced from 1.4px */
 }
 
 .notification {
@@ -79,8 +79,8 @@ html {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-    backdrop-filter: blur(7px); /* Reduced from 9px */
-    -webkit-backdrop-filter: blur(7px); /* For WebKit browsers */
+    backdrop-filter: blur(6px); /* Reduced from 7px */
+    -webkit-backdrop-filter: blur(6px); /* For WebKit browsers */
     display: none; /* Hidden by default */
     justify-content: center;
     align-items: center;
@@ -89,35 +89,35 @@ html {
 
 .notification-content {
     background: linear-gradient(to bottom right, darkblue, darkcyan);
-    border-radius: 11px; /* Reduced from 14px */
-    padding: 14px; /* Reduced from 17px */
-    max-width: 360px; /* Reduced from 450px */
-    width: 85%; /* Reduced from 90% */
-    box-shadow: 0 0 11px rgba(0, 0, 0, 0.7); /* Reduced from 14px */
+    border-radius: 9px; /* Reduced from 11px */
+    padding: 12px; /* Reduced from 14px */
+    max-width: 300px; /* Reduced from 360px */
+    width: 80%; /* Reduced from 85% */
+    box-shadow: 0 0 9px rgba(0, 0, 0, 0.7); /* Reduced from 11px */
     position: relative;
     text-align: center;
 }
 
 .notification h2 {
-    font-size: 1.5em; /* Reduced from 1.8em */
+    font-size: 1.3em; /* Reduced from 1.5em */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0.7px black; /* Reduced from 0.9px */
-    margin: 0 0 7px; /* Reduced from 9px */
+    -webkit-text-stroke: 0.6px black; /* Reduced from 0.7px */
+    margin: 0 0 6px; /* Reduced from 7px */
 }
 
 .notification p {
-    font-size: 1.1em; /* Reduced from 1.3em */
+    font-size: 0.9em; /* Reduced from 1.1em */
     color: white;
     margin: 0;
 }
 
 .close {
     position: absolute;
-    top: 7px; /* Reduced from 9px */
-    right: 11px; /* Reduced from 14px */
-    font-size: 1.1em; /* Reduced from 1.3em */
+    top: 6px; /* Reduced from 7px */
+    right: 9px; /* Reduced from 11px */
+    font-size: 0.9em; /* Reduced from 1.1em */
     color: white;
     cursor: pointer;
     user-select: none;
@@ -128,48 +128,48 @@ html {
 }
 
 .control-bar {
-    width: 950px; /* Reduced from 1150px */
-    height: 66px; /* Reduced from 80px */
+    width: 800px; /* Reduced from 950px */
+    height: 55px; /* Reduced from 66px */
     max-width: 95vw; /* Unchanged for responsiveness */
     background: linear-gradient(to bottom right, #1e90ff, #00ced1); /* Brighter blue to cyan */
-    border-radius: 7px; /* Reduced from 9px */
+    border-radius: 6px; /* Reduced from 7px */
     display: flex;
     justify-content: space-between; /* Space content on left and right */
     align-items: center;
-    margin-top: 7px; /* Reduced from 9px */
-    box-shadow: 0 0 7px rgba(0, 0, 0, 0.5); /* Reduced from 9px */
+    margin-top: 6px; /* Reduced from 7px */
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5); /* Reduced from 7px */
 }
 
 .credits {
     display: flex;
     align-items: center;
-    gap: 7px; /* Reduced from 9px */
-    padding-left: 7px; /* Reduced from 9px */
+    gap: 6px; /* Reduced from 7px */
+    padding-left: 6px; /* Reduced from 7px */
 }
 
 .credits-icon {
-    width: 45px; /* Reduced from 55px */
-    height: 45px;
+    width: 38px; /* Reduced from 45px */
+    height: 38px;
 }
 
 .credits-text {
-    font-size: 1.1em; /* Reduced from 1.3em */
+    font-size: 0.9em; /* Reduced from 1.1em */
     background: linear-gradient(to bottom right, darkblue, darkcyan); /* Match notification h2 */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0.7px black; /* Reduced from 0.9px */
+    -webkit-text-stroke: 0.6px black; /* Reduced from 0.7px */
 }
 
 .fullscreen-button {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 7px; /* Reduced from 9px */
+    padding: 6px; /* Reduced from 7px */
 }
 
 .fullscreen-button img {
-    width: 45px; /* Reduced from 55px */
-    height: 45px;
+    width: 38px; /* Reduced from 45px */
+    height: 38px;
 }
 
 @keyframes gradientShift {
