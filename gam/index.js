@@ -24,9 +24,9 @@ function createBox(row, col, index) {
 
 const siteUrl = window.location.origin;
 
-const specialBox = document.getElementById('box-1');
-if (specialBox) {
-  specialBox.innerHTML = `
+const specialBox1 = document.getElementById('box-1');
+if (specialBox1) {
+  specialBox1.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/repo.png" alt="R.E.P.O." draggable="false">
       <p>R.E.P.O.</p>
@@ -35,9 +35,9 @@ if (specialBox) {
   `;
 }
 
-const specialBox = document.getElementById('box-2');
-if (specialBox) {
-  specialBox.innerHTML = `
+const specialBox2 = document.getElementById('box-2');
+if (specialBox2) {
+  specialBox2.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/webfishing.png" alt="Webfishing" draggable="false">
       <p>Webfishing</p>
