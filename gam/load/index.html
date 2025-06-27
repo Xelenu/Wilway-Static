@@ -35,7 +35,7 @@
                 showNotification: true,
                 notificationText: 'test'
             },
-            '2': {
+            '1': {
                 url: 'https://www.youtube.com/embed/9bZkp7q19f0',
                 showNotification: false,
                 notificationText: ''
@@ -59,7 +59,7 @@
                 container.innerHTML = '';
                 // Create iframe
                 const iframe = document.createElement('iframe');
-                iframe.src = videoSources[videoId在于].url;
+                iframe.src = videoSources[videoId].url; // Fixed syntax error
                 iframe.width = '100%';
                 iframe.height = '100%';
                 iframe.frameBorder = '0';
@@ -121,4 +121,3 @@
     </script>
 </body>
 </html>
-=
