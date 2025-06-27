@@ -127,7 +127,7 @@ html {
 
 .control-bar {
     width: 1200px; /* Match video-box width */
-    height: 50px;
+    height: 60px; /* Increased height to accommodate larger buttons */
     background: linear-gradient(to bottom right, #1e90ff, #00ced1); /* Brighter blue to cyan */
     border-radius: 10px;
     display: flex;
@@ -145,8 +145,8 @@ html {
 }
 
 .fullscreen-button img, .image-button img {
-    width: 40px;
-    height: 40px;
+    width: 60px; /* Increased size for larger buttons */
+    height: 60px;
 }
 
 @keyframes gradientShift {
