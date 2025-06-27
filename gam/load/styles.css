@@ -46,8 +46,8 @@ html {
 }
 
 .video-box {
-    width: 1000px; /* Increased width for a more landscape look */
-    height: 300px; /* Height unchanged */
+    width: 1200px; /* Width unchanged for theater-mode look */
+    height: 450px; /* Increased height for a more pronounced theater-mode appearance */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     border-radius: 20px;
     display: flex;
