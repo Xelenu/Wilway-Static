@@ -1,6 +1,6 @@
 const contentSources = {
     '1': {
-        url: '/game/frame/repo.html',
+        url: '/gam/frame/repo.html',
         showMessage: true,
         messageText: '⚠️ Because this is a PC game, you will have to have some patience in order for this to load! ✨ This is a special game.',
         creditsText: 'Port by breadbb and 98corbins'
