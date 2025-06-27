@@ -47,7 +47,8 @@ html {
 
 .video-box {
     width: 1200px; /* Width for theater-mode look */
-    height: 600px; /* Increased height for game-like container */
+    height: 700px; /* Slightly reduced height for visibility */
+    max-height: 90vh; /* Ensure it fits within viewport */
     background: linear-gradient(to bottom right, darkblue, darkcyan);
     border-radius: 20px;
     display: flex;
@@ -127,7 +128,7 @@ html {
 
 .control-bar {
     width: 1200px; /* Match video-box width */
-    height: 80px; /* Increased height for larger buttons */
+    height: 80px; /* Height for larger buttons */
     background: linear-gradient(to bottom right, #1e90ff, #00ced1); /* Brighter blue to cyan */
     border-radius: 10px;
     display: flex;
