@@ -101,7 +101,7 @@ body {
         .box-content img {
             width: 100%;
             height: 70%;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 15px;
             margin-bottom: 10px;
             user-drag: none;
