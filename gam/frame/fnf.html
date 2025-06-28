@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>FNF</title>
+  <script src="https://cdn.jsdelivr.net/gh/somer-sheff-73/xv@main/ruffle.js"></script>
+  <style>
+    html, body {
+    font-family: Impact, 'Poppins', "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: black;
+      overflow: hidden;
+    }
+
+    #loading {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 1.2rem;
+      z-index: 999;
+      flex-direction: column;
+    }
+
+    .bar {
+      width: 200px;
+      height: 8px;
+      background: #333;
+      margin-top: 10px;
+      overflow: hidden;
+      border-radius: 5px;
+    }
+
+    .bar-fill {
+      width: 0%;
+      height: 100%;
+      background: #00bfff;
+      animation: load 2.5s forwards;
+    }
+
+    @keyframes load {
+      to {
+        width: 100%;
+      }
+    }
+
+    #swf-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    embed {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    #fallback {
+      display: none;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    Loading...
+    <div class="bar"><div class="bar-fill"></div></div>
+  </div>
+
+  <div id="swf-container"></div>
+
+  <div id="fallback">
+    ⚠️ Failed to load the game. Please check your connection or try again later.
+  </div>
+
+  <script>
+    async function fetchAndCombineParts(partUrls) {
+      const buffers = await Promise.all(partUrls.map(url => fetch(url).then(r => {
+        if (!r.ok) throw new Error("Failed to load part: " + url);
+        return r.arrayBuffer();
+      })));
+      const total = buffers.reduce((sum, b) => sum + b.byteLength, 0);
+      const combined = new Uint8Array(total);
+      let offset = 0;
+      for (const b of buffers) {
+        combined.set(new Uint8Array(b), offset);
+        offset += b.byteLength;
+      }
+      return new Blob([combined], { type: "application/x-shockwave-flash" });
+    }
+
+    (async () => {
+      try {
+        const parts = [
+          "https://cdn.jsdelivr.net/gh/fnafben/fx@main/fnfa.part0",
+          "https://cdn.jsdelivr.net/gh/fnafben/fx@main/fnfa.part1",
+          "https://cdn.jsdelivr.net/gh/fnafben/fx@main/fnfa.part2",
+          "https://cdn.jsdelivr.net/gh/fnafben/fx@main/fnfa.part3",
+          "https://cdn.jsdelivr.net/gh/fnafben/fx@main/fnfa.part4",
+          "https://cdn.jsdelivr.net/gh/fnafben/fx@main/fnfa.part5",
+          "https://cdn.jsdelivr.net/gh/fnafben/fx@main/fnfa.part6"
+        ];
+
+        const blob = await fetchAndCombineParts(parts);
+        const blobUrl = URL.createObjectURL(blob);
+
+        const container = document.getElementById("swf-container");
+
+        const ruffle = window.RufflePlayer?.newest();
+        const player = ruffle.createPlayer();
+        player.style.width = "100%";
+        player.style.height = "100%";
+        container.appendChild(player);
+        player.load(blobUrl);
+
+        document.getElementById("loading").style.display = "none";
+      } catch (error) {
+        console.error("Error loading SWF:", error);
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("fallback").style.display = "block";
+      }
+    })();
+  </script>
+</body>
+</html>
