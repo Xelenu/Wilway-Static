@@ -12,6 +12,11 @@ const contentSources = {
         creditsText: 'Port by breadbb and aukak'
     },
     '3': {
+        url: '/gam/frame/fnf.html',
+        showMessage: false,
+        creditsText: 'Ninjamuffin99'
+    },
+    '4': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
