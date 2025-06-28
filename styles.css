@@ -398,7 +398,7 @@ body {
   backdrop-filter: blur(0.5rem);
   -webkit-backdrop-filter: blur(0.5rem);
   display: flex;
-  flex-direction: column; /* 👈 This stacks children vertically */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 100;
@@ -464,49 +464,45 @@ body {
       100% { background-position: 0% 0%; }
     }
 
-/* Hyperbeam container styling */
 #hyperbeam-container {
-  border-radius: 12px; /* Curved edges */
-  overflow: hidden; /* Ensures content respects border-radius */
-  position: relative; /* For positioning timer */
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
 }
 
-/* Session timer styling */
 #session-timer {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: rgba(0, 31, 63, 0.8); /* Dark blue, semi-transparent */
-  color: var(--wilway-text); /* #ffffff */
+  background: rgba(0, 31, 63, 0.8);
+  color: var(--wilway-text);
   font-size: 18px;
   font-weight: bold;
   padding: 8px 12px;
   border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0, 230, 230, 0.5); /* Subtle cyan glow */
-  z-index: 10; /* Above Hyperbeam content */
-  font-family: monospace; /* Clean, digital look */
+  box-shadow: 0 0 8px rgba(0, 230, 230, 0.5);
+  z-index: 10;
+  font-family: monospace;
 }
 
-/* Ensure timer visibility in fullscreen mode */
 #hyperbeam-container.fullscreen-mode #session-timer {
   top: 20px;
   right: 20px;
-  font-size: 20px; /* Slightly larger in fullscreen */
+  font-size: 20px;
 }
 
-/* Premium theme timer styling */
 .premium-theme #session-timer {
-  background: rgba(0, 76, 76, 0.8); /* Dark cyan for premium */
-  box-shadow: 0 0 10px var(--wilway-accent-hover); /* #33f2f2 glow */
+  background: rgba(0, 76, 76, 0.8);
+  box-shadow: 0 0 10px var(--wilway-accent-hover);
 }
 
 .loading-text {
   font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
-  font-size: 2em; /* Adjust size as needed */
+  font-size: 2em;
   color: white;
   text-align: center;
   margin-top: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Optional for glow effect */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
   user-select: none;
 }
