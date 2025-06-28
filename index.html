@@ -56,7 +56,6 @@
 const TAB_COOLDOWN = 800;
 let lastTabSwitch = 0;
 
-    // Detect if Impact font is unavailable
     function detectImpactFont() {
       const testString = "test";
       const span = document.createElement('span');
@@ -79,9 +78,8 @@ let lastTabSwitch = 0;
       }
     }
 
-    // Button click handler for iframe and selection
 function buttonClick(buttonNumber) {
-  if (isLoading) return; // Prevent overlapping calls
+  if (isLoading) return;
   isLoading = true;
 
   const loadingScreen = document.getElementById('loadingScreen');
@@ -93,16 +91,12 @@ function buttonClick(buttonNumber) {
   const maxDuration = 1300;
   const duration = Math.random() * (maxDuration - minDuration) + minDuration;
 
-  // Disable buttons during transition
   buttons.forEach(btn => btn.classList.add('disabled'));
 
-  // Clear all selected states first
   buttons.forEach(btn => btn.classList.remove('selected'));
 
-  // Set new selected state
   buttons[buttonNumber - 1].classList.add('selected');
 
-  // Debugging log
   console.log(`Button ${buttonNumber} clicked`);
 
   const sources = {
@@ -140,8 +134,6 @@ function buttonClick(buttonNumber) {
     return;
   }
 
-  // Show loading screen
-  // Fetch a new random loading message before showing the loading screen
 fetch('/core/messages.json')
   .then(response => response.json())
   .then(data => {
@@ -162,7 +154,7 @@ fetch('/core/messages.json')
   loadingScreen.style.display = 'flex';
   loadingScreen.style.animation = 'none';
   progressCircle.style.animation = 'none';
-  loadingScreen.offsetHeight; // Force reflow
+  loadingScreen.offsetHeight;
   loadingScreen.style.animation = `loadingFade ${duration}ms linear forwards`;
   progressCircle.style.animation = `progressFill ${duration}ms linear forwards`;
 
@@ -172,7 +164,7 @@ fetch('/core/messages.json')
     isLoading = false;
   }, duration);
 }
-    // Add click effect
+
     document.querySelectorAll('.theme-button').forEach(button => {
       button.addEventListener('click', function(e) {
         const rect = this.getBoundingClientRect();
@@ -191,7 +183,6 @@ fetch('/core/messages.json')
       });
     });
     
-    // Toggle settings panel
     function toggleSettingsPanel() {
       const panel = document.getElementById('settingsPanel');
       const pauseButton = panel.querySelector('button');
@@ -212,7 +203,6 @@ fetch('/core/messages.json')
       pauseButton.textContent = background.classList.contains('paused') ? '🔴 Animation' : '🟢 Animation';
     }
 
-    // Toggle bottom bar, hover area, and fullscreen button
     function toggleBottomBar() {
       const bottomBar = document.querySelector('.bottom-bar');
       const hoverArea = document.querySelector('.hover-area');
@@ -251,7 +241,6 @@ fetch('/core/messages.json')
       }
     }
 
-    // Toggle fullscreen mode
     function toggleFullscreen() {
       const fullscreenButton = document.querySelector('.fullscreen-button');
       if (document.fullscreenElement) {
@@ -297,7 +286,6 @@ fetch('/core/messages.json')
       return null;
     }
 
-    // Update fullscreen button visibility on fullscreen change
     document.addEventListener('fullscreenchange', () => {
       const fullscreenButton = document.querySelector('.fullscreen-button');
       const bottomBar = document.querySelector('.bottom-bar');
@@ -343,7 +331,6 @@ fetch('/core/messages.json')
       }
     });
 
-    // Toggle animation and save state
     function toggleAnimation() {
   const background = document.querySelector('.background');
   const pauseButton = document.querySelector('#settingsPanel button');
@@ -360,7 +347,6 @@ fetch('/core/messages.json')
   }
 }
 
-// Initialize loading screen and other features
 let initialLoadDone = false;
 
 let autoHideEnabled = false;
