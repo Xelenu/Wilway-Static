@@ -39,9 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Disable the button to prevent double-clicks
   submit.disabled = true;
-  errorEl.textContent = ""; // clear previous errors
+  errorEl.textContent = "";
 
   const endpoint = isSignup ? "/signup" : "/login";
 
@@ -54,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const data = await res.json();
     if (!res.ok) {
-      // Check for unique constraint
       if (data.error?.includes("UNIQUE")) {
         throw new Error("That username is already taken. Please choose another.");
       }
@@ -68,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateAuthUI();
     overlay.style.display = "none";
 
-    // For signups, reload the page
    if (isSignup) {
   window.removeEventListener('beforeunload', handleBeforeUnload);
   location.reload();
@@ -76,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   } catch (err) {
     errorEl.textContent = err.message;
-    submit.disabled = false; // re-enable on error
+    submit.disabled = false;
   }
 });
     guest.addEventListener("click", () => {
@@ -96,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    updateAuthUI(); // Call it once after page load
+    updateAuthUI();
   });
 
    okButton.addEventListener("click", () => {
@@ -107,7 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Function to check if user is premium
   function isUserPremium() {
     const token = localStorage.getItem("cvm_token");
     if (!token) {
@@ -119,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return isPremium;
   }
 
-  // Function to get time of day
   function getTimeOfDay() {
     const hour = new Date().getHours();
     if (hour < 12) return "morning";
@@ -127,31 +122,26 @@ document.addEventListener("DOMContentLoaded", () => {
     return "evening";
   }
 
-  // Function to get username
   function getUsername() {
     const username = localStorage.getItem("cvm_username") || "User";
     console.log(`Username retrieved: "${username}"`);
     return username;
   }
 
-  // Select the overlay-content container
   const overlayContent = document.querySelector("#warning .overlay-content");
   if (!overlayContent) {
     console.log("No overlay-content found in #warning, cannot proceed.");
     return;
   }
 
-  // Select the h2 element
   const h2 = overlayContent.querySelector("h2");
   if (!h2) {
     console.log("No h2 found in overlay-content, cannot add greeting.");
     return;
   }
 
-  // Step 1: Add greeting for all logged-in users
   const username = getUsername();
-  if (username !== "User") { // Only add for logged-in users
-    // Check for existing greeting by ID
+  if (username !== "User") {
     const existingGreeting = document.querySelector("#user-greeting");
     if (!existingGreeting) {
       const timeOfDay = getTimeOfDay();
@@ -171,7 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("No username in localStorage (guest user), skipping greeting creation.");
   }
 
-  // Step 2: Remove duplicates for all users (delayed to catch late additions)
   setTimeout(() => {
     console.log("Checking for duplicate paragraphs in overlay-content.");
     const paragraphs = overlayContent.querySelectorAll("p");
@@ -180,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Log all paragraphs before processing
     console.log("Paragraphs before duplicate removal:");
     paragraphs.forEach((p, index) => {
       console.log(`Index ${index}: "${p.textContent}" (ID: ${p.id || "none"})`);
@@ -199,18 +187,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     console.log(`Duplicate check complete. Total paragraphs after processing: ${overlayContent.querySelectorAll("p").length}`);
-  }, 100); // Small delay to allow other DOM modifications
+  }, 100);
 });
 
     let awayTimestamp = null;
-const maxAwayTime = 5 * 60 * 1000; // 5 minutes in ms
+const maxAwayTime = 5 * 60 * 1000;
 
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
-    // User left tab, start timing
     awayTimestamp = Date.now();
   } else if (document.visibilityState === 'visible') {
-    // User came back, reset timer
     awayTimestamp = null;
   }
 });
@@ -222,4 +208,4 @@ setInterval(() => {
       location.reload();
     }
   }
-}, 10000); // check every 10 seconds
+}, 10000);
