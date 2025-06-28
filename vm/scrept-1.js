@@ -74,7 +74,7 @@ function getUsername() {
   return localStorage.getItem("cvm_username") || "User";
 }
 
-let serverUrl = 'https://example.com/'; // Default URL
+let serverUrl = 'https://example.com/';
 const selectedButton = document.querySelector('#server-switch button.selected');
 if (selectedButton) {
   serverUrl = selectedButton.dataset.url;
@@ -93,7 +93,7 @@ if (serverButtons.length > 0) {
 } else {
   console.warn('No server-switch buttons found; using default server URL.');
 }
-  // Removed timer-related elements (fullscreen-timer-wrapper, fullscreen-timer, toggle-timer-btn)
+
   async function start() {
     setTimeout(() => document.getElementById('black-notif').classList.add('active'), 5000);
     try {
@@ -181,16 +181,14 @@ document.addEventListener('fullscreenchange', () => {
           .classList.toggle('fullscreen-mode', inFS);
 });
 
-// Session timer logic
-// Session timer logic
 function startSessionTimer() {
   const timerElement = document.getElementById('session-timer');
   if (!timerElement) {
     console.error('Session timer element (#session-timer) not found.');
     return;
   }
-  let seconds = 45 * 40; // 60 minutes
-  timerElement.style.display = 'block'; // Ensure visibility
+  let seconds = 45 * 40;
+  timerElement.style.display = 'block';
   updateTimerDisplay(seconds);
   const interval = setInterval(() => {
     if (seconds > 0) {
@@ -213,7 +211,6 @@ function updateTimerDisplay(seconds) {
   }
 }
 
-  // ======== key blocking ========
   document.addEventListener('keydown', e => {
     if (e.ctrlKey) {
       if (!['c','v','C','V'].includes(e.key)) e.preventDefault();
@@ -224,9 +221,6 @@ function updateTimerDisplay(seconds) {
     }
   });
 }
-
-////////////////////////////////////////////////////////////////////////////////
-// 3) HOOKING UP AUTH FLOW
 
 document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("overlay");
