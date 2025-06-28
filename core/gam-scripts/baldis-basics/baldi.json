@@ -2,7 +2,7 @@
   "companyName": "Mystman12",
   "productName": "Baldi's Basics in Education and Learning",
   "productVersion": "1.4.3",
-  "dataUrl": "unity/baldi.data.unityweb",
+  "dataUrl": "https://bread-org.github.io/s16.games/g/baldis-basics/unity/baldi.data.unityweb",
   "wasmCodeUrl": "unity/baldi.wasm.code.unityweb",
   "wasmFrameworkUrl": "unity/baldi.wasm.framework.unityweb",
   "graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
