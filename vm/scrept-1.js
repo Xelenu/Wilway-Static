@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const userEl = document.getElementById("auth-username");
   const passEl = document.getElementById("auth-password");
   const errorEl = document.getElementById("auth-error");
-  const WORKER_BASE = "https://vm-account-api.learnstats.xyz";
+  const WORKER_BASE = "https://useless-vos-acc-runner.grady.lol";
 
   let isSignup = false;
   let started = false;
