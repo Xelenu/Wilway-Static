@@ -1,12 +1,12 @@
 // This file overwrites the stock UV config.js
 
 self.__uv$config = {
-  prefix: "/uv/service/",
+  prefix: "/cra/zim/",
   encodeUrl: Ultraviolet.codec.xor.encode,
   decodeUrl: Ultraviolet.codec.xor.decode,
-  handler: "/uv/uv.handler.js",
-  client: "/uv/uv.client.js",
-  bundle: "/uv/uv.bundle.js",
-  config: "/uv/uv.config.js",
-  sw: "/uv/uv.sw.js",
+  handler: "/cra/uv.handler.js",
+  client: "/cra/uv.client.js",
+  bundle: "/cra/uv.bundle.js",
+  config: "/cra/uv.config.js",
+  sw: "/cra/uv.sw.js",
 };
