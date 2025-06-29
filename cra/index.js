@@ -37,8 +37,8 @@ form.addEventListener("submit", async (event) => {
 	let frame = document.getElementById("uv-frame");
 	frame.style.display = "block";
 	let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
-	if (await connection.getTransport() !== "/epoxy/index.mjs") {
-		await connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
+	if (await connection.getTransport() !== "/cra/epoxy/index.mjs") {
+		await connection.setTransport("/cra/epoxy/index.mjs", [{ wisp: wispUrl }]);
 	}
 	frame.src = __uv$config.prefix + __uv$config.encodeUrl(url);
 });
