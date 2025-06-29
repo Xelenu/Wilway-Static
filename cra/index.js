@@ -32,7 +32,7 @@ fastify.register(fastifyStatic, {
 });
 
 fastify.get("/uv/uv.config.js", (req, res) => {
-	return res.sendFile("uv/uv.config.js", publicPath);
+	return res.sendFile("zim/uv.config.js", publicPath);
 });
 
 fastify.register(fastifyStatic, {
