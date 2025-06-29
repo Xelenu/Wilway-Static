@@ -37,8 +37,12 @@ form.addEventListener("submit", async (event) => {
 	let frame = document.getElementById("uv-frame");
 	frame.style.display = "block";
 	let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
-	if (await connection.getTransport() !== "/cra/epoxy/index.mjs") {
-		await connection.setTransport("/cra/epoxy/index.mjs", [{ wisp: wispUrl }]);
-	}
+	if (await connection.getTransport() !== "bare-mux-remote") {
+	await connection.setTransport("bare-mux-remote", [
+		// REPLACE this URL with your actual Cloudflare Worker URL
+		"https://ultraviolet-proxy.stilla-rrms-wlwv-k12-or-us.workers.dev/",
+		"bare-remote"
+	]);
+}
 	frame.src = __uv$config.prefix + __uv$config.encodeUrl(url);
 });
