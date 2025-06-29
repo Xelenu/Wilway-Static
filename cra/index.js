@@ -19,7 +19,7 @@ const error = document.getElementById("uv-error");
  * @type {HTMLPreElement}
  */
 const errorCode = document.getElementById("uv-error-code");
-const connection = new BareMux.BareMuxConnection("/baremux/worker.js")
+const connection = new BareMux.BareMuxConnection("/cra/baremux/worker.js")
 
 form.addEventListener("submit", async (event) => {
 	event.preventDefault();
