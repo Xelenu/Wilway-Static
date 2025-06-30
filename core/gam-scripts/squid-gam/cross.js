@@ -10,7 +10,7 @@ $(function() {
 });
 
 function loadB(){
-	$.get('../../../cross/overlay.html', function(data){
+	$.get('/core/gam-scripts/squid-gam/overlay.html', function(data){
 		$('body').prepend(data);
 		buildB();
 		displayB();
@@ -46,7 +46,7 @@ function getSyncScriptParams() {
 	 for(scriptNum=0;scriptNum<scripts.length;scriptNum++){
 		 var scriptName = scripts[scriptNum];
 		 
-		 if(scriptName.getAttribute('src')=='../../../cross/cross.js'){
+		 if(scriptName.getAttribute('src')=='/core/gam-scripts/squid-gam/cross.js'){
 			 bannerCon = scriptName.getAttribute('data-banner');
 			 linkTo = scriptName.getAttribute('data-link');
 		 }
