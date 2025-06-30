@@ -11,10 +11,17 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
     }
+
+    #container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: black;
+    }
+
     canvas {
       width: 320px;
       height: 200px;
@@ -29,30 +36,53 @@
 </head>
 <body>
 
-  <canvas id="canvas"
-          width="320"
-          height="200"
-          tabindex="0"
-          oncontextmenu="event.preventDefault()">
-  </canvas>
+  <div id="container">
+    <canvas id="canvas"
+            width="320"
+            height="200"
+            tabindex="0"
+            oncontextmenu="event.preventDefault()">
+    </canvas>
+  </div>
 
   <script>
     const canvas = document.getElementById('canvas');
+    const container = document.getElementById('container');
 
-    canvas.focus();  
-    canvas.addEventListener('click', () => canvas.focus());
+    // Focus canvas for keyboard input
+    function focusCanvas() {
+      canvas.focus();
+    }
 
+    canvas.addEventListener('click', focusCanvas);
+    window.addEventListener('load', focusCanvas);
+
+    // Scale canvas by integer multiple to fit screen
     function scaleCanvas() {
-      const maxX = Math.floor(window.innerWidth  / 320);
+      const maxX = Math.floor(window.innerWidth / 320);
       const maxY = Math.floor(window.innerHeight / 200);
       const scale = Math.max(1, Math.min(maxX, maxY));
       canvas.style.transform = `scale(${scale})`;
     }
 
+    window.addEventListener('resize', scaleCanvas);
     scaleCanvas();
 
-    window.addEventListener('resize', scaleCanvas);
+    // Optional: Add Fullscreen on key press (F key)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'f' || e.key === 'F') {
+        if (!document.fullscreenElement) {
+          container.requestFullscreen().catch(err => {
+            console.error(`Fullscreen error: ${err.message}`);
+          });
+        } else {
+          document.exitFullscreen();
+        }
+      }
+    });
 
+    // Ensure canvas rescaling on fullscreen change
+    document.addEventListener('fullscreenchange', scaleCanvas);
   </script>
 
   <script>
