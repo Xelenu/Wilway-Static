@@ -8,14 +8,19 @@
       margin: 0;
       padding: 0;
       background: black;
-      height: 100%;
       width: 100%;
+      height: 100%;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     canvas {
       display: block;
       background-color: black;
+      width: 100vw;
+      height: 100vh;
       image-rendering: pixelated;
       image-rendering: crisp-edges;
     }
@@ -28,16 +33,14 @@
 <script>
   const canvas = document.getElementById('canvas');
 
+  // Resize the canvas resolution to match display size
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
 
-  // Initial size
-  resizeCanvas();
-
-  // Resize on window size change
   window.addEventListener('resize', resizeCanvas);
+  resizeCanvas(); // Initial call
 </script>
 
 <script>
@@ -47,7 +50,6 @@
     });
   }
 
-  // Timer fix
   (function () {
     const originalSetTimeout = window.setTimeout;
     let totalTimers = 0;
@@ -101,7 +103,6 @@
   };
 </script>
 
-<!-- Load the Wolfenstein game engine -->
 <script async src="/core/gam-scripts/wolfenstein/Chocolate-Wolfenstein-3D.js"></script>
 
 </body>
