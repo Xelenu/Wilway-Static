@@ -1,249 +1,100 @@
-<html lang="en-us"><head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Wolfenstein</title>
-    <style>
-      body {
-        font-family: arial;
-        margin: 0;
-        padding: none;
-      }
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <title>Wolfenstein</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      height: 100%;
+      overflow: hidden;
+    }
+    .canvas-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    canvas#canvas {
+      transform: scaleY(2.4) scaleX(2);
+      transform-origin: top;
+      image-rendering: pixelated;
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
 
-      .emscripten {
-        padding-right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-      }
-      div.emscripten {
-        text-align: center;
-      }
-      div.emscripten_border {
-      }
-      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-      canvas.emscripten {
-        transform: scaleY(2.4) scaleX(2);
-        transform-origin: top;
-        image-rendering: pixelated;
-        border: 0px none;
-        background-color: black;
-      }
+  <div class="canvas-container">
+    <canvas id="canvas" width="320" height="200"
+            oncontextmenu="event.preventDefault()"></canvas>
+  </div>
 
-      .fullscreen canvas.emscripten {
-        transform: none;
-        margin-top: none;
-      }
+  <script>
+    function resumeSDLAudioContext() {
+      SDL.audioContext.resume().then(function () {
+        console.log('Playback resumed successfully');
+      });
+    }
 
-      #emscripten_logo {
-        display: inline-block;
-        margin: 0;
-      }
+    function scaleCanvas(size) {
+      document.getElementById('canvas').style.transform =
+        `scaleY(${size === 2 ? 2.4 : 3.6}) scaleX(${size})`;
+    }
 
-      #status {
-        display: inline-block;
-        vertical-align: top;
-        margin-top: 0;
-        margin-left: 0;
-        font-weight: bold;
-      }
-
-      #progress {
-        height: 20px;
-        width: 300px;
-      }
-
-      #controls {
-        display: inline-block;
-        vertical-align: top;
-        margin-top: 0;
-        margin-right: 0;
-      }
-      .controlbox {
-        display: flex;
-        justify-content: center;
-      }
-      .statusarea {
-        padding-left: 10px;
-        padding-top: 2px;
-      }
-
-      body {
-        background: #8d8d8d;
-        color: white;
-      }
-    </style>
-  </head>
-  <body>
-    <script type="text/javascript">
-      function resumeSDLAudioContext() {
-        SDL.audioContext.resume().then(function () {
-          console.log('Playback resumed successfully');
-        });
-      }
-
-      function scaleCanvas(size) {
-        document.querySelector('#canvas').style.transform = `scaleY(${
-          size === 2 ? 2.4 : 3.6
-        }) scaleX(${size})`;
-      }
-
-      var originalSetTimeout = setTimeout;
+    (function() {
+      var originalSetTimeout = window.setTimeout;
       var totalTimers = 0;
-      window.setTimeout = function (fn, time) {
+      window.setTimeout = function(fn, time) {
         totalTimers++;
-        if ((totalTimers > 1 && totalTimers < 100) || totalTimers % 100 == 0) {
+        if ((totalTimers > 1 && totalTimers < 100) || totalTimers % 100 === 0) {
           console.log('totalTimers=', totalTimers);
         }
-        return originalSetTimeout(function (...args) {
+        return originalSetTimeout(function(...args) {
           totalTimers--;
           return fn.apply(this, args);
-        });
+        }, time);
       };
-    </script>
+    })();
+  </script>
 
-    <div class="controlbox">
-      <div id="controls">
-        <!-- <input type="checkbox" id="resize">Resize canvas
-      <input type="checkbox" id="pointerLock" checked>Lock/hide mouse pointer &nbsp;&nbsp;&nbsp;
-      
-        <input type="button" value="Fullscreen" onclick="
-        document.body.classList.add('fullscreen');
-        Module.requestFullscreen(
-          document.getElementById('pointerLock').checked, 
-          document.getElementById('resize').checked
-        );">
--->
-
-        <button id="enableSound" onclick="resumeSDLAudioContext()">
-          enable sound
-        </button>
-        <button id="screen2x" onclick="scaleCanvas(2)">2x scale</button>
-        <button id="screen3x" onclick="scaleCanvas(3)">3x scale</button>
-      </div>
-
-      <div class="statusarea">
-        <div class="spinner" id="spinner" style="display: none;"></div>
-        <div class="emscripten" id="status"></div>
-      </div>
-
-      <pre style="position: absolute; top: 10px; left: 10px">      <a href="/">home</a>
-      <a href="https://twitter.com/ur_friend_james">twitter</a>
-
-      <b>controls</b>
-      arrow keys: move
-      ctrl: shoot
-      space: open door
-      shift: run
-      alt+arrow keys: strafe
-      number keys: change weapon
-    </pre>
-    </div>
-    <!-- end controlbox -->
-
-    <div class="emscripten">
-      <progress value="0" max="1" id="progress" hidden=""></progress>
-    </div>
-
-    <div class="emscripten_border">
-      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" width="320" height="200"></canvas>
-    </div>
-    <!-- <textarea id="output" rows="8"></textarea> -->
-
-    <script type="text/javascript">
-      var statusElement = document.getElementById('status');
-      var progressElement = document.getElementById('progress');
-      var spinnerElement = document.getElementById('spinner');
-
-      var Module = {
-        preRun: [],
-        postRun: [],
-        print: (function () {
-          // var element = document.getElementById('output');
-          // if (element) element.value = ''; // clear browser cache
-          return function (text) {
-            // if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-            // These replacements are necessary if you render to raw HTML
-            //text = text.replace(/&/g, "&amp;");
-            //text = text.replace(/</g, "&lt;");
-            //text = text.replace(/>/g, "&gt;");
-            //text = text.replace('\n', '<br>', 'g');
-            console.log(text);
-            // if (element) {
-            //   element.value += text + "\n";
-            //   element.scrollTop = element.scrollHeight; // focus on bottom
-            // }
-          };
-        })(),
-        printErr: function (text) {
-          if (arguments.length > 1)
-            text = Array.prototype.slice.call(arguments).join(' ');
-          console.error(text);
-        },
-        canvas: (function () {
-          var canvas = document.getElementById('canvas');
-
-          // As a default initial behavior, pop up an alert when webgl context is lost. To make your
-          // application robust, you may want to override this behavior before shipping!
-          // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
-          canvas.addEventListener(
-            'webglcontextlost',
-            function (e) {
-              alert('WebGL context lost. You will need to reload the page.');
-              e.preventDefault();
-            },
-            false
-          );
-
-          return canvas;
-        })(),
-        setStatus: function (text) {
-          if (!Module.setStatus.last)
-            Module.setStatus.last = {time: Date.now(), text: ''};
-          if (text === Module.setStatus.last.text) return;
-          var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
-          var now = Date.now();
-          if (m && now - Module.setStatus.last.time < 30) return; // if this is a progress update, skip it if too soon
-          Module.setStatus.last.time = now;
-          Module.setStatus.last.text = text;
-          if (m) {
-            text = m[1];
-            progressElement.value = parseInt(m[2]) * 100;
-            progressElement.max = parseInt(m[4]) * 100;
-            progressElement.hidden = false;
-            // spinnerElement.hidden = false;
-          } else {
-            progressElement.value = null;
-            progressElement.max = null;
-            progressElement.hidden = true;
-            if (!text) spinnerElement.style.display = 'none';
-          }
-          statusElement.innerHTML = text;
-        },
-        totalDependencies: 0,
-        monitorRunDependencies: function (left) {
-          this.totalDependencies = Math.max(this.totalDependencies, left);
-          Module.setStatus(
-            left
-              ? 'Preparing... (' +
-                  (this.totalDependencies - left) +
-                  '/' +
-                  this.totalDependencies +
-                  ')'
-              : 'All downloads complete.'
-          );
-        },
+  <script>
+    var Module = {
+      preRun: [], postRun: [],
+      print: function(text) { console.log(text); },
+      printErr: function(text) { console.error(text); },
+      canvas: (function() {
+        var canvas = document.getElementById('canvas');
+        canvas.addEventListener('webglcontextlost', function(e) {
+          alert('WebGL context lost. Reload the page.');
+          e.preventDefault();
+        }, false);
+        return canvas;
+      })(),
+      setStatus: function(text) {
+        console.log('[status] ' + text);
+      },
+      totalDependencies: 0,
+      monitorRunDependencies: function(left) {
+        this.totalDependencies = Math.max(this.totalDependencies, left);
+        Module.setStatus(left
+          ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')'
+          : 'All downloads complete.'
+        );
+      }
+    };
+    Module.setStatus('Downloading...');
+    window.onerror = function(event) {
+      Module.setStatus('Exception thrown, see console');
+      Module.setStatus = function(text) {
+        text && Module.printErr('[post-exception status] ' + text);
       };
-      Module.setStatus('Downloading...');
-      window.onerror = function (event) {
-        // TODO: do not warn on ok events like simulating an infinite loop or exitStatus
-        Module.setStatus('Exception thrown, see JavaScript console');
-        spinnerElement.style.display = 'none';
-        Module.setStatus = function (text) {
-          if (text) Module.printErr('[post-exception status] ' + text);
-        };
-      };
-    </script>
-    <script async="" type="text/javascript" src="/core/gam-scripts/wolfenstein/Chocolate-Wolfenstein-3D.js"></script>
-  
+    };
+  </script>
 
-</body></html>
+  <script async src="/core/gam-scripts/wolfenstein/Chocolate-Wolfenstein-3D.js"></script>
+
+</body>
+</html>
