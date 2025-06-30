@@ -17,6 +17,12 @@ const contentSources = {
         creditsText: 'Ninjamuffin99'
     },
     '4': {
+        url: '/gam/frame/wolfenstein.html',
+        showMessage: true,
+        messageText: '👀 This game is from 1992!',
+        creditsText: 'id Software'
+    },
+    '5': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
