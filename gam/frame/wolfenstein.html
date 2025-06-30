@@ -2,99 +2,107 @@
 <html lang="en-US">
 <head>
   <meta charset="utf-8">
-  <title>Wolfenstein</title>
+  <title>Wolfenstein Fullscreen</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       background: black;
       height: 100%;
+      width: 100%;
       overflow: hidden;
     }
-    .canvas-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-    }
-    canvas#canvas {
-      transform: scaleY(2.4) scaleX(2);
-      transform-origin: top;
-      image-rendering: pixelated;
+
+    canvas {
+      display: block;
       background-color: black;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
     }
   </style>
 </head>
 <body>
 
-  <div class="canvas-container">
-    <canvas id="canvas" width="320" height="200"
-            oncontextmenu="event.preventDefault()"></canvas>
-  </div>
+<canvas id="canvas"></canvas>
 
-  <script>
-    function resumeSDLAudioContext() {
-      SDL.audioContext.resume().then(function () {
-        console.log('Playback resumed successfully');
-      });
-    }
+<script>
+  const canvas = document.getElementById('canvas');
 
-    function scaleCanvas(size) {
-      document.getElementById('canvas').style.transform =
-        `scaleY(${size === 2 ? 2.4 : 3.6}) scaleX(${size})`;
-    }
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
 
-    (function() {
-      var originalSetTimeout = window.setTimeout;
-      var totalTimers = 0;
-      window.setTimeout = function(fn, time) {
-        totalTimers++;
-        if ((totalTimers > 1 && totalTimers < 100) || totalTimers % 100 === 0) {
-          console.log('totalTimers=', totalTimers);
-        }
-        return originalSetTimeout(function(...args) {
-          totalTimers--;
-          return fn.apply(this, args);
-        }, time);
-      };
-    })();
-  </script>
+  // Initial size
+  resizeCanvas();
 
-  <script>
-    var Module = {
-      preRun: [], postRun: [],
-      print: function(text) { console.log(text); },
-      printErr: function(text) { console.error(text); },
-      canvas: (function() {
-        var canvas = document.getElementById('canvas');
-        canvas.addEventListener('webglcontextlost', function(e) {
-          alert('WebGL context lost. Reload the page.');
-          e.preventDefault();
-        }, false);
-        return canvas;
-      })(),
-      setStatus: function(text) {
-        console.log('[status] ' + text);
-      },
-      totalDependencies: 0,
-      monitorRunDependencies: function(left) {
-        this.totalDependencies = Math.max(this.totalDependencies, left);
-        Module.setStatus(left
+  // Resize on window size change
+  window.addEventListener('resize', resizeCanvas);
+</script>
+
+<script>
+  function resumeSDLAudioContext() {
+    SDL.audioContext.resume().then(() => {
+      console.log('Playback resumed successfully');
+    });
+  }
+
+  // Timer fix
+  (function () {
+    const originalSetTimeout = window.setTimeout;
+    let totalTimers = 0;
+    window.setTimeout = function (fn, time) {
+      totalTimers++;
+      if ((totalTimers > 1 && totalTimers < 100) || totalTimers % 100 === 0) {
+        console.log('totalTimers =', totalTimers);
+      }
+      return originalSetTimeout(function (...args) {
+        totalTimers--;
+        return fn.apply(this, args);
+      }, time);
+    };
+  })();
+</script>
+
+<script>
+  var Module = {
+    preRun: [],
+    postRun: [],
+    print: function (text) { console.log(text); },
+    printErr: function (text) { console.error(text); },
+    canvas: (function () {
+      const canvas = document.getElementById('canvas');
+      canvas.addEventListener('webglcontextlost', function (e) {
+        alert('WebGL context lost. Reload the page.');
+        e.preventDefault();
+      }, false);
+      return canvas;
+    })(),
+    setStatus: function (text) {
+      console.log('[status]', text);
+    },
+    totalDependencies: 0,
+    monitorRunDependencies: function (left) {
+      this.totalDependencies = Math.max(this.totalDependencies, left);
+      Module.setStatus(
+        left
           ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')'
           : 'All downloads complete.'
-        );
-      }
-    };
-    Module.setStatus('Downloading...');
-    window.onerror = function(event) {
-      Module.setStatus('Exception thrown, see console');
-      Module.setStatus = function(text) {
-        text && Module.printErr('[post-exception status] ' + text);
-      };
-    };
-  </script>
+      );
+    }
+  };
 
-  <script async src="/core/gam-scripts/wolfenstein/Chocolate-Wolfenstein-3D.js"></script>
+  Module.setStatus('Downloading...');
+  window.onerror = function (event) {
+    Module.setStatus('Exception thrown, see console');
+    Module.setStatus = function (text) {
+      text && Module.printErr('[post-exception status] ' + text);
+    };
+  };
+</script>
+
+<!-- Load the Wolfenstein game engine -->
+<script async src="/core/gam-scripts/wolfenstein/Chocolate-Wolfenstein-3D.js"></script>
 
 </body>
 </html>
