@@ -1050,7 +1050,7 @@ function isDataURI(filename) {
 
 function integrateWasmJS() {
     var wasmTextFile = "Chocolate-Wolfenstein-3D.wast";
-    var wasmBinaryFile = "/core/gam-scripts/wolfenstein/Chocolate-Wolfenstein-3D.wasm";
+    var wasmBinaryFile = "Chocolate-Wolfenstein-3D.wasm";
     var asmjsCodeFile = "Chocolate-Wolfenstein-3D.temp.asm.js";
     if (!isDataURI(wasmTextFile)) {
         wasmTextFile = locateFile(wasmTextFile)
