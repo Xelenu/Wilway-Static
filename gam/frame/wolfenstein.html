@@ -37,7 +37,6 @@
   <script>
     const canvas = document.getElementById('canvas');
 
-    // Focus canvas to ensure keyboard input works
     function focusCanvas() {
       canvas.focus();
     }
@@ -45,29 +44,24 @@
     canvas.addEventListener('click', focusCanvas);
     window.addEventListener('load', focusCanvas);
 
-    // Dynamically scale canvas with integer multiple
     function scaleCanvas() {
       const baseWidth = canvas.width;
       const baseHeight = canvas.height;
       const scaleX = Math.floor(window.innerWidth / baseWidth);
       const scaleY = Math.floor(window.innerHeight / baseHeight);
       const scale = Math.max(1, Math.min(scaleX, scaleY));
-
-      canvas.style.width = `${baseWidth * scale}px`;
-      canvas.style.height = `${baseHeight * scale}px`;
+      canvas.style.width = baseWidth * scale + 'px';
+      canvas.style.height = baseHeight * scale + 'px';
     }
 
     window.addEventListener('resize', scaleCanvas);
     document.addEventListener('fullscreenchange', scaleCanvas);
     scaleCanvas();
 
-    // Fullscreen toggle with F key
     window.addEventListener('keydown', (e) => {
       if (e.key === 'f' || e.key === 'F') {
         if (!document.fullscreenElement) {
-          canvas.requestFullscreen().catch(err => {
-            console.error('Failed to enter fullscreen:', err);
-          });
+          canvas.requestFullscreen().catch(() => {});
         } else {
           document.exitFullscreen();
         }
@@ -76,24 +70,17 @@
   </script>
 
   <script>
-    // SDL Audio workaround
     function resumeSDLAudioContext() {
       if (SDL?.audioContext?.resume) {
-        SDL.audioContext.resume().then(() =>
-          console.log('Audio resumed')
-        );
+        SDL.audioContext.resume().then(() => {});
       }
     }
 
-    // Monitor setTimeout calls (optional debugging)
     (function () {
       const origSetTimeout = window.setTimeout;
       let timers = 0;
       window.setTimeout = function(fn, t) {
         timers++;
-        if ((timers > 1 && timers < 100) || timers % 100 === 0) {
-          console.log('timers=', timers);
-        }
         return origSetTimeout(() => {
           timers--;
           return fn();
@@ -103,12 +90,11 @@
   </script>
 
   <script>
-    // Emscripten module config
     var Module = {
       preRun: [], postRun: [],
-      print:    text => console.log(text),
+      print: text => console.log(text),
       printErr: text => console.error(text),
-      canvas:   (function() {
+      canvas: (function() {
         const c = document.getElementById('canvas');
         c.addEventListener('webglcontextlost', e => {
           alert('WebGL context lost — reload.');
