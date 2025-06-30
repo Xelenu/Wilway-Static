@@ -2,19 +2,19 @@ const contentSources = {
     '1': {
         url: '/gam/frame/repo.html',
         showMessage: true,
-        messageText: '⚠️ Because this is a PC game, you will have to have some patience in order for this to load! ✨ This is a special game.',
+        messageText: '⚠️ Because this is a PC gam, you will have to have some patience in order for this to load! ✨ This is a special gam.',
         creditsText: 'Port by breadbb and 98corbins'
     },
     '2': {
         url: '/gam/frame/webfishing.html',
         showMessage: true,
-        messageText: '✨ This is a special game!',
+        messageText: '✨ This is a special gam!',
         creditsText: 'Port by breadbb and aukak'
     },
     '3': {
         url: '/gam/frame/wolfenstein.html',
         showMessage: true,
-        messageText: '👀 This game is from 1992!',
+        messageText: '👀 This gam is from 1992!',
         creditsText: 'id Software'
     },
     '4': {
