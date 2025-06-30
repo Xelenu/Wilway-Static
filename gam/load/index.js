@@ -12,15 +12,15 @@ const contentSources = {
         creditsText: 'Port by breadbb and aukak'
     },
     '3': {
-        url: '/gam/frame/fnf.html',
-        showMessage: false,
-        creditsText: 'Ninjamuffin99'
-    },
-    '4': {
         url: '/gam/frame/wolfenstein.html',
         showMessage: true,
         messageText: '👀 This game is from 1992!',
         creditsText: 'id Software'
+    },
+    '4': {
+        url: '/gam/frame/fnf.html',
+        showMessage: false,
+        creditsText: 'Ninjamuffin99'
     },
     '5': {
         url: 'https://example.com',
