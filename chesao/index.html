@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Apply Impact first, then Poppins, then sans-serif */
 body {
   font-family: Impact, 'Poppins', sans-serif;
   display: flex;
@@ -18,17 +17,14 @@ body {
   min-height: 100vh;
   width: 100%;
   margin: 0;
-  /* darkblue to darkcyan gradient */
-  background: linear-gradient(135deg, #00008B, #008B8B);
   padding: 20px;
   box-sizing: border-box;
 }
 
-/* Main text styling—using a cyan-ish accent */
 .motw-text {
   font-size: 2rem;
   font-weight: bold;
-  color: #00CED1; /* DarkTurquoise accent */
+  color: #00CED1;
   text-shadow: 0 0 2px #00CED1, 0 0 4px #00CED1;
   margin-top: 20px;
   text-align: center;
@@ -45,7 +41,6 @@ body {
   text-shadow: 0 0 15px #00CED1, 0 0 20px #00CED1;
 }
 
-/* Form container */
 .form-container {
   margin-top: 20px;
   text-align: center;
@@ -53,26 +48,26 @@ body {
 .form-container input {
   padding: 10px;
   font-size: 1.2rem;
-  background-color: #111; /* very dark background for input */
+  background-color: #111;
   color: #00CED1;
   border: 1px solid #00CED1;
   border-radius: 5px;
 }
 .form-container input::placeholder {
-  color: #555; /* optional: muted placeholder */
+  color: #555;
 }
 .form-container button {
   padding: 10px 20px;
   font-size: 1.2rem;
   background-color: #00CED1;
-  color: #000; /* black text on cyan button */
+  color: #000;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
 }
 .form-container button:hover {
-  background-color: #008B8B; /* darkcyan on hover */
+  background-color: #008B8B;
   color: #fff;
 }
   </style>
@@ -116,7 +111,7 @@ body {
           overlay.style.justifyContent = 'center';
           overlay.style.fontWeight = 'bold';
           overlay.style.fontSize = '1.5rem';
-          overlay.style.zIndex = 9999;  /* Ensure this is on top */
+          overlay.style.zIndex = 9999;
           overlay.textContent = "...";
 
           document.body.appendChild(overlay);
