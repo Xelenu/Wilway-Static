@@ -50,8 +50,8 @@ const specialBox3 = document.getElementById('box-3');
 if (specialBox3) {
   specialBox3.innerHTML = `
     <div class="box-content">
-      <img src="${siteUrl}/core/gam-image/fnf.png" alt="FNF" draggable="false">
-      <p>FNF</p>
+      <img src="${siteUrl}/core/gam-image/wolfenstein.png" alt="Wolfenstein" draggable="false">
+      <p>Wolfenstein 3D</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=3'">Let's go!</button>
     </div>
   `;
@@ -61,12 +61,14 @@ const specialBox4 = document.getElementById('box-4');
 if (specialBox4) {
   specialBox4.innerHTML = `
     <div class="box-content">
-      <img src="${siteUrl}/core/gam-image/wolfenstein.png" alt="Wolfenstein" draggable="false">
-      <p>Wolfenstein 3D</p>
+      <img src="${siteUrl}/core/gam-image/fnf.png" alt="FNF" draggable="false">
+      <p>FNF</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=4'">Let's go!</button>
     </div>
   `;
 }
+
+
 
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
