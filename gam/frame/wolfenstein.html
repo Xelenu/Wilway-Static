@@ -4,40 +4,47 @@
   <meta charset="utf-8">
   <title>Wolfenstein</title>
   <style>
+    /* make page fill the entire window */
     html, body {
       margin: 0;
       padding: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background: black;
       overflow: hidden;
     }
 
+    /* full-screen flex container for centering/scaling */
+    #wrapper {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* canvas styling: pixelated, no scrollbars */
     canvas {
       background: black;
       image-rendering: pixelated;
       image-rendering: crisp-edges;
-      display: block;
       outline: none;
+      /* but never exceed the wrapper’s bounds */
       max-width: 100%;
       max-height: 100%;
-      margin: auto;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
     }
   </style>
 </head>
 <body>
 
-  <canvas id="canvas"
-          width="320"
-          height="200"
-          tabindex="0"
-          oncontextmenu="event.preventDefault()">
-  </canvas>
+  <div id="wrapper">
+    <canvas id="canvas"
+            width="320"
+            height="200"
+            tabindex="0"
+            oncontextmenu="event.preventDefault()">
+    </canvas>
+  </div>
 
   <script>
     const canvas = document.getElementById('canvas');
@@ -45,34 +52,38 @@
     function focusCanvas() {
       canvas.focus();
     }
-
     canvas.addEventListener('click', focusCanvas);
     window.addEventListener('load', focusCanvas);
 
     function scaleCanvas() {
-      const baseWidth = canvas.width;
-      const baseHeight = canvas.height;
-      const aspectRatio = baseWidth / baseHeight;
+      const baseW = canvas.width;
+      const baseH = canvas.height;
+      const aspect = baseW / baseH;
 
-      let newWidth = window.innerWidth;
-      let newHeight = window.innerHeight;
+      // measure the wrapper (i.e. the full window)
+      const maxW = document.documentElement.clientWidth;
+      const maxH = document.documentElement.clientHeight;
 
-      if (newWidth / newHeight > aspectRatio) {
-        newWidth = newHeight * aspectRatio;
-      } else {
-        newHeight = newWidth / aspectRatio;
+      // compute the largest size that fits while preserving aspect ratio
+      let newW = maxW;
+      let newH = maxW / aspect;
+      if (newH > maxH) {
+        newH = maxH;
+        newW = maxH * aspect;
       }
 
-      canvas.style.width = `${newWidth}px`;
-      canvas.style.height = `${newHeight}px`;
+      canvas.style.width  = newW + 'px';
+      canvas.style.height = newH + 'px';
     }
 
+    // rescale whenever the window (or fullscreen state) changes
     window.addEventListener('resize', scaleCanvas);
     document.addEventListener('fullscreenchange', scaleCanvas);
     scaleCanvas();
 
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'f' || e.key === 'F') {
+    // optional F‑key fullscreen toggle
+    window.addEventListener('keydown', e => {
+      if (e.key.toLowerCase() === 'f') {
         if (!document.fullscreenElement) {
           canvas.requestFullscreen().catch(() => {});
         } else {
@@ -82,6 +93,7 @@
     });
   </script>
 
+  <!-- your existing SDL/Module scripts below: -->
   <script>
     function resumeSDLAudioContext() {
       if (SDL?.audioContext?.resume) {
@@ -126,7 +138,6 @@
         );
       }
     };
-
     Module.setStatus('Downloading...');
     window.onerror = e => {
       Module.setStatus('Exception — see console');
