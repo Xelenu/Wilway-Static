@@ -4,146 +4,139 @@
   <meta charset="utf-8">
   <title>Wolfenstein</title>
   <style>
-    /* make page fill the entire window */
     html, body {
       margin: 0;
       padding: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       background: black;
       overflow: hidden;
     }
 
-    /* full-screen flex container for centering/scaling */
-    #wrapper {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* canvas styling: pixelated, no scrollbars */
-    canvas {
+    #canvas {
+      display: block;
+      margin: auto;
       background: black;
       image-rendering: pixelated;
       image-rendering: crisp-edges;
       outline: none;
-      /* but never exceed the wrapper’s bounds */
-      max-width: 100%;
-      max-height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
     }
   </style>
 </head>
 <body>
 
-  <div id="wrapper">
-    <canvas id="canvas"
-            width="320"
-            height="200"
-            tabindex="0"
-            oncontextmenu="event.preventDefault()">
-    </canvas>
-  </div>
+<canvas id="canvas"
+        width="320"
+        height="200"
+        tabindex="0"
+        oncontextmenu="event.preventDefault()">
+</canvas>
 
-  <script>
-    const canvas = document.getElementById('canvas');
+<script>
+  const canvas = document.getElementById('canvas');
 
-    function focusCanvas() {
-      canvas.focus();
-    }
-    canvas.addEventListener('click', focusCanvas);
-    window.addEventListener('load', focusCanvas);
+  function focusCanvas() {
+    canvas.focus();
+  }
 
-    function scaleCanvas() {
-      const baseW = canvas.width;
-      const baseH = canvas.height;
-      const aspect = baseW / baseH;
-
-      // measure the wrapper (i.e. the full window)
-      const maxW = document.documentElement.clientWidth;
-      const maxH = document.documentElement.clientHeight;
-
-      // compute the largest size that fits while preserving aspect ratio
-      let newW = maxW;
-      let newH = maxW / aspect;
-      if (newH > maxH) {
-        newH = maxH;
-        newW = maxH * aspect;
-      }
-
-      canvas.style.width  = newW + 'px';
-      canvas.style.height = newH + 'px';
-    }
-
-    // rescale whenever the window (or fullscreen state) changes
-    window.addEventListener('resize', scaleCanvas);
-    document.addEventListener('fullscreenchange', scaleCanvas);
+  canvas.addEventListener('click', focusCanvas);
+  window.addEventListener('load', () => {
+    focusCanvas();
     scaleCanvas();
+  });
 
-    // optional F‑key fullscreen toggle
-    window.addEventListener('keydown', e => {
-      if (e.key.toLowerCase() === 'f') {
-        if (!document.fullscreenElement) {
-          canvas.requestFullscreen().catch(() => {});
-        } else {
-          document.exitFullscreen();
-        }
-      }
-    });
-  </script>
+  function scaleCanvas() {
+    const baseW = canvas.width;
+    const baseH = canvas.height;
+    const aspect = baseW / baseH;
 
-  <!-- your existing SDL/Module scripts below: -->
-  <script>
-    function resumeSDLAudioContext() {
-      if (SDL?.audioContext?.resume) {
-        SDL.audioContext.resume().then(() => {});
-      }
+    const windowW = window.innerWidth;
+    const windowH = window.innerHeight;
+
+    let scaledW = windowW;
+    let scaledH = windowW / aspect;
+
+    if (scaledH > windowH) {
+      scaledH = windowH;
+      scaledW = windowH * aspect;
     }
 
-    (function () {
-      const origSetTimeout = window.setTimeout;
-      let timers = 0;
-      window.setTimeout = function(fn, t) {
-        timers++;
-        return origSetTimeout(() => {
-          timers--;
-          return fn();
-        }, t);
-      };
-    })();
-  </script>
+    canvas.style.width = `${scaledW}px`;
+    canvas.style.height = `${scaledH}px`;
+  }
 
-  <script>
-    var Module = {
-      preRun: [], postRun: [],
-      print: text => console.log(text),
-      printErr: text => console.error(text),
-      canvas: (function() {
-        const c = document.getElementById('canvas');
-        c.addEventListener('webglcontextlost', e => {
-          alert('WebGL context lost — reload.');
-          e.preventDefault();
-        }, false);
-        return c;
-      })(),
-      setStatus(text) { console.log('[status]', text); },
-      totalDependencies: 0,
-      monitorRunDependencies(left) {
-        this.totalDependencies = Math.max(this.totalDependencies, left);
-        Module.setStatus(
-          left
-            ? `Preparing... (${this.totalDependencies - left}/${this.totalDependencies})`
-            : 'All downloads complete.'
-        );
+  window.addEventListener('resize', scaleCanvas);
+  document.addEventListener('fullscreenchange', scaleCanvas);
+
+  // Optional: press F to toggle fullscreen
+  window.addEventListener('keydown', e => {
+    if (e.key.toLowerCase() === 'f') {
+      if (!document.fullscreenElement) {
+        canvas.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen();
       }
-    };
-    Module.setStatus('Downloading...');
-    window.onerror = e => {
-      Module.setStatus('Exception — see console');
-    };
-  </script>
+    }
+  });
+</script>
 
-  <script async src="/core/gam-scripts/wolfenstein/Chocolate-Wolfenstein-3D.js"></script>
+<script>
+  function resumeSDLAudioContext() {
+    if (SDL?.audioContext?.resume) {
+      SDL.audioContext.resume().then(() => {});
+    }
+  }
+
+  (function () {
+    const origSetTimeout = window.setTimeout;
+    let timers = 0;
+    window.setTimeout = function(fn, t) {
+      timers++;
+      return origSetTimeout(() => {
+        timers--;
+        return fn();
+      }, t);
+    };
+  })();
+</script>
+
+<script>
+  var Module = {
+    preRun: [], postRun: [],
+    print: text => console.log(text),
+    printErr: text => console.error(text),
+    canvas: (function() {
+      const c = document.getElementById('canvas');
+      c.addEventListener('webglcontextlost', e => {
+        alert('WebGL context lost — reload.');
+        e.preventDefault();
+      }, false);
+      return c;
+    })(),
+    setStatus(text) { console.log('[status]', text); },
+    totalDependencies: 0,
+    monitorRunDependencies(left) {
+      this.totalDependencies = Math.max(this.totalDependencies, left);
+      Module.setStatus(
+        left
+          ? `Preparing... (${this.totalDependencies - left}/${this.totalDependencies})`
+          : 'All downloads complete.'
+      );
+    }
+  };
+
+  Module.setStatus('Downloading...');
+  window.onerror = e => {
+    Module.setStatus('Exception — see console');
+  };
+</script>
+
+<!-- Path to the emulator (replace with actual location if different) -->
+<script async src="/core/gam-scripts/wolfenstein/Chocolate-Wolfenstein-3D.js"></script>
 </body>
 </html>
