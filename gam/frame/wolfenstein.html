@@ -7,49 +7,37 @@
     html, body {
       margin: 0;
       padding: 0;
+      width: 100%;
+      height: 100%;
       background: black;
-      width: 100%;
-      height: 100%;
       overflow: hidden;
-    }
-
-    #container {
-      width: 100%;
-      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: black;
     }
 
     canvas {
-      width: 320px;
-      height: 200px;
       background: black;
       image-rendering: pixelated;
       image-rendering: crisp-edges;
-      transform-origin: top left;
-      outline: none;
       display: block;
+      outline: none;
     }
   </style>
 </head>
 <body>
 
-  <div id="container">
-    <canvas id="canvas"
-            width="320"
-            height="200"
-            tabindex="0"
-            oncontextmenu="event.preventDefault()">
-    </canvas>
-  </div>
+  <canvas id="canvas"
+          width="320"
+          height="200"
+          tabindex="0"
+          oncontextmenu="event.preventDefault()">
+  </canvas>
 
   <script>
     const canvas = document.getElementById('canvas');
-    const container = document.getElementById('container');
 
-    // Focus canvas for keyboard input
+    // Focus canvas to ensure keyboard input works
     function focusCanvas() {
       canvas.focus();
     }
@@ -57,41 +45,47 @@
     canvas.addEventListener('click', focusCanvas);
     window.addEventListener('load', focusCanvas);
 
-    // Scale canvas by integer multiple to fit screen
+    // Dynamically scale canvas with integer multiple
     function scaleCanvas() {
-      const maxX = Math.floor(window.innerWidth / 320);
-      const maxY = Math.floor(window.innerHeight / 200);
-      const scale = Math.max(1, Math.min(maxX, maxY));
-      canvas.style.transform = `scale(${scale})`;
+      const baseWidth = canvas.width;
+      const baseHeight = canvas.height;
+      const scaleX = Math.floor(window.innerWidth / baseWidth);
+      const scaleY = Math.floor(window.innerHeight / baseHeight);
+      const scale = Math.max(1, Math.min(scaleX, scaleY));
+
+      canvas.style.width = `${baseWidth * scale}px`;
+      canvas.style.height = `${baseHeight * scale}px`;
     }
 
     window.addEventListener('resize', scaleCanvas);
+    document.addEventListener('fullscreenchange', scaleCanvas);
     scaleCanvas();
 
-    // Optional: Add Fullscreen on key press (F key)
+    // Fullscreen toggle with F key
     window.addEventListener('keydown', (e) => {
       if (e.key === 'f' || e.key === 'F') {
         if (!document.fullscreenElement) {
-          container.requestFullscreen().catch(err => {
-            console.error(`Fullscreen error: ${err.message}`);
+          canvas.requestFullscreen().catch(err => {
+            console.error('Failed to enter fullscreen:', err);
           });
         } else {
           document.exitFullscreen();
         }
       }
     });
-
-    // Ensure canvas rescaling on fullscreen change
-    document.addEventListener('fullscreenchange', scaleCanvas);
   </script>
 
   <script>
+    // SDL Audio workaround
     function resumeSDLAudioContext() {
-      SDL.audioContext.resume().then(() =>
-        console.log('Audio resumed')
-      );
+      if (SDL?.audioContext?.resume) {
+        SDL.audioContext.resume().then(() =>
+          console.log('Audio resumed')
+        );
+      }
     }
 
+    // Monitor setTimeout calls (optional debugging)
     (function () {
       const origSetTimeout = window.setTimeout;
       let timers = 0;
@@ -109,6 +103,7 @@
   </script>
 
   <script>
+    // Emscripten module config
     var Module = {
       preRun: [], postRun: [],
       print:    text => console.log(text),
@@ -132,6 +127,7 @@
         );
       }
     };
+
     Module.setStatus('Downloading...');
     window.onerror = e => {
       Module.setStatus('Exception — see console');
