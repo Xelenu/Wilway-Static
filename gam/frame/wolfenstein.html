@@ -12,98 +12,102 @@
       height: 100%;
       overflow: hidden;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      align-items: flex-start;
     }
-
     canvas {
-      display: block;
-      background-color: black;
-      width: 100vw;
-      height: 100vh;
+      width: 320px;
+      height: 200px;
+      background: black;
       image-rendering: pixelated;
       image-rendering: crisp-edges;
+      transform-origin: top left;
+      outline: none;
+      display: block;
     }
   </style>
 </head>
 <body>
 
-<canvas id="canvas"></canvas>
+  <canvas id="canvas"
+          width="320"
+          height="200"
+          tabindex="0"
+          oncontextmenu="event.preventDefault()">
+  </canvas>
 
-<script>
-  const canvas = document.getElementById('canvas');
+  <script>
+    const canvas = document.getElementById('canvas');
 
-  // Resize the canvas resolution to match display size
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
+    canvas.focus();  
+    canvas.addEventListener('click', () => canvas.focus());
 
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas(); // Initial call
-</script>
+    function scaleCanvas() {
+      const maxX = Math.floor(window.innerWidth  / 320);
+      const maxY = Math.floor(window.innerHeight / 200);
+      const scale = Math.max(1, Math.min(maxX, maxY));
+      canvas.style.transform = `scale(${scale})`;
+    }
 
-<script>
-  function resumeSDLAudioContext() {
-    SDL.audioContext.resume().then(() => {
-      console.log('Playback resumed successfully');
-    });
-  }
+    scaleCanvas();
 
-  (function () {
-    const originalSetTimeout = window.setTimeout;
-    let totalTimers = 0;
-    window.setTimeout = function (fn, time) {
-      totalTimers++;
-      if ((totalTimers > 1 && totalTimers < 100) || totalTimers % 100 === 0) {
-        console.log('totalTimers =', totalTimers);
-      }
-      return originalSetTimeout(function (...args) {
-        totalTimers--;
-        return fn.apply(this, args);
-      }, time);
-    };
-  })();
-</script>
+    window.addEventListener('resize', scaleCanvas);
 
-<script>
-  var Module = {
-    preRun: [],
-    postRun: [],
-    print: function (text) { console.log(text); },
-    printErr: function (text) { console.error(text); },
-    canvas: (function () {
-      const canvas = document.getElementById('canvas');
-      canvas.addEventListener('webglcontextlost', function (e) {
-        alert('WebGL context lost. Reload the page.');
-        e.preventDefault();
-      }, false);
-      return canvas;
-    })(),
-    setStatus: function (text) {
-      console.log('[status]', text);
-    },
-    totalDependencies: 0,
-    monitorRunDependencies: function (left) {
-      this.totalDependencies = Math.max(this.totalDependencies, left);
-      Module.setStatus(
-        left
-          ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')'
-          : 'All downloads complete.'
+  </script>
+
+  <script>
+    function resumeSDLAudioContext() {
+      SDL.audioContext.resume().then(() =>
+        console.log('Audio resumed')
       );
     }
-  };
 
-  Module.setStatus('Downloading...');
-  window.onerror = function (event) {
-    Module.setStatus('Exception thrown, see console');
-    Module.setStatus = function (text) {
-      text && Module.printErr('[post-exception status] ' + text);
+    (function () {
+      const origSetTimeout = window.setTimeout;
+      let timers = 0;
+      window.setTimeout = function(fn, t) {
+        timers++;
+        if ((timers > 1 && timers < 100) || timers % 100 === 0) {
+          console.log('timers=', timers);
+        }
+        return origSetTimeout(() => {
+          timers--;
+          return fn();
+        }, t);
+      };
+    })();
+  </script>
+
+  <script>
+    var Module = {
+      preRun: [], postRun: [],
+      print:    text => console.log(text),
+      printErr: text => console.error(text),
+      canvas:   (function() {
+        const c = document.getElementById('canvas');
+        c.addEventListener('webglcontextlost', e => {
+          alert('WebGL context lost — reload.');
+          e.preventDefault();
+        }, false);
+        return c;
+      })(),
+      setStatus(text) { console.log('[status]', text); },
+      totalDependencies: 0,
+      monitorRunDependencies(left) {
+        this.totalDependencies = Math.max(this.totalDependencies, left);
+        Module.setStatus(
+          left
+            ? `Preparing... (${this.totalDependencies - left}/${this.totalDependencies})`
+            : 'All downloads complete.'
+        );
+      }
     };
-  };
-</script>
+    Module.setStatus('Downloading...');
+    window.onerror = e => {
+      Module.setStatus('Exception — see console');
+    };
+  </script>
 
-<script async src="/core/gam-scripts/wolfenstein/Chocolate-Wolfenstein-3D.js"></script>
-
+  <script async src="/core/gam-scripts/wolfenstein/Chocolate-Wolfenstein-3D.js"></script>
 </body>
 </html>
