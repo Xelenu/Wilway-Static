@@ -86,19 +86,6 @@ html {
     overflow: hidden; /* Clip panel image */
 }
 
-.side-panel-2 {
-    width: 200px; /* Fixed width for side panels */
-    height: 650.4px; /* Match video-box height */
-    max-height: 90vh; /* Match video-box responsiveness */
-    background: linear-gradient(to bottom left, darkblue, darkcyan); /* Match page theme */
-    border-radius: 11.2px; /* Match video-box border-radius */
-    box-shadow: 0 0 11.2px rgba(0, 0, 0, 0.5); /* Glowing effect like video-box */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Clip panel image */
-}
-
 .panel-image {
     width: 100%;
     height: 100%;
