@@ -383,6 +383,33 @@ body {
       -webkit-text-stroke: 1px black;
       text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
     }
+.settings-panel .divider {
+  border: none;
+  height: 0.4vh; /* Slightly thicker for prominence */
+  background: linear-gradient(to right, rgba(0,0,139,0.9), rgba(0,139,139,0.9), rgba(0,0,139,0.9));
+  margin: 1.5vh 0; /* Increased margin for better spacing */
+  border-radius: 0.2vh; /* Slightly more rounded edges */
+  box-shadow: 0 0 0.8vh rgba(0, 139, 139, 0.5); /* Subtle glow effect */
+  position: relative;
+  overflow: hidden;
+}
+
+.settings-panel .divider::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(0, 230, 230, 0.3), transparent);
+  animation: shimmer 2s infinite linear; /* Shimmer effect for dynamism */
+}
+
+/* Animation for shimmer effect */
+@keyframes shimmer {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(200%); }
+}
     .no-impact .settings-panel .close-button {
       -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
       text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
