@@ -552,6 +552,37 @@ body {
   border: 0.1vh solid white;
 }
 
+.settings-panel .settings-tab-name-input {
+  background: #333333;
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  color: white;
+  border: 0.1vh solid rgba(0,139,139,0.7);
+  border-radius: 0.6vh;
+  padding: 0.5vh 1vw;
+  box-shadow: 0 0.2vh 0.4vh rgba(0,0,0,0.2);
+  flex-grow: 1;
+  outline: none;
+  position: relative;
+  z-index: 1;
+}
+.settings-panel .settings-tab-name-input::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(0, 230, 230, 0.5), transparent);
+  animation: shimmer 2s infinite linear;
+  z-index: 0;
+}
+.settings-panel .settings-tab-name-input::placeholder {
+  color: rgba(255,255,255,0.6);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+
 @keyframes shimmer {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
