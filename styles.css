@@ -390,7 +390,7 @@ html {
   border-radius: 1.5vh;
   box-shadow: 0 0.4vh 1.2vh rgba(0,0,0,0.5);
   z-index: 13;
-  display: none;
+  display: none; /* Hidden on page load */
   flex-direction: column;
   gap: 1.25rem;
   border: 0.2vh solid rgba(0,139,139,0.7);
@@ -399,14 +399,14 @@ html {
 }
 
 .settings-panel:not(.hidden) {
-  display: flex;
+  display: flex; /* Shown when toggled */
   opacity: 1;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); /* Centered */
 }
 
 .settings-panel.hidden {
   opacity: 0;
-  transform: translate(-50%, -50%) translateY(10vh);
+  transform: translate(-50%, -50%) translateY(10vh); /* Slide down when hiding */
 }
 
 /* Settings panel buttons */
