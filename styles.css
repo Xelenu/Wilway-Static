@@ -437,6 +437,25 @@ body {
   animation: shimmer 2s infinite linear; /* Same shimmer effect as divider */
 }
 
+.settings-panel .settings-subtitle {
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.2rem); /* Smaller than settings-title, matches .home-container p */
+  font-weight: 900;
+  color: white;
+  -webkit-text-stroke: 0.5px black; /* Thinner stroke than settings-title for subtlety */
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
+  margin: 0 0 1vh 0; /* Matches settings-title margin for spacing */
+  text-align: center;
+  user-select: none;
+  display: block;
+  width: 100%; /* Ensures centering */
+}
+
+.no-impact .settings-panel .settings-subtitle {
+  -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
+}
+
 /* Animation for shimmer effect */
 @keyframes shimmer {
   0% { transform: translateX(0); }
