@@ -419,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cloakCookie = getCookie('cloakEnabled');
   if (cloakBtn) {
     cloakEnabled = (cloakCookie === 'true');
-    cloakBtn.textContent = `${cloakEnabled ? '🟢' : '🔴'} Cloak!`;
+    cloakBtn.textContent = `${cloakEnabled ? '🟢' : '🔴'} Cloak`;
     if (cloakEnabled && !initialLoadDone) {
       initialLoadDone = true;
       openCloakedWindow();
