@@ -424,12 +424,12 @@ function updateSettingsButtonVisibility() {
 });
 
 function updatePageTitle() {
-  const input = document.getElementById('tabNameInput');
+  const input = document.getElementById('settingsTabNameInput');
   const newTitle = input.value.trim();
   if (newTitle) {
     document.title = newTitle;
   } else {
-    document.title = 'Wilway'; // fallback
+    document.title = 'Wilway'; // Fallback to default title if input is empty
   }
 }
 
