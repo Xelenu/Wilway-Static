@@ -566,6 +566,38 @@
 
       updateSettingsButtonVisibility();
 
+      function setCookie(name, value, days) {
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+}
+
+function getCookie(name) {
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(';');
+  for (let c of ca) {
+    while (c.charAt(0) === ' ') c = c.substring(1);
+    if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length));
+  }
+  return null;
+}
+
+function updatePageTitle() {
+  const input = document.getElementById('settingsTabNameInput');
+  const newTitle = input.value.trim() || 'Wilway';
+  document.title = newTitle;
+  setCookie('customTitle', newTitle, 30);
+}
+const titleInput = document.getElementById('settingsTabNameInput');
+const customTitle = getCookie('customTitle');
+if (customTitle) {
+  document.title = customTitle;
+  titleInput.value = customTitle;
+} else {
+  document.title = 'Wilway';
+}
+
       const loadingScreen = document.getElementById('loadingScreen');
       const progressCircle = document.querySelector('.progress-circle circle');
 
