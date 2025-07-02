@@ -438,8 +438,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, transparent, rgba(0, 230, 230, 0.5), transparent);
-  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, transparent 0%, rgba(0, 230, 230, 0.5) 50%, transparent 100%);
+  animation: shimmer 2.5s infinite ease-in-out;
   z-index: 0;
 }
 .settings-panel .settings-subtitle {
@@ -523,10 +523,9 @@ body {
   text-shadow: none;
 }
 
-/* Animation for shimmer effect */
 @keyframes shimmer {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(200%); }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
     .no-impact .settings-panel .close-button {
       -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
