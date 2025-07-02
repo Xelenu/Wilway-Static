@@ -46,19 +46,20 @@
   <button type="button" class="fullscreen-button" onclick="toggleFullscreen()">⛶</button>
   <button type="button" class="toggle-bar-button" onclick="toggleBottomBar()">🔽</button>
   <div class="settings-panel" id="settingsPanel">
-    <h2 class="settings-title">Settings</h2>
-    <p class="settings-subtitle">Configure</p>
-    <div class="settings-tab-name-container">
-      <button class="settings-tab-name-button" onclick="updatePageTitle()">Tab name</button>
-      <input type="text" class="settings-tab-name-input" id="settingsTabNameInput" placeholder="Enter tab name">
-    </div>
-    <button class="cloak-button" id="cloakBtn" onclick="toggleCloak()">🔴 Cloak!</button>
-    <hr class="divider">
-    <button class="animation-button" onclick="toggleAnimation()">🟢 Animation</button>
-    <button id="autoHideBtn" onclick="toggleAutoHide()">🔴 Auto-Hide Bar</button>
-    <button id="fsHideSettingsBtn" onclick="toggleFsHideSettings()">🟢 Settings in fullscreen</button>
-    <button class="close-button" onclick="toggleSettingsPanel()">Close</button>
-  </div>
+     <h2 class="settings-title">Settings</h2>
+     <p class="settings-subtitle">Configure</p>
+     <div class="settings-tab-name-container">
+       <button class="settings-tab-name-button" onclick="updatePageTitle()">Tab name</button>
+       <input type="text" class="settings-tab-name-input" id="settingsTabNameInput" placeholder="Enter tab name">
+     </div>
+     <button class="cloak-button" id="cloakBtn" onclick="toggleCloak()">🔴 Cloak!</button>
+     <p class="cloak-instruction">If you want this to be permanent, allow popups.</p>
+     <hr class="divider">
+     <button class="animation-button" onclick="toggleAnimation()">🟢 Animation</button>
+     <button id="autoHideBtn" onclick="toggleAutoHide()">🔴 Auto-Hide Bar</button>
+     <button id="fsHideSettingsBtn" onclick="toggleFsHideSettings()">🟢 Settings in fullscreen</button>
+     <button class="close-button" onclick="toggleSettingsPanel()">Close</button>
+   </div>
   <script>
     let isLoading = false;
     const TAB_COOLDOWN = 800;
