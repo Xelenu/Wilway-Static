@@ -404,6 +404,32 @@ body {
   animation: shimmer 2.5s infinite ease-in-out;
   z-index: 0;
 }
+.divider {
+  border: 0;
+  height: 2px;
+  background: linear-gradient(to right, #ff6b6b, #4ecdc4); /* Gradient to match theme */
+  margin: 20px 0;
+  width: 0; /* Initial width for animation */
+  animation: expandDivider 0.5s ease-out forwards; /* Animation on load */
+}
+
+@keyframes expandDivider {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+/* Ensure divider resets when settings panel is hidden */
+.settings-panel.hidden .divider {
+  width: 0;
+  opacity: 0;
+  animation: none; /* Prevent animation when panel is hidden */
+}
 .settings-panel .settings-title {
   font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: clamp(1.5rem, 2.5vw, 2rem);
