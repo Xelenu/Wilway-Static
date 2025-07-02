@@ -237,7 +237,7 @@ function openCloakedWindow() {
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Wilway</title>
+        <title>‎ </title>
         <style>
           body { margin: 0; padding: 0; overflow: hidden; }
           iframe { width: 100vw; height: 100vh; border: none; }
