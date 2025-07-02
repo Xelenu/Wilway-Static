@@ -423,6 +423,16 @@ function updateSettingsButtonVisibility() {
   });
 });
 
+function updatePageTitle() {
+  const input = document.getElementById('tabNameInput');
+  const newTitle = input.value.trim();
+  if (newTitle) {
+    document.title = newTitle;
+  } else {
+    document.title = 'Wilway'; // fallback
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const autoHideBtn = document.getElementById('autoHideBtn');
   const autoHideCookie = getCookie('autoHideBar');
