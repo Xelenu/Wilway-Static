@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Wilway</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="styles.css?v=4" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -52,6 +52,7 @@
       <button class="settings-tab-name-button" onclick="updatePageTitle()">Tab name</button>
       <input type="text" class="settings-tab-name-input" id="settingsTabNameInput" placeholder="Enter tab name">
     </div>
+    <button class="cloak-button" id="cloakBtn" onclick="toggleCloak()">🔴 Cloak!</button>
     <hr class="divider">
     <button class="animation-button" onclick="toggleAnimation()">🟢 Animation</button>
     <button id="autoHideBtn" onclick="toggleAutoHide()">🔴 Auto-Hide Bar</button>
@@ -352,6 +353,44 @@
       }
     }
 
+    let cloakEnabled = false;
+
+    function toggleCloak() {
+      cloakEnabled = !cloakEnabled;
+      const btn = document.getElementById('cloakBtn');
+      setCookie('cloakEnabled', cloakEnabled ? 'true' : 'false', 30);
+
+      btn.textContent = `${cloakEnabled ? '🟢' : '🔴'} Cloak!`;
+
+      if (cloakEnabled) {
+        openCloakedWindow();
+      }
+    }
+
+    function openCloakedWindow() {
+      const currentUrl = window.location.href;
+      const blankWindow = window.open('about:blank', '_blank');
+      if (blankWindow) {
+        blankWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Wilway</title>
+            <style>
+              body { margin: 0; padding: 0; overflow: hidden; }
+              iframe { width: 100vw; height: 100vh; border: none; }
+            </style>
+          </head>
+          <body>
+            <iframe src="${currentUrl}" allowfullscreen></iframe>
+          </body>
+          </html>
+        `);
+        blankWindow.document.close();
+        window.location.href = 'https://classroom.google.com/';
+      }
+    }
+
     let initialLoadDone = false;
 
     let autoHideEnabled = false;
@@ -507,10 +546,21 @@
       }
 
       const fsHideSettingsBtn = document.getElementById('fsHideSettingsBtn');
-      const cookieVal = getCookie('fsHideSettings');
+      const fsHideCookie = getCookie('fsHideSettings');
       if (fsHideSettingsBtn) {
-        fsHideSettingsEnabled = (cookieVal === 'true');
+        fsHideSettingsEnabled = (fsHideCookie === 'true');
         fsHideSettingsBtn.textContent = `${fsHideSettingsEnabled ? '🔴' : '🟢'} Settings in Fullscreen`;
+      }
+
+      const cloakBtn = document.getElementById('cloakBtn');
+      const cloakCookie = getCookie('cloakEnabled');
+      if (cloakBtn) {
+        cloakEnabled = (cloakCookie === 'true');
+        cloakBtn.textContent = `${cloakEnabled ? '🟢' : '🔴'} Cloak!`;
+        if (cloakEnabled && !initialLoadDone) {
+          initialLoadDone = true;
+          openCloakedWindow();
+        }
       }
 
       updateSettingsButtonVisibility();
