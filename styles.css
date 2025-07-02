@@ -456,6 +456,76 @@ body {
   text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
 }
 
+.settings-tab-name-container {
+  display: flex;
+  align-items: center;
+  gap: 1vw; /* Space between button and textbox */
+  width: 100%;
+  margin: 0.5vh 0; /* Spacing below Configure, above divider */
+}
+
+.settings-tab-name-button {
+  background: darkcyan;
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(0.8rem, 1vw, 1rem); /* Small text for "Tab name" */
+  font-weight: 900;
+  color: white;
+  -webkit-text-stroke: 0.5px black;
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
+  border: none;
+  border-radius: 0.6vh;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
+  padding: 0.5vh 1vw;
+  box-shadow: 0 0.2vh 0.4vh rgba(0,0,0,0.2);
+  user-select: none;
+  width: 30%; /* Button narrower than textbox */
+}
+
+.no-impact .settings-tab-name-button {
+  -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
+  background: rgba(0,139,139,0.8);
+}
+
+.settings-tab-name-button:hover {
+  transform: scale(1.05);
+  border: 0.1vh solid white;
+}
+
+.settings-tab-name-input {
+  background: #333333; /* Dark gray background */
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  color: white;
+  border: 0.1vh solid rgba(0,139,139,0.7); /* Matches settings-panel border */
+  border-radius: 0.6vh;
+  padding: 0.5vh 1vw;
+  box-shadow: 0 0.2vh 0.4vh rgba(0,0,0,0.2);
+  flex-grow: 1; /* Textbox takes remaining space */
+  outline: none;
+  position: relative; /* For shimmer pseudo-element */
+  z-index: 1; /* Ensure text is above shimmer */
+}
+
+.settings-tab-name-input::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(0, 230, 230, 0.5), transparent); /* Matches settings-title and divider shimmer */
+  animation: shimmer 2s infinite linear;
+  z-index: 0; /* Shimmer behind text */
+}
+
+.settings-tab-name-input::placeholder {
+  color: rgba(255,255,255,0.6);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+
 /* Animation for shimmer effect */
 @keyframes shimmer {
   0% { transform: translateX(0); }
