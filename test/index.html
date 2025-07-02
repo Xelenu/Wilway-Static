@@ -537,6 +537,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   detectImpactFont();
 });
+
+    function toggleSettingsPanel() {
+  const panel = document.getElementById('settingsPanel');
+  const pauseButton = panel.querySelector('.animation-button');
+  const isVisible = !panel.classList.contains('hidden');
+  if (isVisible) {
+    panel.classList.add('hidden');
+    setTimeout(() => {
+      panel.style.display = 'none';
+    }, 300);
+  } else {
+    panel.style.display = 'flex';
+    panel.offsetHeight;
+    panel.classList.remove('hidden');
+  }
+  const background = document.querySelector('.background');
+  pauseButton.textContent = background.classList.contains('paused') ? '🔴 Animation' : '🟢 Animation';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const panel = document.getElementById('settingsPanel');
+  panel.classList.add('hidden');
+  panel.style.display = 'none';
+});
   </script>
 </body>
 </html>
