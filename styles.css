@@ -338,13 +338,17 @@ body {
   flex-direction: column;
   gap: 1.25rem;
   border: 0.2vh solid rgba(0,139,139,0.7);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 1;
   transform: translate(-50%, -50%);
 }
 .settings-panel.hidden {
   opacity: 0;
   transform: translate(-50%, calc(-50% + 10vh));
+}
+.settings-panel:not(.hidden) {
+  opacity: 1;
+  transform: translateY(0);
 }
 .settings-panel button:not(.settings-tab-name-button):not(.close-button) {
   width: 100%;
@@ -416,10 +420,10 @@ body {
 
 @keyframes shimmerDivider {
   0% {
-    background-position: -200% 0; /* Start off-screen to the left */
+    background-position: -500% 0; /* Start far off-screen left */
   }
   100% {
-    background-position: 200% 0; /* Move fully to the right */
+    background-position: 500% 0; /* Move far off-screen right */
   }
 }
 
@@ -627,6 +631,21 @@ body {
   color: rgba(255,255,255,0.6);
   -webkit-text-stroke: 0;
   text-shadow: none;
+}
+.settings-panel hr.divider {
+  border: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #ff6b6b, #4ecdc4, transparent); /* Theme gradient */
+  background-size: 500% 100%; /* Extra-wide gradient for full traversal */
+  margin: 20px 0;
+  width: 100%; /* Full width of panel */
+  opacity: 1 !important; /* Prevent opacity overrides */
+  animation: shimmerDivider 3s linear infinite; /* Slower, continuous shimmer */
+}
+.settings-panel.hidden hr.divider {
+  background-position: -500% 0; /* Reset gradient position */
+  opacity: 0; /* Hide divider */
+  animation: none !important; /* Stop animation */
 }
     .loading-screen {
   position: fixed;
