@@ -324,76 +324,80 @@ body {
       transform: translateY(10vh);
     }
     .settings-panel {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 35vw;
-      padding: 3vh;
-      background: linear-gradient(to bottom right, rgba(0,0,139,0.7), rgba(0,139,139,0.7), rgba(0,0,139,0.7));
-      border-radius: 1.5vh;
-      box-shadow: 0 0.4vh 1.2vh rgba(0,0,0,0.5);
-      z-index: 13;
-      display: none;
-      flex-direction: column;
-      gap: 1.25rem;
-      border: 0.2vh solid rgba(0,139,139,0.7);
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      opacity: 1;
-      transform: translate(-50%, -50%);
-    }
-    .settings-panel.hidden {
-      opacity: 0;
-      transform: translate(-50%, calc(-50% + 10vh));
-    }
-    .settings-panel button {
-      width: 100%;
-      height: 5vh;
-      background: darkcyan;
-      font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: clamp(1.2rem, 2vw, 1.6rem);
-      font-weight: 900;
-      color: white;
-      -webkit-text-stroke: 1px black;
-      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
-      border: none;
-      border-radius: 0.6vh;
-      cursor: pointer;
-      transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0.2vh 0.4vh rgba veda(0,0,0,0.2);
-    }
-    .no-impact .settings-panel button {
-      -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
-      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
-      background: rgba(0,139,139,0.8);
-    }
-    .settings-panel button:hover {
-      transform: scale(1.05);
-      border: 0.1vh solid white;
-    }
-    .settings-panel .close-button {
-      background: darkblue;
-      font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: clamp(1rem, 1.5vw, 1.2rem);
-      font-weight: 900;
-      color: white;
-      -webkit-text-stroke: 1px black;
-      text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
-    }
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35vw;
+  padding: 3vh;
+  background: linear-gradient(to bottom right, rgba(0,0,139,0.7), rgba(0,139,139,0.7), rgba(0,0,139,0.7));
+  border-radius: 1.5vh;
+  box-shadow: 0 0.4vh 1.2vh rgba(0,0,0,0.5);
+  z-index: 13;
+  display: none;
+  flex-direction: column;
+  gap: 1.25rem;
+  border: 0.2vh solid rgba(0,139,139,0.7);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+.settings-panel.hidden {
+  opacity: 0;
+  transform: translate(-50%, calc(-50% + 10vh));
+}
+.settings-panel button:not(.settings-tab-name-button):not(.close-button) {
+  width: 100%;
+  height: 5vh;
+  background: darkcyan;
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 900;
+  color: white;
+  -webkit-text-stroke: 1px black;
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
+  border: none;
+  border-radius: 0.6vh;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.2vh 0.4vh rgba(0,0,0,0.2);
+}
+.no-impact .settings-panel button:not(.settings-tab-name-button):not(.close-button) {
+  -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
+  background: rgba(0,139,139,0.8);
+}
+.settings-panel button:not(.settings-tab-name-button):not(.close-button):hover {
+  transform: scale(1.05);
+  border: 0.1vh solid white;
+}
+.settings-panel .close-button {
+  background: darkblue;
+  font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 900;
+  color: white;
+  -webkit-text-stroke: 1px black;
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
+}
+.no-impact .settings-panel .close-button {
+  -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
+  background: rgba(75,0,130,0.8);
+}
 .settings-panel .divider {
   border: none;
-  height: 0.4vh; /* Slightly thicker for prominence */
+  height: 0.4vh;
   background: linear-gradient(to right, rgba(0,0,139,0.9), rgba(0,139,139,0.9), rgba(0,0,139,0.9));
-  margin: 1.5vh 0; /* Increased margin for better spacing */
-  border-radius: 0.2vh; /* Slightly more rounded edges */
-  box-shadow: 0 0 0.8vh rgba(0, 139, 139, 0.5); /* Subtle glow effect */
+  margin: 1.5vh 0;
+  border-radius: 0.2vh;
+  box-shadow: 0 0 0.8vh rgba(0, 139, 139, 0.5);
   position: relative;
   overflow: hidden;
 }
-
 .settings-panel .divider::before {
   content: '';
   position: absolute;
@@ -401,10 +405,9 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, transparent, rgba(0, 230, 230, 0.3), transparent);
-  animation: shimmer 2s infinite linear; /* Shimmer effect for dynamism */
+  background: linear-gradient(to right, transparent, rgba(0, 230, 230, 0.5), transparent);
+  animation: shimmer 2s infinite linear;
 }
-
 .settings-panel .settings-title {
   font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: clamp(1.5rem, 2.5vw, 2rem);
@@ -415,17 +418,17 @@ body {
   margin: 0 0 1vh 0;
   text-align: center;
   user-select: none;
-  position: relative; /* Required for shimmer pseudo-element */
-  overflow: hidden; /* Ensures shimmer stays within bounds */
-  display: inline-block; /* Centers the text block and fits content */
-  width: 100%; /* Ensures full-width for centering */
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  background: rgba(0,0,139,0.2);
+  padding: 0.5vh 0;
 }
-
 .no-impact .settings-panel .settings-title {
   -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
   text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
 }
-
 .settings-panel .settings-title::before {
   content: '';
   position: absolute;
@@ -433,41 +436,38 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, transparent, rgba(0, 230, 230, 0.3), transparent);
-  animation: shimmer 2s infinite linear; /* Same shimmer effect as divider */
+  background: linear-gradient(to right, transparent, rgba(0, 230, 230, 0.5), transparent);
+  animation: shimmer 2s infinite linear;
+  z-index: 0;
 }
-
 .settings-panel .settings-subtitle {
   font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: clamp(1rem, 1.5vw, 1.2rem); /* Smaller than settings-title, matches .home-container p */
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
   font-weight: 900;
   color: white;
-  -webkit-text-stroke: 0.5px black; /* Thinner stroke than settings-title for subtlety */
+  -webkit-text-stroke: 0.5px black;
   text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.5);
-  margin: 0 0 1vh 0; /* Matches settings-title margin for spacing */
+  margin: 0 0 1vh 0;
   text-align: center;
   user-select: none;
   display: block;
-  width: 100%; /* Ensures centering */
+  width: 100%;
 }
-
 .no-impact .settings-panel .settings-subtitle {
   -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
   text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
 }
-
 .settings-tab-name-container {
   display: flex;
   align-items: center;
-  gap: 1vw; /* Space between button and textbox */
+  gap: 1vw;
   width: 100%;
-  margin: 0.5vh 0; /* Spacing below Configure, above divider */
+  margin: 0.5vh 0;
 }
-
-.settings-tab-name-button {
+.settings-panel .settings-tab-name-button {
   background: darkcyan;
   font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: clamp(0.8rem, 1vw, 1rem); /* Small text for "Tab name" */
+  font-size: clamp(0.8rem, 1vw, 1rem);
   font-weight: 900;
   color: white;
   -webkit-text-stroke: 0.5px black;
@@ -479,35 +479,31 @@ body {
   padding: 0.5vh 1vw;
   box-shadow: 0 0.2vh 0.4vh rgba(0,0,0,0.2);
   user-select: none;
-  width: 30%; /* Button narrower than textbox */
+  width: 30%;
 }
-
-.no-impact .settings-tab-name-button {
+.no-impact .settings-panel .settings-tab-name-button {
   -webkit-text-stroke: clamp(0.05rem, 0.1vw, 0.1rem);
   text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.7);
   background: rgba(0,139,139,0.8);
 }
-
-.settings-tab-name-button:hover {
+.settings-panel .settings-tab-name-button:hover {
   transform: scale(1.05);
   border: 0.1vh solid white;
 }
-
 .settings-tab-name-input {
-  background: #333333; /* Dark gray background */
+  background: #333333;
   font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   color: white;
-  border: 0.1vh solid rgba(0,139,139,0.7); /* Matches settings-panel border */
+  border: 0.1vh solid rgba(0,139,139,0.7);
   border-radius: 0.6vh;
   padding: 0.5vh 1vw;
   box-shadow: 0 0.2vh 0.4vh rgba(0,0,0,0.2);
-  flex-grow: 1; /* Textbox takes remaining space */
+  flex-grow: 1;
   outline: none;
-  position: relative; /* For shimmer pseudo-element */
-  z-index: 1; /* Ensure text is above shimmer */
+  position: relative;
+  z-index: 1;
 }
-
 .settings-tab-name-input::before {
   content: '';
   position: absolute;
@@ -515,11 +511,10 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, transparent, rgba(0, 230, 230, 0.5), transparent); /* Matches settings-title and divider shimmer */
+  background: linear-gradient(to right, transparent, rgba(0, 230, 230, 0.5), transparent);
   animation: shimmer 2s infinite linear;
-  z-index: 0; /* Shimmer behind text */
+  z-index: 0;
 }
-
 .settings-tab-name-input::placeholder {
   color: rgba(255,255,255,0.6);
   -webkit-text-stroke: 0;
