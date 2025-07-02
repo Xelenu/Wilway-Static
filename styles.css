@@ -407,10 +407,20 @@ body {
 .divider {
   border: 0;
   height: 2px;
-  background: linear-gradient(to right, #ff6b6b, #4ecdc4); /* Gradient to match theme */
+  background: linear-gradient(to right, transparent, #ffffff, transparent); /* Shimmer gradient */
+  background-size: 200% 100%; /* Wide gradient for smooth movement */
   margin: 20px 0;
-  width: 0; /* Initial width for animation */
-  animation: expandDivider 0.5s ease-out forwards; /* Animation on load */
+  width: 100%; /* Full width for the divider */
+  animation: shimmerDivider 1.5s linear infinite; /* Continuous shimmer effect */
+}
+
+@keyframes shimmerDivider {
+  0% {
+    background-position: -200% 0; /* Start off-screen to the left */
+  }
+  100% {
+    background-position: 200% 0; /* Move fully to the right */
+  }
 }
 
 @keyframes expandDivider {
@@ -426,8 +436,7 @@ body {
 
 /* Ensure divider resets when settings panel is hidden */
 .settings-panel.hidden .divider {
-  width: 0;
-  opacity: 0;
+  background-position: -200% 0; /* Reset to initial position */
   animation: none; /* Prevent animation when panel is hidden */
 }
 .settings-panel .settings-title {
