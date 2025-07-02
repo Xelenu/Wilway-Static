@@ -223,7 +223,7 @@ function toggleCloak() {
   cloakEnabled = !cloakEnabled;
   const btn = document.getElementById('cloakBtn');
   setCookie('cloakEnabled', cloakEnabled ? 'true' : 'false', 30);
-  btn.textContent = `${cloakEnabled ? '🟢' : '🔴'} Cloak!`;
+  btn.textContent = `${cloakEnabled ? '🟢' : '🔴'} Cloak`;
   if (cloakEnabled) {
     openCloakedWindow();
   }
