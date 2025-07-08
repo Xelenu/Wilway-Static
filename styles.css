@@ -765,6 +765,25 @@ html {
   box-shadow: 0 0 10px var(--wilway-accent-hover);
 }
 
+.secret-box-hehe {
+        background: linear-gradient(to right, darkblue, #004d66);
+        color: darkcyan;
+        width: 100%;
+        padding: 10px;
+        border: 2px solid darkcyan;
+        box-sizing: border-box;
+        border-radius: 8px;
+    }
+    .secret-button-hehe {
+        background: linear-gradient(to right, darkcyan, #006666);
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
 /* Animations */
 @keyframes shimmer {
   0% { transform: translateX(-100%); }
