@@ -28,9 +28,23 @@
       <p style="font-family: Impact, 'Poppins', 'Arial Black', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight:bold; font-size:1.0em; margin:0.2em 0; background:linear-gradient(to bottom right, #888888, #dddddd); -webkit-background-clip:text; -webkit-text-fill-color:transparent; -webkit-text-stroke:0.5px black; user-select:none; background-color:gray; padding:0.2em 0.4em; display:inline-block;">Version 0.85</p>
 <input type="text" class="secret-box-hehe" placeholder="Enter secret words...">
 <button class="secret-button-hehe">Take me!</button>
+<div class="secret-status-hehe" style="margin-top: 10px; color: white;"></div>
+
 <script>
+    const input = document.querySelector('.secret-box-hehe');
+    const button = document.querySelector('.secret-button-hehe');
+    const status = document.querySelector('.secret-status-hehe');
+
     function submitSecret() {
-        var text = document.querySelector('.secret-box-hehe').value;
+        const text = input.value.trim();
+        if (!text) {
+            alert('Please enter a secret word!');
+            return;
+        }
+
+        status.textContent = 'Checking...';
+        button.disabled = true;
+
         fetch('https://your-worker-name.your-subdomain.workers.dev', {
             method: 'POST',
             headers: {
@@ -49,11 +63,15 @@
         })
         .catch(error => {
             alert('Request failed: ' + error.message);
+        })
+        .finally(() => {
+            button.disabled = false;
+            status.textContent = '';
         });
     }
 
-    document.querySelector('.secret-button-hehe').addEventListener('click', submitSecret);
-    document.querySelector('.secret-box-hehe').addEventListener('keydown', function(event) {
+    button.addEventListener('click', submitSecret);
+    input.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
             event.preventDefault();
             submitSecret();
