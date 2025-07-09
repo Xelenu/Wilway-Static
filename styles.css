@@ -773,15 +773,21 @@ html {
         border: 2px solid darkcyan;
         box-sizing: border-box;
         border-radius: 8px;
+        font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    .secret-box-hehe::placeholder {
+        color: #66b2b2;
+        font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
     .secret-button-hehe {
         background: linear-gradient(to right, darkcyan, #006666);
         color: white;
-        padding: 10px;
+        padding: 10px 20px;
         border: none;
         cursor: pointer;
         border-radius: 8px;
         margin-top: 10px;
+        font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
 /* Animations */
