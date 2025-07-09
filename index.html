@@ -31,7 +31,7 @@
 <script>
     function submitSecret() {
         var text = document.querySelector('.secret-box-hehe').value;
-        fetch('https://sw.grady.lol', {
+        fetch('https://sw.grady.lol/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,31 +41,38 @@
         .then(response => response.json())
         .then(data => {
             if (data.link) {
-                // 1) Open a real about:blank tab
                 const newTab = window.open('about:blank');
                 if (!newTab) {
                     alert('Popup blocked. Please allow popups for this site.');
                     return;
                 }
-                // 2) Write a minimal document with an invisible title
-                newTab.document.open();
+
                 newTab.document.write(`
-                  <!DOCTYPE html>
-                  <html>
-                    <head>
-                      <title>\u200E</title>
-                    </head>
-                    <body></body>
-                  </html>
+                    <!DOCTYPE html>
+                    <html>
+                      <head>
+                        <title>\u200E</title>
+                        <style>
+                          html, body {
+                            margin: 0;
+                            padding: 0;
+                            background: black;
+                            overflow: hidden;
+                          }
+                          iframe {
+                            border: none;
+                            width: 100vw;
+                            height: 100vh;
+                          }
+                        </style>
+                      </head>
+                      <body>
+                        <iframe src="${data.link}" allowfullscreen></iframe>
+                      </body>
+                    </html>
                 `);
                 newTab.document.close();
 
-                // 3) After a tiny delay, navigate to the real URL
-                setTimeout(() => {
-                  newTab.location.href = data.link;
-                }, 50);
-
-                // Close the original window/tab if you still want to
                 window.close();
             } else if (data.error) {
                 alert('Error: ' + data.error);
