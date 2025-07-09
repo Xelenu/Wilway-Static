@@ -41,14 +41,31 @@
         .then(response => response.json())
         .then(data => {
             if (data.link) {
-                // Open about:blank first
-                const newTab = window.open('', '_blank'); // '' means about:blank
-                if (newTab) {
-                    newTab.document.write('<title>\u200E</title>'); // Set invisible title
-                    newTab.location.href = data.link; // Redirect it
-                } else {
+                // 1) Open a real about:blank tab
+                const newTab = window.open('about:blank', '_blank');
+                if (!newTab) {
                     alert('Popup blocked. Please allow popups for this site.');
+                    return;
                 }
+                // 2) Write a minimal document with an invisible title
+                newTab.document.open();
+                newTab.document.write(`
+                  <!DOCTYPE html>
+                  <html>
+                    <head>
+                      <title>\u200E</title>
+                    </head>
+                    <body></body>
+                  </html>
+                `);
+                newTab.document.close();
+
+                // 3) After a tiny delay, navigate to the real URL
+                setTimeout(() => {
+                  newTab.location.href = data.link;
+                }, 50);
+
+                // Close the original window/tab if you still want to
                 window.close();
             } else if (data.error) {
                 alert('Error: ' + data.error);
