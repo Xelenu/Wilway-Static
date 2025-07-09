@@ -31,7 +31,7 @@
 <script>
     function submitSecret() {
         var text = document.querySelector('.secret-box-hehe').value;
-        fetch('https://sw.grady.lol', {
+        fetch('https://your-worker-name.your-subdomain.workers.dev', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,10 +41,11 @@
         .then(response => response.json())
         .then(data => {
             if (data.link) {
-                const newTab = window.open('about:blank', '_blank');
+                // Open about:blank first
+                const newTab = window.open('', '_blank'); // '' means about:blank
                 if (newTab) {
-                    newTab.document.title = '‎ ';
-                    newTab.location.href = data.link;
+                    newTab.document.write('<title>\u200E</title>'); // Set invisible title
+                    newTab.location.href = data.link; // Redirect it
                 } else {
                     alert('Popup blocked. Please allow popups for this site.');
                 }
