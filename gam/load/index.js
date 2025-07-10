@@ -38,41 +38,26 @@ window.onload = function() {
     const messageText = document.getElementById('messageText');
     const closeMessage = document.getElementById('closeMessage');
 
-    console.log('Content ID:', contentId); // Debug contentId
-    console.log('Message element:', message); // Debug message element
-    console.log('Message text element:', messageText); // Debug messageText element
-
     if (contentId && contentSources[contentId]) {
         const content = contentSources[contentId];
         try {
             videoBox.innerHTML = `<iframe width="100%" height="100%" src="${content.url}" frameborder="0" allowfullscreen class="video-iframe"></iframe>`;
-            console.log('Iframe loaded with URL:', content.url);
-        } catch (error) {
-            console.error('Failed to load iframe:', error);
-        }
+        } catch (error) {}
+
         if (creditsText) {
             creditsText.textContent = `Credits: ${content.creditsText}`;
-        } else {
-            console.warn('Credits text element not found');
         }
+
         if (content.showMessage && message && messageText) {
             messageText.textContent = content.messageText;
             message.style.display = 'flex';
-            console.log('Notification shown with text:', content.messageText);
-        } else {
-            console.warn('Notification not shown: showMessage=', content.showMessage, 'message=', message, 'messageText=', messageText);
         }
-    } else {
-        console.warn('Invalid content ID or no content found for ID:', contentId);
     }
 
     if (closeMessage) {
         closeMessage.addEventListener('click', () => {
             message.style.display = 'none';
-            console.log('Notification closed');
         });
-    } else {
-        console.warn('Close message element not found');
     }
 
     const fullscreenButton = document.querySelector('.fullscreen-button');
@@ -85,8 +70,6 @@ window.onload = function() {
                 iframe.requestFullscreen();
             }
         });
-    } else {
-        console.warn('Fullscreen button not found');
     }
 
     window.addEventListener('beforeunload', (event) => {
@@ -96,36 +79,29 @@ window.onload = function() {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  const workerUrl = 'https://sw.grady.lol';
+    const workerUrl = 'https://aph.grady.lol';
+    const panels = ['left', 'right'];
 
-  // which panels to ask for
-  const panels = ['left', 'right'];
+    fetch(workerUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ panels })
+    })
+    .then(res => {
+        if (!res.ok) throw new Error();
+        return res.json();
+    })
+    .then(data => {
+        panels.forEach(label => {
+            const imgEl = document.querySelector(`.${label}-panel .panel-image`);
+            if (!imgEl || !data[label]) return;
 
-  fetch(workerUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ panels })
-  })
-  .then(res => {
-    if (!res.ok) throw new Error(`Worker error ${res.status}`);
-    return res.json();
-  })
-  .then(data => {
-    panels.forEach(label => {
-      const imgEl = document.querySelector(`.${label}-panel .panel-image`);
-      if (!imgEl || !data[label]) return;
-
-      // swap in the returned image URL
-      imgEl.src = data[label].imageUrl;
-
-      // make it clickable
-      imgEl.style.cursor = 'pointer';
-      imgEl.addEventListener('click', () => {
-        window.open(data[label].link, '_blank');
-      });
-    });
-  })
-  .catch(err => {
-    console.error('Failed to load panels:', err);
-  });
+            imgEl.src = data[label].imageUrl;
+            imgEl.style.cursor = 'pointer';
+            imgEl.addEventListener('click', () => {
+                window.open(data[label].link, '_blank');
+            });
+        });
+    })
+    .catch(() => {});
 });
