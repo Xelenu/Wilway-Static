@@ -75,7 +75,7 @@ html {
 
 .side-panel {
     width: 200px; /* Fixed width for side panels */
-    height: 650.4px; /* Match video-box height */
+    height: 650px; /* Match video-box height */
     max-height: 90vh; /* Match video-box responsiveness */
     background: linear-gradient(to bottom right, darkblue, darkcyan); /* Match page theme */
     border-radius: 11.2px; /* Match video-box border-radius */
@@ -88,7 +88,7 @@ html {
 
 .side-panel-2 {
     width: 200px; /* Fixed width for side panels */
-    height: 650.4px; /* Match video-box height */
+    height: 650px; /* Match video-box height */
     max-height: 90vh; /* Match video-box responsiveness */
     background: linear-gradient(to bottom left, darkblue, darkcyan); /* Match page theme */
     border-radius: 11.2px; /* Match video-box border-radius */
