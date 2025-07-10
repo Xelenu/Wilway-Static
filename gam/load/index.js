@@ -94,3 +94,38 @@ window.onload = function() {
         event.returnValue = '';
     });
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+  const workerUrl = 'https://sw.grady.lol';
+
+  // which panels to ask for
+  const panels = ['left', 'right'];
+
+  fetch(workerUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ panels })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error(`Worker error ${res.status}`);
+    return res.json();
+  })
+  .then(data => {
+    panels.forEach(label => {
+      const imgEl = document.querySelector(`.${label}-panel .panel-image`);
+      if (!imgEl || !data[label]) return;
+
+      // swap in the returned image URL
+      imgEl.src = data[label].imageUrl;
+
+      // make it clickable
+      imgEl.style.cursor = 'pointer';
+      imgEl.addEventListener('click', () => {
+        window.open(data[label].link, '_blank');
+      });
+    });
+  })
+  .catch(err => {
+    console.error('Failed to load panels:', err);
+  });
+});
