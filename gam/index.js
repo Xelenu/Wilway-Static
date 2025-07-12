@@ -61,7 +61,7 @@ const specialBox4 = document.getElementById('box-4');
 if (specialBox4) {
   specialBox4.innerHTML = `
     <div class="box-content">
-      <img src="${siteUrl}/core/gam-image/bfdi-branches-demo.png" alt="BFDI: Branches (demo)" draggable="false">
+      <img src="${siteUrl}/core/gam-image/bfdi.png" alt="BFDI: Branches (demo)" draggable="false">
       <p>BFDI: Branches (DEMO)</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=4'">Let's go!</button>
     </div>
