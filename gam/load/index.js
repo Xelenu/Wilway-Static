@@ -23,11 +23,18 @@ const contentSources = {
         creditsText: 'Ninjamuffin99'
     },
     '5': {
+        url: '/gam/frame/bfdi-branches.html',
+        showMessage: true,
+        messageText: '⚠️ Because this is a PC gam, you will have to have some patience in order for this to load! ✨ This is a special gam.',
+        creditsText: 'Port by breadbb'
+    },
+    '6': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
     }
 };
+
 
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
