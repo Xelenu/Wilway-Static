@@ -61,9 +61,20 @@ const specialBox4 = document.getElementById('box-4');
 if (specialBox4) {
   specialBox4.innerHTML = `
     <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/bfdi-branches-demo.png" alt="BFDI: Branches (demo)" draggable="false">
+      <p>BFDI: Branches (DEMO)</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=4'">Let's go!</button>
+    </div>
+  `;
+}
+
+const specialBox5 = document.getElementById('box-5');
+if (specialBox5) {
+  specialBox5.innerHTML = `
+    <div class="box-content">
       <img src="${siteUrl}/core/gam-image/fnf.png" alt="FNF" draggable="false">
       <p>FNF</p>
-      <button onclick="window.location.href='${siteUrl}/gam/load?id=4'">Let's go!</button>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=5'">Let's go!</button>
     </div>
   `;
 }
