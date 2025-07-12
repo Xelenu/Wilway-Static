@@ -20,7 +20,7 @@ const contentSources = {
     '4': {
         url: '/gam/frame/bfdi-branches.html',
         showMessage: true,
-        messageText: '😃 This is a special gam, and is very exclusive! Does not save progress :/',
+        messageText: '😃 This is an exclusive gam, does not save progress :/',
         creditsText: 'Port by breadbb'
     },
     '5': {
