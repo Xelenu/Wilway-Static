@@ -20,7 +20,7 @@ const contentSources = {
     '4': {
         url: '/gam/frame/bfdi-branches.html',
         showMessage: true,
-        messageText: '⚠️ Because this is a PC gam, you will have to have some patience in order for this to load! ✨ This is a special gam.',
+        messageText: '😃 This is a special gam, and is very exclusive! Does not save progress :/',
         creditsText: 'Port by breadbb'
     },
     '5': {
