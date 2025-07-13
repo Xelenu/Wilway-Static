@@ -1,6 +1,6 @@
 Game.addToManifest({
-	bg: "sprites/bg.png",
-	bg_dark: "sprites/bg_dark.png"
+	bg: "/core/gam-scripts/we-become-what-we-behold/sprites/bg.png",
+	bg_dark: "/core/gam-scripts/we-become-what-we-behold/sprites/bg_dark.png"
 });
 
 /**************************************
