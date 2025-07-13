@@ -1,80 +1,73 @@
 @font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 400;
-  src: url('Poppins-Medium.ttf') format('truetype');
-}
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    src: url('Poppins-Medium.ttf') format('truetype');
+  }
 
-html, body {
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  background: #222;
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden; /* prevent scrollbars */
-}
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #222;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
 
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* vertical centering */
-  align-items: center;     /* horizontal centering */
-  cursor: none;
-  position: relative;
-  height: 100vh;
-}
+  body {
+    cursor: none;
+  }
 
-#stage {
-  position: relative;
-  width: 100vw;    /* fill viewport width */
-  height: 100vh;   /* fill viewport height */
-  max-width: 1920px;   /* optional max size */
-  max-height: 1080px;  /* optional max size */
-  background: #000;
-  cursor: none;
-}
-
-#stage canvas {
-  width: 100%;    /* stretch canvas to fill #stage */
-  height: 100%;
-  display: block; /* remove inline gap */
-}
-
-.overlay {
-  position: absolute;   /* overlay on top of game */
-  top: 20px;            /* near top */
-  left: 50%;            /* center horizontally */
-  transform: translateX(-50%);
-  width: 500px;
-  height: 170px;
-  text-align: center;
-  color: #fff;
-  letter-spacing: 1px;
-  z-index: 10;
-  user-select: none;    /* prevent text selection */
-}
-
-.overlay > div:nth-child(1) {
-  font-size: 100px;
-  line-height: 100px;
-}
-
-.overlay > div:nth-child(2) {
-  font-size: 20px;
-}
-
-#modal_shade {
-  display: none;
-  background: rgba(0,0,0,0.8);
+  #stage {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  transform: translate(-50%, -50%) scale(1);
+}
+  #stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 170px;
+    color: #fff;
+    letter-spacing: 1px;
+    user-select: none;
+    text-align: center;
+    z-index: 10;
+  }
+
+  .overlay > div:nth-child(1) {
+    font-size: 100px;
+    line-height: 100px;
+  }
+
+  .overlay > div:nth-child(2) {
+    font-size: 20px;
+  }
+
+  #modal_shade {
+  display: none;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
   cursor: pointer;
-  z-index: 9;
+  z-index: 1000;
 }
 
-#paused {
-  cursor: pointer;
-}
+  #paused {
+    cursor: pointer;
+  }
