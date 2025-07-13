@@ -1,5 +1,5 @@
 Game.addToManifest({
-	snow: "sprites/snow.png"
+	snow: "/core/gam-scripts/we-become-what-we-behold/sprites/snow.png"
 });
 
 /*************
