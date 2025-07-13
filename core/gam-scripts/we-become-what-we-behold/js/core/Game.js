@@ -1,3 +1,11 @@
+var Game = Game || {};
+
+Game.manifest = Game.manifest || [];
+
+Game.addToManifest = function(item) {
+  Game.manifest.push(item);
+};
+
 /**************************************
 
 GAME CLASS SINGLETON:
