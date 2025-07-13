@@ -29,12 +29,15 @@
   }
 
   #stage {
-    position: absolute;
-    width: 960px;
-    height: 540px;
-    background: #000;
-    cursor: none;
-  }
+  position: absolute;
+  width: 960px;
+  height: 540px;
+  background: #000;
+  cursor: none;
+  top: 50%;
+  left: 50%;
+  transform-origin: top left; /* anchor point for scaling */
+}
 
   #stage canvas {
     display: block;
@@ -164,37 +167,36 @@
 <script>
   Game.stats = false;
   window.onload = function() {
-    try {
-      Game.init();
+  try {
+    Game.init();
 
-      function resize() {
-        const w = window.innerWidth;
-        const h = window.innerHeight;
+    function resize() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const designWidth = 960;
+      const designHeight = 540;
 
-        const designWidth = 960;
-        const designHeight = 540;
+      // Calculate scale to fit window, preserve aspect ratio
+      const scaleX = w / designWidth;
+      const scaleY = h / designHeight;
+      const scale = Math.min(scaleX, scaleY);
 
-        const scaleX = w / designWidth;
-        const scaleY = h / designHeight;
-        const scale = Math.min(scaleX, scaleY);
-
-        Game.renderer.resize(designWidth * scale, designHeight * scale);
-        Game.stage.scale.set(scale);
-
-        const stageDiv = document.getElementById('stage');
-        stageDiv.style.width = (designWidth * scale) + 'px';
-        stageDiv.style.height = (designHeight * scale) + 'px';
-        stageDiv.style.left = ((w - designWidth * scale) / 2) + 'px';
-        stageDiv.style.top = ((h - designHeight * scale) / 2) + 'px';
-      }
-
-      window.addEventListener('resize', resize);
-      resize();
-
-    } catch(e) {
-      document.getElementById("warning").style.display = "block";
+      // Apply CSS transform scale and center with translate
+      const stageDiv = document.getElementById('stage');
+      stageDiv.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      stageDiv.style.width = designWidth + 'px';
+      stageDiv.style.height = designHeight + 'px';
+      stageDiv.style.top = '50%';
+      stageDiv.style.left = '50%';
     }
-  };
+
+    window.addEventListener('resize', resize);
+    resize();
+
+  } catch(e) {
+    document.getElementById("warning").style.display = "block";
+  }
+};
   window.SHARE_TEXT = "I just played this really weird game about the news. WE BECOME WHAT WE BEHOLD:";
   window.SHARE_URL = "https://ncase.itch.io/wbwwb";
 </script>
