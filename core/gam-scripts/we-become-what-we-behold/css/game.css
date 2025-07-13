@@ -5,38 +5,38 @@
 	src: url('Poppins-Medium.ttf') format('truetype');
 }
 
-html, body{
-	width: 100%;
-	height: 100%;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
-body{
-	font-family: 'Poppins';
-	margin: 0;
-	background: #222;
-	position:relative;
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* horizontal center */
+  justify-content: center; /* vertical center */
+  height: 100vh; /* full viewport height */
+  margin: 0;
+  background: #222;
+  font-family: 'Poppins';
+  position: relative;
+  cursor: none;
 }
-#stage{
-	background: #000;
-	width:960px; height:540px;
-	position:absolute;
-	margin:auto;
-	top:0; left:0; right:0; bottom:0;
-	cursor: none;
+#stage {
+  width: 960px;
+  height: 540px;
+  background: #000;
+  position: relative; /* inside flex container */
+  cursor: none;
 }
-.overlay{
-
-	display: none;
-
-	text-align: center;
-	color: #fff;
-	letter-spacing: 1px;
-
-	width:500px; height:170px;
-
-	position:absolute;
-	margin:auto;
-	top:0; left:0; right:0; bottom:0;
-
+.overlay {
+  position: relative; /* so it flows naturally above #stage */
+  margin-bottom: 20px; /* spacing above the game */
+  width: 500px;
+  height: 170px;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 1px;
 }
 .overlay > div:nth-child(1){
 	font-size: 100px;
