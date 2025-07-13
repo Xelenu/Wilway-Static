@@ -1,5 +1,5 @@
 Game.addToManifest({
-    laptop: "sprites/laptop.png"
+    laptop: "/core/gam-scripts/we-become-what-we-behold/sprites/laptop.png"
 });
 
 /*************
