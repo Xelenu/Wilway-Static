@@ -35,6 +35,12 @@ const contentSources = {
         creditsText: 'Wilway'
     },
     '7': {
+        url: '/gam/frame/wbwwb.html',
+        showMessage: true,
+        messageText: '✍️ Every game file indivisually imported by us! Enjoy.',
+        creditsText: 'Files from frogiee1'
+    },
+    '8': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
