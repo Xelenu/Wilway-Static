@@ -51,7 +51,7 @@ if (specialBox3) {
   specialBox3.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/wolfenstein.png" alt="Wolfenstein" draggable="false">
-      <p>Wolfenstein 3D</p>
+      <p>Wolfenstein 3D ✨</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=3'">Let's go!</button>
     </div>
   `;
@@ -74,6 +74,17 @@ if (specialBox5) {
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/fnf.png" alt="FNF" draggable="false">
       <p>FNF</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=5'">Let's go!</button>
+    </div>
+  `;
+}
+
+const specialBox6 = document.getElementById('box-6');
+if (specialBox6) {
+  specialBox6.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/kittytoy.png" alt="KittyToy" draggable="false">
+      <p>KittyToy ✨</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=5'">Let's go!</button>
     </div>
   `;
