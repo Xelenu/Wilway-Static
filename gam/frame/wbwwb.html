@@ -66,16 +66,16 @@
   }
 
   #modal_shade {
-    display: none;
-    background: rgba(0,0,0,0.8);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 960px;
-    height: 540px;
-    cursor: pointer;
-    z-index: 9;
-  }
+  display: none;
+  position: fixed;       /* fixed to viewport */
+  top: 0;
+  left: 0;
+  width: 100vw;          /* full viewport width */
+  height: 100vh;         /* full viewport height */
+  background: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  z-index: 1000;         /* very high to cover everything */
+}
 
   #paused {
     cursor: pointer;
