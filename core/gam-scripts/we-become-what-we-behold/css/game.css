@@ -1,66 +1,80 @@
-* {
-  outline: 1px solid red; /* visually see element boundaries */
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 @font-face {
-	font-family: 'Poppins';
-	font-style: normal;
-	font-weight: 400;
-	src: url('Poppins-Medium.ttf') format('truetype');
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  src: url('Poppins-Medium.ttf') format('truetype');
 }
 
 html, body {
-  height: 100vh;  /* Use viewport height units */
+  height: 100vh;
   margin: 0;
   padding: 0;
+  background: #222;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden; /* prevent scrollbars */
 }
+
 body {
   display: flex;
   flex-direction: column;
-  align-items: center; /* horizontal center */
-  justify-content: center; /* vertical center */
-  height: 100vh; /* full viewport height */
-  margin: 0;
-  background: #222;
-  font-family: 'Poppins';
+  justify-content: center; /* vertical centering */
+  align-items: center;     /* horizontal centering */
+  cursor: none;
   position: relative;
-  cursor: none;
+  height: 100vh;
 }
+
 #stage {
-  width: 960px;
-  height: 540px;
+  position: relative;
+  width: 100vw;    /* fill viewport width */
+  height: 100vh;   /* fill viewport height */
+  max-width: 1920px;   /* optional max size */
+  max-height: 1080px;  /* optional max size */
   background: #000;
-  position: relative; /* inside flex container */
   cursor: none;
 }
+
+#stage canvas {
+  width: 100%;    /* stretch canvas to fill #stage */
+  height: 100%;
+  display: block; /* remove inline gap */
+}
+
 .overlay {
-  position: relative; /* so it flows naturally above #stage */
-  margin-bottom: 20px; /* spacing above the game */
+  position: absolute;   /* overlay on top of game */
+  top: 20px;            /* near top */
+  left: 50%;            /* center horizontally */
+  transform: translateX(-50%);
   width: 500px;
   height: 170px;
   text-align: center;
   color: #fff;
   letter-spacing: 1px;
+  z-index: 10;
+  user-select: none;    /* prevent text selection */
 }
-.overlay > div:nth-child(1){
-	font-size: 100px;
-	line-height: 100px;
+
+.overlay > div:nth-child(1) {
+  font-size: 100px;
+  line-height: 100px;
 }
-.overlay > div:nth-child(2){
-	font-size: 20px;
+
+.overlay > div:nth-child(2) {
+  font-size: 20px;
 }
-#modal_shade{
-	display: none;
-	background: rgba(0,0,0,0.8);
-	width:960px; height:540px;
-	position:absolute;
-	margin:auto;
-	top:0; left:0; right:0; bottom:0;
-	cursor: pointer;
+
+#modal_shade {
+  display: none;
+  background: rgba(0,0,0,0.8);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+  z-index: 9;
 }
-#paused{
-	cursor: pointer;
+
+#paused {
+  cursor: pointer;
 }
