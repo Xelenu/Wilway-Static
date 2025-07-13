@@ -3,36 +3,55 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>We Become What We Behold - Centered Game</title>
+<title>We Become What We Behold - Fullscreen Centered</title>
 <link rel="stylesheet" href="/core/gam-scripts/we-become-what-we-behold/css/game.css" />
 <style>
   /* Override or add styles for full screen and centering */
+  @font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    src: url('Poppins-Medium.ttf') format('truetype');
+  }
+
   html, body {
     height: 100vh;
     margin: 0;
     padding: 0;
     background: #222;
     font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+  }
+
+  body {
     display: flex;
+    flex-direction: column;
     justify-content: center; /* vertical centering */
     align-items: center;     /* horizontal centering */
-    overflow: hidden;        /* prevent scrollbars */
+    cursor: none;
+    position: relative;
+    height: 100vh;
   }
 
   #stage {
     position: relative;
-    width: 100vw;   /* full viewport width */
-    height: 100vh;  /* full viewport height */
-    max-width: 1920px; /* optional max width */
-    max-height: 1080px; /* optional max height */
+    width: 100vw;
+    height: 100vh;
+    max-width: 1920px;
+    max-height: 1080px;
     background: #000;
     cursor: none;
   }
 
-  /* Keep overlays positioned on top */
+  #stage canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
   .overlay {
-    position: absolute; /* overlay the game */
-    top: 20px;          /* place near top */
+    position: absolute;
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
     width: 500px;
@@ -41,13 +60,24 @@
     color: #fff;
     letter-spacing: 1px;
     z-index: 10;
+    user-select: none;
+  }
+
+  .overlay > div:nth-child(1) {
+    font-size: 100px;
+    line-height: 100px;
+  }
+
+  .overlay > div:nth-child(2) {
+    font-size: 20px;
   }
 
   #modal_shade {
     display: none;
     background: rgba(0,0,0,0.8);
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     cursor: pointer;
@@ -76,7 +106,7 @@
 
 <!-- Game container -->
 <div id="stage">
-  <canvas width="960" height="540" style="width: 100%; height: 100%;"></canvas>
+  <canvas></canvas> <!-- no width/height attrs here -->
 </div>
 
 <!-- Scripts -->
@@ -145,7 +175,27 @@
   window.onload = function() {
     try {
       Game.init();
-      //Game.init("Game");
+
+      function resize() {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const canvas = document.querySelector('#stage canvas');
+
+        if (canvas) {
+          canvas.width = w;
+          canvas.height = h;
+          canvas.style.width = w + 'px';
+          canvas.style.height = h + 'px';
+        }
+
+        if (Game.renderer) {
+          Game.renderer.resize(w, h);
+        }
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+
     } catch (e) {
       document.getElementById("warning").style.display = "block";
     }
