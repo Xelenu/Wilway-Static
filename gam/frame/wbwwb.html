@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>We Become What We Behold - Scaled Centered</title>
+<title>We Become What We Behold</title>
 <link rel="stylesheet" href="/core/gam-scripts/we-become-what-we-behold/css/game.css" />
 <style>
   @font-face {
@@ -93,14 +93,10 @@
 </div>
 
 <div class="overlay" id="paused" style="display:none;">
-  <div>paused</div>
-  <div>click anywhere to resume</div>
 </div>
 
-<!-- Game container -->
 <div id="stage"></div>
 
-<!-- Scripts -->
 <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/pixi.min.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/howler.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/stats.min.js"></script>
@@ -109,12 +105,10 @@
 <script>Ticker.framerate=144; Ticker.paused=true;</script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/helpers.js"></script>
 
-<!-- Core Engine Code -->
 <script src="/core/gam-scripts/we-become-what-we-behold/js/core/Game.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/core/SceneManager.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/core/Scene.js"></script>
 
-<!-- Main Game Scene Code -->
 <script src="/core/gam-scripts/we-become-what-we-behold/js/game/World.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/game/Camera.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/game/Director.js"></script>
@@ -127,7 +121,6 @@
 <script src="/core/gam-scripts/we-become-what-we-behold/js/game/DeadBody.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/game/Blood.js"></script>
 
-<!-- Peeps -->
 <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/NormalPeep.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/CrazyPeep.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/NervousPeep.js"></script>
@@ -142,13 +135,11 @@
 <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/PanicPeep.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/MurderPeep.js"></script>
 
-<!-- Misc -->
 <script src="/core/gam-scripts/we-become-what-we-behold/js/misc/Candlelight.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/misc/LoversWatching.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/misc/Cricket.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/misc/Cursor.js"></script>
 
-<!-- Scenes -->
 <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Preloader.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Quote.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Game.js"></script>
@@ -173,12 +164,10 @@
       const designWidth = 960;
       const designHeight = 540;
 
-      // Calculate scale to fit window, preserve aspect ratio
       const scaleX = w / designWidth;
       const scaleY = h / designHeight;
       const scale = Math.min(scaleX, scaleY);
 
-      // Apply CSS transform scale and center with translate
       const stageDiv = document.getElementById('stage');
       stageDiv.style.transform = `translate(-50%, -50%) scale(${scale})`;
       stageDiv.style.width = designWidth + 'px';
