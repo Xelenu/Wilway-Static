@@ -1,104 +1,115 @@
 <html>
 <head>
-	<link rel="stylesheet" href="/core/gam-scripts/we-become-what-we-behold/css/game.css">
+  <link rel="stylesheet" href="/core/gam-scripts/we-become-what-we-behold/css/game.css">
 </head>
 <body>
-	<div id="stage-container">
-		<div id="stage">
-			<canvas width="960" height="540" style="cursor: inherit;"></canvas>
-		</div>
-	</div>
-	
-	<div id="modal_shade" style="display: block;"></div>
+  <div id="stage-container">
+    <div id="stage">
+      <canvas width="960" height="540" style="cursor: inherit;"></canvas>
+    </div>
+  </div>
 
-	<div class="overlay" id="warning">
-		<div>oh noes</div>
-		<div>
-			your browser doesn't support webgl.<br>
-			try a different browser or computer?
-		</div>
-	</div>
+  <div id="modal_shade" style="display: block;"></div>
 
-	<div class="overlay" id="paused" style="display: block;">
-		<div>paused</div>
-		<div>
-			click anywhere to resume
-		</div>
-	</div>
+  <div class="overlay" id="warning">
+    <div>oh noes</div>
+    <div>
+      your browser doesn't support webgl.<br>
+      try a different browser or computer?
+    </div>
+  </div>
 
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/lib/pixi.min.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/lib/howler.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/lib/stats.min.js"></script>
-	<script>var createjs = window;</script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/lib/tweenjs-0.6.2.min.js"></script>
-	<script>Ticker.framerate=144; Ticker.paused=true;</script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/lib/helpers.js"></script>
+  <div class="overlay" id="paused" style="display: block;">
+    <div>paused</div>
+    <div>click anywhere to resume</div>
+  </div>
 
-	<!-- Core Engine Code -->
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/core/Game.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/core/SceneManager.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/core/Scene.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/pixi.min.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/howler.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/stats.min.js"></script>
+  <script>var createjs = window;</script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/tweenjs-0.6.2.min.js"></script>
+  <script>Ticker.framerate=144; Ticker.paused=true;</script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/helpers.js"></script>
 
-	<!-- Main Game Scene Code -->
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/game/World.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/game/Camera.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/game/Director.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/game/Peep.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/game/TV.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/game/AnimationProp.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/game/ScreenShake.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/game/ScreenZoomOut.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/game/Gore.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/game/DeadBody.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/game/Blood.js"></script>
+  <!-- Core Engine Code -->
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/core/Game.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/core/SceneManager.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/core/Scene.js"></script>
 
-	<!-- Peeps -->
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/NormalPeep.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/CrazyPeep.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/NervousPeep.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/SnobbyPeep.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/AngryPeep.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/HatPeep.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/LoverPeep.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/ProtestAnim.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/HelpingAnim.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/HappyWeirdoPeep.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/EvilHatPeep.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/PanicPeep.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/MurderPeep.js"></script>
+  <!-- Main Game Scene Code -->
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/game/World.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/game/Camera.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/game/Director.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/game/Peep.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/game/TV.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/game/AnimationProp.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/game/ScreenShake.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/game/ScreenZoomOut.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/game/Gore.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/game/DeadBody.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/game/Blood.js"></script>
 
-	<!-- Misc -->
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/misc/Candlelight.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/misc/LoversWatching.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/misc/Cricket.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/misc/Cursor.js"></script>
+  <!-- Peeps -->
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/NormalPeep.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/CrazyPeep.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/NervousPeep.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/SnobbyPeep.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/AngryPeep.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/HatPeep.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/LoverPeep.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/ProtestAnim.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/HelpingAnim.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/HappyWeirdoPeep.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/EvilHatPeep.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/PanicPeep.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/peeps/MurderPeep.js"></script>
 
-	<!-- Scenes -->
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Preloader.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Quote.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Game.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Credits.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Post_Credits.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Post_Post_Credits.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_EndPrototype.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Act_I.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Act_II.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Act_III.js"></script>
-	<script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Meta.js"></script>
+  <!-- Misc -->
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/misc/Candlelight.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/misc/LoversWatching.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/misc/Cricket.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/misc/Cursor.js"></script>
 
-	<!-- Game Scripts -->
-	<script>
-		Game.stats = false;
-		window.onload = function () {
-			try {
-				Game.init();
-			} catch (e) {
-				document.getElementById("warning").style.display = "block";
-			}
-		};
-		window.SHARE_TEXT = "I just played this really weird game about the news. WE BECOME WHAT WE BEHOLD:";
-		window.SHARE_URL = "https://ncase.itch.io/wbwwb";
-	</script>
-	<script defer src="/core/gam-scripts/we-become-what-we-behold/htmlgame.js" type="text/javascript"></script>
+  <!-- Scenes -->
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Preloader.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Quote.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Game.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Credits.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Post_Credits.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Post_Post_Credits.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_EndPrototype.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Act_I.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Act_II.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Act_III.js"></script>
+  <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Meta.js"></script>
+
+  <script>
+    Game.stats = false;
+    window.onload = function() {
+      try {
+        Game.init();
+      } catch(e) {
+        document.getElementById('warning').style.display = 'block';
+      }
+    };
+
+    window.SHARE_TEXT = "I just played this really weird game about the news. WE BECOME WHAT WE BEHOLD:";
+    window.SHARE_URL  = "https://ncase.itch.io/wbwwb";
+
+    // --- Scaling script ---
+    function scaleGame() {
+      const container = document.getElementById('stage-container');
+      const nativeW = 960, nativeH = 540;
+      const winW = window.innerWidth, winH = window.innerHeight;
+      const scale = Math.min(winW / nativeW, winH / nativeH);
+      container.style.transform = `scale(${scale})`;
+      container.style.width  = nativeW + 'px';
+      container.style.height = nativeH + 'px';
+    }
+    window.addEventListener('load', scaleGame);
+    window.addEventListener('resize', scaleGame);
+  </script>
+  <script defer src="/core/gam-scripts/we-become-what-we-behold/htmlgame.js" type="text/javascript"></script>
 </body>
 </html>
