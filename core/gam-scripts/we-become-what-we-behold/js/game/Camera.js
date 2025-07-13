@@ -7,9 +7,9 @@ The graphics & controls for this sucka
 
 Game.addToManifest({
 
-	cam_frame: "sprites/cam/cam.png",
-	cam_flash: "sprites/cam/cam-flash.png",
-	cam_instructions: "sprites/cam/cam-instructions.png",
+	cam_frame: "/core/gam-scripts/we-become-what-we-behold/sprites/cam/cam.png",
+	cam_flash: "/core/gam-scripts/we-become-what-we-behold/sprites/cam/cam-flash.png",
+	cam_instructions: "/core/gam-scripts/we-become-what-we-behold/sprites/cam/cam-instructions.png",
 
 	cam_snap: "sounds/cam_snap.mp3"
 
