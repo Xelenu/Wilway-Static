@@ -30,15 +30,12 @@
 
   #stage {
   position: absolute;
-  width: 960px;
-  height: 540px;
-  background: #000;
-  cursor: none;
   top: 50%;
   left: 50%;
-  transform-origin: top left; /* anchor point for scaling */
+  transform-origin: center center;
+  /* The JS sets scale dynamically */
+  transform: translate(-50%, -50%) scale(1);
 }
-
   #stage canvas {
     display: block;
     width: 100%;
