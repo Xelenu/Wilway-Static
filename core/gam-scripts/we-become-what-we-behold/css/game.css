@@ -7,13 +7,16 @@
 
 /* Fix: use viewport height units for full viewport fill */
 html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
-  background: #222;
-  position: relative;
-  font-family: 'Poppins';
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+	background: #222;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	font-family: 'Poppins';
 }
 
 /* Keep relative positioning on body */
@@ -27,21 +30,17 @@ body {
 
 /* New: wrap #stage in a container for scaling */
 #stage-container {
-  width: 960px;
-  height: 540px;
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  margin: auto;
-  transform-origin: top left;
+	width: 960px;
+	height: 540px;
+	transform-origin: top left;
 }
 
 /* Keep #stage size fixed, remove absolute positioning and margin auto */
 #stage {
-  background: #000;
-  width: 960px;
-  height: 540px;
-  cursor: none;
-  /* REMOVE: position, margin, top/left/right/bottom */
+	background: #000;
+	width: 960px;
+	height: 540px;
+	cursor: none;
 }
 
 /* Overlays and modal shade keep absolute positioning and margin auto */
