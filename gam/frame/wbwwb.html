@@ -1,26 +1,85 @@
-<html><head>
-		<link rel="stylesheet" href="/core/gam-scripts/we-become-what-we-behold/css/game.css">
-	</head>
-	<body>
-		<div id="stage"><canvas width="960" height="540" style="cursor: inherit;"></canvas></div>
-		<div id="modal_shade" style="display: block;"></div>
-		<div class="overlay" id="warning">
-			<div>oh noes</div>
-			<div>
-			your browser doesn't support webgl.<br>
-			try a different browser or computer?
-			</div>
-		</div>
-		<div class="overlay" id="paused" style="display: block;">
-			<div>paused</div>
-			<div>
-			click anywhere to resume
-			</div>
-		</div>
-	
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>We Become What We Behold - Centered Game</title>
+<link rel="stylesheet" href="/core/gam-scripts/we-become-what-we-behold/css/game.css" />
+<style>
+  /* Override or add styles for full screen and centering */
+  html, body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: #222;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center; /* vertical centering */
+    align-items: center;     /* horizontal centering */
+    overflow: hidden;        /* prevent scrollbars */
+  }
 
+  #stage {
+    position: relative;
+    width: 100vw;   /* full viewport width */
+    height: 100vh;  /* full viewport height */
+    max-width: 1920px; /* optional max width */
+    max-height: 1080px; /* optional max height */
+    background: #000;
+    cursor: none;
+  }
 
+  /* Keep overlays positioned on top */
+  .overlay {
+    position: absolute; /* overlay the game */
+    top: 20px;          /* place near top */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 170px;
+    text-align: center;
+    color: #fff;
+    letter-spacing: 1px;
+    z-index: 10;
+  }
 
+  #modal_shade {
+    display: none;
+    background: rgba(0,0,0,0.8);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    cursor: pointer;
+    z-index: 9;
+  }
+
+  #paused {
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- Overlay elements -->
+<div id="modal_shade"></div>
+
+<div class="overlay" id="warning" style="display:none;">
+  <div>oh noes</div>
+  <div>your browser doesn't support webgl.<br>try a different browser or computer?</div>
+</div>
+
+<div class="overlay" id="paused" style="display:none;">
+  <div>paused</div>
+  <div>click anywhere to resume</div>
+</div>
+
+<!-- Game container -->
+<div id="stage">
+  <canvas width="960" height="540" style="width: 100%; height: 100%;"></canvas>
+</div>
+
+<!-- Scripts -->
 <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/pixi.min.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/howler.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/lib/stats.min.js"></script>
@@ -81,18 +140,20 @@
 <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Act_III.js"></script>
 <script src="/core/gam-scripts/we-become-what-we-behold/js/scenes/Scene_Meta.js"></script>
 
-<!-- Game Scripts -->
 <script>
-Game.stats = false;
-window.onload = function(){
-	try{
-		Game.init();
-		//Game.init("Game");
-	}catch(e){
-		document.getElementById("warning").style.display = "block";
-	}
-};
-window.SHARE_TEXT = "I just played this really weird game about the news. WE BECOME WHAT WE BEHOLD:"
-window.SHARE_URL = "https://ncase.itch.io/wbwwb";
-</script><script defer="" src="/core/gam-scripts/we-become-what-we-behold/htmlgame.js" type="text/javascript"></script>
-</body></html>
+  Game.stats = false;
+  window.onload = function() {
+    try {
+      Game.init();
+      //Game.init("Game");
+    } catch (e) {
+      document.getElementById("warning").style.display = "block";
+    }
+  };
+  window.SHARE_TEXT = "I just played this really weird game about the news. WE BECOME WHAT WE BEHOLD:";
+  window.SHARE_URL = "https://ncase.itch.io/wbwwb";
+</script>
+
+<script defer src="/core/gam-scripts/we-become-what-we-behold/htmlgame.js" type="text/javascript"></script>
+</body>
+</html>
