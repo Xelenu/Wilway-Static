@@ -336,8 +336,8 @@ html {
 /* Fullscreen button */
 .fullscreen-button {
   position: fixed;
-  bottom: 2vh;
-  right: 8vh;
+  bottom: 8vh;        /* 2vh (toggle-bar) + 5vh (button height) + 1vh (gap) */
+  right: 3vh;         /* same as .toggle-bar-button */
   width: 5vh;
   height: 5vh;
   background: darkcyan;
