@@ -2,7 +2,7 @@ const contentSources = {
     '1': {
         url: '/gam/frame/repo.html',
         showMessage: true,
-        messageText: '⚠️ Because this is a PC gam, you will have to have some patience in order for this to load! ✨ This is a special gam.',
+        messageText: '⚠️ Because this is a PC gam, you will have to have some patience in order for this to load! ⭐ This is an exclusive gam.',
         creditsText: 'Port by breadbb and 98corbins'
     },
     '2': {
@@ -19,7 +19,7 @@ const contentSources = {
     '4': {
         url: '/gam/frame/bfdi-branches.html',
         showMessage: true,
-        messageText: '⭐ This is an exclusive gam, based on the show BFDI!',
+        messageText: '✨ This is a special gam, based on the show BFDI!',
         creditsText: 'Port by breadbb'
     },
     '5': {
