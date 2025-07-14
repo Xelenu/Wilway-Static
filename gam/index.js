@@ -29,7 +29,7 @@ if (specialBox1) {
   specialBox1.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/repo.png" alt="R.E.P.O." draggable="false">
-      <p>R.E.P.O. ✨</p>
+      <p>R.E.P.O. ⭐</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=1'">Let's go!</button>
     </div>
   `;
@@ -62,7 +62,7 @@ if (specialBox4) {
   specialBox4.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/bfdi.png" alt="BFDI: Branches (demo)" draggable="false">
-      <p>BFDI: Branches (DEMO) ⭐</p>
+      <p>BFDI: Branches (DEMO) ✨</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=4'">Let's go!</button>
     </div>
   `;
