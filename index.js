@@ -362,7 +362,7 @@ function toggleFsHideSettings() {
   const btn = document.getElementById('fsHideSettingsBtn');
   setCookie('fsHideSettings', fsHideSettingsEnabled ? 'true' : 'false', 30);
   updateSettingsButtonVisibility();
-  btn.textContent = `${fsHideSettingsEnabled ? '🔴' : '🟢'} Settings in Fullscreen`;
+  btn.textContent = `${fsHideSettingsEnabled ? '🔴' : '🟢'} Settings in fullscreen`;
 }
 
 function updateSettingsButtonVisibility() {
