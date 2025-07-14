@@ -24,14 +24,15 @@ const contentSources = {
         creditsText: 'Port by breadbb'
     },
     '5': {
-        url: '/gam/frame/fnf.html',
-        showMessage: false,
-        creditsText: 'Ninjamuffin99'
+        url: '/core/gam-scripts/baldis-fun-new-school-plus-ultimate-edition/',
+        showMessage: true,
+        messageText: '✨ This is an exclusive gam 😉 This gam was ported by us 😨 May be intense!',
+        creditsText: 'Wilway'
     },
     '6': {
         url: '/core/gam-scripts/kittytoy/',
         showMessage: true,
-        messageText: '😉 This gam was ported by us!',
+        messageText: '😉 This gam was ported by us 🤑 Saves progress!',
         creditsText: 'Wilway'
     },
     '7': {
