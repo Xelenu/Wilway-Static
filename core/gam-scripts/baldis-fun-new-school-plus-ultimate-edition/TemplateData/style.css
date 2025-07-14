@@ -1,14 +1,8 @@
-body { 
-  padding: 0; 
-  margin: 0; 
-  width: 100vw; 
-  height: 100vh; 
-  overflow: hidden; 
-  background: #fff;
-}
-html {
-  width: 100vw;
-  height: 100vh;
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
 #unity-container {
@@ -18,7 +12,7 @@ html {
   height: 100vh;
   min-width: 100vw;
   min-height: 100vh;
-  background: #fff;
+  background: #000;
   margin: 0;
   padding: 0;
   z-index: 0;
@@ -27,13 +21,13 @@ html {
   width: 100vw;
   height: 100vh;
   display: block;
-  background: #FFFFFF;
+  background: #000;
 }
 
 #unity-loading-bar {
   position: fixed;
-  left: 50%; 
-  top: 50%; 
+  left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
   display: none;
   z-index: 2;
@@ -42,11 +36,11 @@ html {
   margin: 0;
 }
 #unity-logo {
-  display: block;
-  margin: 0 auto 16px auto;
   background: url('unity-logo-dark.png') no-repeat center/contain;
   width: 200px;
   height: 170px;
+  display: block;
+  margin: 0 auto 16px auto;
 }
 #unity-progress-bar-empty { 
   width: 180px; 
