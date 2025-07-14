@@ -40,7 +40,7 @@ if (specialBox2) {
   specialBox2.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/webfishing.png" alt="Webfishing" draggable="false">
-      <p>Webfishing</p>
+      <p>Webfishing ✨</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=2'">Let's go!</button>
     </div>
   `;
@@ -62,7 +62,7 @@ if (specialBox4) {
   specialBox4.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/bfdi.png" alt="BFDI: Branches (demo)" draggable="false">
-      <p>BFDI: Branches (DEMO)</p>
+      <p>BFDI: Branches (DEMO) ⭐</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=4'">Let's go!</button>
     </div>
   `;
@@ -95,7 +95,7 @@ if (specialBox7) {
   specialBox7.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/wbwwb.png" alt="WBWWB" draggable="false">
-      <p>We Become What We Behold</p>
+      <p>We Become What We Behold ✍️</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=7'">Let's go!</button>
     </div>
   `;
