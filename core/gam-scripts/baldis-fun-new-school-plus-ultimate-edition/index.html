@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Baldi's Fun New School Plus Ultimate Edition</title>
+    <title>Baldi's Fun New School Plus Ultimate Edition</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -31,12 +31,6 @@
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var warningBanner = document.querySelector("#unity-warning");
 
-      // Shows a temporary message banner/ribbon for a few seconds, or
-      // a permanent error message on top of the canvas if type=='error'.
-      // If type=='warning', a yellow highlight color is used.
-      // Modify or remove this function to customize the visually presented
-      // way that non-critical warnings and error messages are presented to the
-      // user.
       function unityShowBanner(msg, type) {
         function updateBannerVisibility() {
           warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
@@ -58,9 +52,8 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/BFNSPUE Alpha 6 Part 2b WebGL.loader.js";
       var config = {
-        dataUrl: buildUrl + "/BFNSPUE Alpha 6 Part 2b WebGL.data",
+        // dataUrl and codeUrl will be set later after combining parts!
         frameworkUrl: buildUrl + "/BFNSPUE Alpha 6 Part 2b WebGL.framework.js",
-        codeUrl: buildUrl + "/BFNSPUE Alpha 6 Part 2b WebGL.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "JohnsterSpaceGames",
         productName: "Baldi's Fun New School Plus Ultimate Edition",
@@ -68,17 +61,31 @@
         showBanner: unityShowBanner,
       };
 
-      // By default Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      // config.matchWebGLToCanvasSize = false;
+      const numDataParts = 7; // 0 to 6
+      const numWasmParts = 3; // 0 to 2
 
+      async function fetchAndCombineParts(baseUrl, numParts) {
+        const parts = [];
+        for (let i = 0; i < numParts; i++) {
+          const partUrl = `${baseUrl}.${i.toString().padStart(3, '0')}.part`;
+          const response = await fetch(partUrl);
+          if (!response.ok) throw new Error(`Failed to fetch ${partUrl}`);
+          const arrayBuffer = await response.arrayBuffer();
+          parts.push(arrayBuffer);
+        }
+        let totalLength = parts.reduce((sum, part) => sum + part.byteLength, 0);
+        let combined = new Uint8Array(totalLength);
+        let offset = 0;
+        for (let part of parts) {
+          combined.set(new Uint8Array(part), offset);
+          offset += part.byteLength;
+        }
+        return combined.buffer;
+      }
+
+      // Responsive / DPI stuff:
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         container.className = "unity-mobile";
-        // Avoid draining fillrate performance on mobile devices,
-        // and default/override low DPI mode on mobile browsers.
         config.devicePixelRatio = 1;
         unityShowBanner('WebGL builds are not supported on mobile devices.');
       } else {
@@ -88,21 +95,32 @@
       canvas.style.background = "url('" + buildUrl + "/BFNSPUE Alpha 6 Part 2b WebGL.jpg') center / cover";
       loadingBar.style.display = "block";
 
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
-        }).then((unityInstance) => {
-          loadingBar.style.display = "none";
-          fullscreenButton.onclick = () => {
-            unityInstance.SetFullscreen(1);
-          };
-        }).catch((message) => {
-          alert(message);
-        });
-      };
-      document.body.appendChild(script);
+      // --- Start the loader after parts are combined ---
+      Promise.all([
+        fetchAndCombineParts(buildUrl + "/BFNSPUE Alpha 6 Part 2b WebGL.data", numDataParts),
+        fetchAndCombineParts(buildUrl + "/BFNSPUE Alpha 6 Part 2b WebGL.wasm", numWasmParts)
+      ]).then(([dataBuffer, wasmBuffer]) => {
+        config.dataUrl = URL.createObjectURL(new Blob([dataBuffer]));
+        config.codeUrl = URL.createObjectURL(new Blob([wasmBuffer]));
+
+        var script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = () => {
+          createUnityInstance(canvas, config, (progress) => {
+            progressBarFull.style.width = 100 * progress + "%";
+          }).then((unityInstance) => {
+            loadingBar.style.display = "none";
+            fullscreenButton.onclick = () => {
+              unityInstance.SetFullscreen(1);
+            };
+          }).catch((message) => {
+            alert(message);
+          });
+        };
+        document.body.appendChild(script);
+      }).catch(error => {
+        unityShowBanner("Error loading split file parts: " + error.message, "error");
+      });
     </script>
   </body>
 </html>
