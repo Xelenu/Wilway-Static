@@ -29,7 +29,7 @@ const contentSources = {
         creditsText: 'Ninjamuffin99'
     },
     '6': {
-        url: '/gam/frame/kittytoy.html',
+        url: '/core/gam-scripts/kittytoy/',
         showMessage: true,
         messageText: '😉 This gam was ported by us!',
         creditsText: 'Wilway'
