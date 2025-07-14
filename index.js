@@ -282,7 +282,7 @@ function toggleAutoHide() {
     showToggleButton();
     setTimeout(() => location.reload(), 200);
   }
-  btn.textContent = `${autoHideEnabled ? '🟢' : '🔴'} Auto-Hide Bar`;
+  btn.textContent = `${autoHideEnabled ? '🟢' : '🔴'} Auto-hide Bar`;
 }
 
 function handleMouseMoveForAutoHide(e) {
