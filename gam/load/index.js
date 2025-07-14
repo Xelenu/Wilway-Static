@@ -7,8 +7,7 @@ const contentSources = {
     },
     '2': {
         url: '/gam/frame/webfishing.html',
-        showMessage: true,
-        messageText: '✨ This is a special gam!',
+        showMessage: false,
         creditsText: 'Port by breadbb and aukak'
     },
     '3': {
@@ -20,13 +19,13 @@ const contentSources = {
     '4': {
         url: '/gam/frame/bfdi-branches.html',
         showMessage: true,
-        messageText: '😃 This is an exclusive gam, based on the show BFDI!',
+        messageText: '⭐ This is an exclusive gam, based on the show BFDI!',
         creditsText: 'Port by breadbb'
     },
     '5': {
         url: '/core/gam-scripts/baldis-fun-new-school-plus-ultimate-edition/',
         showMessage: true,
-        messageText: '✨ This is an exclusive gam 😉 This gam was ported by us 😨 May be intense!',
+        messageText: '⭐ This is an exclusive gam 😉 This gam was ported by us 😨 May be INTENSE!',
         creditsText: 'Wilway'
     },
     '6': {
