@@ -73,7 +73,7 @@ if (specialBox5) {
   specialBox5.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/bfnspue.png" alt="Baldi's Fun New School Plus™ Ultimate Edition" draggable="false">
-      <p>Baldi's Fun New School Plus™ Ultimate Edition ⭐ 🤑</p>
+      <p>Baldi's Fun New School Plus™ Ultimate Edition ⭐ 😉 🤑</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=5'">Let's go!</button>
     </div>
   `;
@@ -84,7 +84,7 @@ if (specialBox6) {
   specialBox6.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/kittytoy.png" alt="KittyToy" draggable="false">
-      <p>KittyToy 🤑</p>
+      <p>KittyToy 😉 🤑</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=6'">Let's go!</button>
     </div>
   `;
