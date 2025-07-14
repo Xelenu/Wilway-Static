@@ -94,7 +94,7 @@ const specialBox7 = document.getElementById('box-7');
 if (specialBox7) {
   specialBox7.innerHTML = `
     <div class="box-content">
-      <img src="${siteUrl}/core/gam-image/kittytoy.png" alt="WBWWB" draggable="false">
+      <img src="${siteUrl}/core/gam-image/wbwwb.png" alt="WBWWB" draggable="false">
       <p>We Become What We Behold ✨</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=7'">Let's go!</button>
     </div>
