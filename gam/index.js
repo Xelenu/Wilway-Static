@@ -85,7 +85,7 @@ if (specialBox6) {
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/kittytoy.png" alt="KittyToy" draggable="false">
       <p>KittyToy ✨</p>
-      <button onclick="window.location.href='${siteUrl}/gam/load?id=5'">Let's go!</button>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=6'">Let's go!</button>
     </div>
   `;
 }
