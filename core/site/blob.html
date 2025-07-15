@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>test</title>
+</head>
+<body>
+  <h1>hehe</h1>
+  <p>imsigma23</p>
+  <script>
+    // Define your blob site content
+    const secretHTML = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Secret Blob Website</title>
+        <style>
+          body { background: #111; color: #3af; font-size: 2em; text-align: center; }
+        </style>
+      </head>
+      <body>
+        <h1>This is a secret blob website</h1>
+        <p>You cannot access me from the main page!</p>
+      </body>
+      </html>
+    `;
+    // Create the blob URL, but do not use it in the DOM
+    const secretBlob = new Blob([secretHTML], { type: 'text/html' });
+    const secretBlobURL = URL.createObjectURL(secretBlob);
+
+    // Print the blob URL to the console
+    console.log("Secret blob URL:", secretBlobURL);
+  </script>
+</body>
+</html>
