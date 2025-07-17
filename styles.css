@@ -8,7 +8,7 @@ body {
 }
 
 button:hover {
-  cursor: url('/things/cursor-hover.png') 8 0, pointer;
+  cursor: url('/things/cursor-hover.png') 8 0, pointer !important;
 }
 
 ::-webkit-scrollbar {
