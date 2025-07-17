@@ -7,9 +7,10 @@ body {
   font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-button:hover {
-  /* cursor: url('/things/cursor-hover.png') 8 0, pointer !important; */
+/* button:hover {
+  cursor: url('/things/cursor-hover.png') 8 0, pointer !important;
 }
+*/
 
 ::-webkit-scrollbar {
   width: 1.2vw;
