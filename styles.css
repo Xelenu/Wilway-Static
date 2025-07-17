@@ -3,7 +3,12 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  cursor: url('/things/cursor.png') 0 0, auto;
   font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+button:hover {
+  cursor: url('/things/cursor-hover.png') 8 0, pointer;
 }
 
 ::-webkit-scrollbar {
