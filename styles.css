@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  cursor: url('/things/cursor.png') 0 0, auto;
+  cursor: url('/things/cursor.png') 0 0, auto !important;
   font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
