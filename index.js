@@ -44,7 +44,7 @@ function buttonClick(buttonNumber) {
   buttons[buttonNumber - 1].classList.add('selected');
   console.log(`Button ${buttonNumber} clicked`);
   const sources = {
-    2: '/vm/',
+    2: '/vos/',
     3: '/gam/',
     4: '/ai/',
     5: '/chat/',
