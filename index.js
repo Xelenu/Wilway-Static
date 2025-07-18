@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const autoHideCookie = getCookie('autoHideBar');
   if (autoHideBtn) {
     autoHideEnabled = (autoHideCookie === 'true');
-    autoHideBtn.textContent = `${autoHideEnabled ? '🟢' : '🔴'} Auto-Hide Bar`;
+    autoHideBtn.textContent = `${autoHideEnabled ? '🟢' : '🔴'} Auto-hide Bar`;
     if (autoHideEnabled) {
       hideBottomBar();
       hideToggleButton();
@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const fsHideCookie = getCookie('fsHideSettings');
   if (fsHideSettingsBtn) {
     fsHideSettingsEnabled = (fsHideCookie === 'true');
-    fsHideSettingsBtn.textContent = `${fsHideSettingsEnabled ? '🔴' : '🟢'} Settings in Fullscreen`;
+    fsHideSettingsBtn.textContent = `${fsHideSettingsEnabled ? '🔴' : '🟢'} Settings in fullscreen`;
   }
   const cloakBtn = document.getElementById('cloakBtn');
   const cloakCookie = getCookie('cloakEnabled');
