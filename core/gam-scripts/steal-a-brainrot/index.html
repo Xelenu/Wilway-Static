@@ -74,19 +74,17 @@ const spinner = document.querySelector('.spinner');
         } catch { return false; }
     }
     async function discoverWasmParts(baseUrl) {
-        let partUrls = [];
-        let i = 0;
-        while (true) {
-            let partUrl = `${baseUrl}.part${i}`;
-            if (await urlExists(partUrl)) {
-                partUrls.push(partUrl);
-                i++;
-            } else {
-                break;
-            }
+    let partUrls = [];
+    for (let i = 0; i < 3; i++) {
+        let partUrl = `${baseUrl}.part${i}`;
+        if (await urlExists(partUrl)) {
+            partUrls.push(partUrl);
+        } else {
+            break;
         }
-        return partUrls;
     }
+    return partUrls;
+}
     async function fetchAndCombineParts(partUrls) {
         const arrays = [];
         for (const url of partUrls) {
