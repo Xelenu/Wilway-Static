@@ -38,9 +38,15 @@ const contentSources = {
         url: '/gam/frame/wbwwb.html',
         showMessage: true,
         messageText: '✍️ Every game file indivisually imported by us! Enjoy.',
-        creditsText: 'Files from frogiee1'
+        creditsText: 'Nicky Case'
     },
     '8': {
+        url: '/core/gam-scripts/merge-rot/',
+        showMessage: true,
+        messageText: '✨ This is a special gam 😉 This gam was ported by us',
+        creditsText: 'Wilway'
+    },
+    '9': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
