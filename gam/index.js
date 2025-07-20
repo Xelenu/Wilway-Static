@@ -101,7 +101,7 @@ if (specialBox7) {
   `;
 }
 
-const specialBox7 = document.getElementById('box-8');
+const specialBox8 = document.getElementById('box-8');
 if (specialBox8) {
   specialBox8.innerHTML = `
     <div class="box-content">
