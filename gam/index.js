@@ -107,7 +107,7 @@ if (specialBox8) {
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/merge-rot.png" alt="Merge Rot" draggable="false">
       <p>Merge Rot ✨ ✍️</p>
-      <button onclick="window.location.href='${siteUrl}/gam/load?id=7'">Let's go!</button>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=8'">Let's go!</button>
     </div>
   `;
 }
