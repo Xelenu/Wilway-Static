@@ -1,1 +1,1 @@
-function o(){return"404 - Not Found"}export{o as default};
+function o(){return"This game has an anti-tamper function."}export{o as default};
