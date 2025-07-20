@@ -48,8 +48,7 @@ const contentSources = {
     },
     '9': {
         url: '/core/gam-scripts/plonky/',
-        showMessage: true,
-        messageText: '✨ This is a special gam 😉 This gam was ported by us',
+        showMessage: false,
         creditsText: 'Wilway & Po҉k҉i҉'
     },
     '10': {
