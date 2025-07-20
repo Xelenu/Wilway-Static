@@ -1,7 +1,7 @@
 import {
   o as me,
   t as we
-} from "../chunks/scheduler.6cda8fd7.js";
+} from "/core/gam-scripts/slowroads/_app/immutable/chunks/scheduler.6cda8fd7.js";
 import {
   S as Ge,
   a as Je,
@@ -17,7 +17,7 @@ import {
   o as Fe,
   P as Me,
   h as Ze
-} from "../chunks/singletons.9f85c147.js";
+} from "/core/gam-scripts/slowroads/_app/immutable/chunks/singletons.9f85c147.js";
 
 function Qe(t, r) {
   return t === "/" || r === "ignore" ? t : r === "never" ? t.endsWith("/") ? t.slice(0, -1) : t : r === "always" && !t.endsWith("/") ? t + "/" : t
