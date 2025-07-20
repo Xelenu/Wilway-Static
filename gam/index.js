@@ -112,6 +112,17 @@ if (specialBox8) {
   `;
 }
 
+const specialBox9 = document.getElementById('box-9');
+if (specialBox9) {
+  specialBox9.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/plonky.png" alt="Plonky" draggable="false">
+      <p>Plonky</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=9'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
