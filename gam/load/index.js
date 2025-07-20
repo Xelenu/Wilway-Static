@@ -44,9 +44,15 @@ const contentSources = {
         url: '/core/gam-scripts/merge-rot/',
         showMessage: true,
         messageText: '✨ This is a special gam 😉 This gam was ported by us',
-        creditsText: 'Wilway'
+        creditsText: 'Wilway & Po҉k҉i҉'
     },
     '9': {
+        url: '/core/gam-scripts/plonky/',
+        showMessage: true,
+        messageText: '✨ This is a special gam 😉 This gam was ported by us',
+        creditsText: 'Wilway & Po҉k҉i҉'
+    },
+    '10': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
