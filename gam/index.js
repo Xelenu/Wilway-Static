@@ -101,6 +101,17 @@ if (specialBox7) {
   `;
 }
 
+const specialBox7 = document.getElementById('box-8');
+if (specialBox8) {
+  specialBox8.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/merge-rot.png" alt="Merge Rot" draggable="false">
+      <p>Merge Rot ✨ ✍️</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=7'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
