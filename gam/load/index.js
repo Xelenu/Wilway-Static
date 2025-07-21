@@ -52,6 +52,11 @@ const contentSources = {
         creditsText: 'Wilway & Po҉k҉i҉'
     },
     '10': {
+        url: '/core/gam-scripts/level-devil/',
+        showMessage: false,
+        creditsText: 'Wilway & Po҉k҉i҉'
+    },
+    '11': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
