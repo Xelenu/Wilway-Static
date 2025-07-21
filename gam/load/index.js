@@ -41,6 +41,11 @@ const contentSources = {
         creditsText: 'Nicky Case'
     },
     '8': {
+        url: '/core/gam-scripts/slope/',
+        showMessage: false,
+        creditsText: 'Y8'
+    },
+    '9': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
