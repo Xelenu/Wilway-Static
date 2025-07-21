@@ -1,48 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>City Classic Car Driving: 131</title>
   <style>
-    html, body { height: 100%; margin: 0; background: #231F20; }
-    #unityContainer { width: 100vw; height: 100vh; background: #231F20; display: flex; align-items: center; justify-content: center; }
-    #loadingScreen { color: #fff; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: sans-serif; font-size: 1.5em; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #231F20;
+    }
+    #unityContainer {
+      width: 100vw;
+      height: 100vh;
+      background: #231F20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    #loadingScreen {
+      color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: sans-serif;
+      font-size: 1.5em;
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
   <div id="unityContainer"></div>
   <div id="loadingScreen">Loading game files...</div>
-  <script>
-      const unityScript = document.createElement('script');
-      unityScript.src = '/core/gam-scripts/131-car/Build/UnityLoader-v3.js';
-      unityScript.onload = function() {
-        window.UnityLoader.instantiate(
-          "unityContainer",
-          "/core/gam-scripts/131-car/Build/WebGL.json",
-          { onProgress: UnityProgress }
-        );
-        document.getElementById('loadingScreen').style.display = 'none';
-      };
-      document.body.appendChild(unityScript);
 
-      window.UnityProgress = function(container, progress) {
-        if (!container.progress) {
-          var bar = document.createElement('div');
-          bar.style.position = 'absolute';
-          bar.style.top = '50%';
-          bar.style.left = '50%';
-          bar.style.transform = 'translate(-50%, -50%)';
-          bar.style.width = '50vw';
-          bar.style.height = '32px';
-          bar.style.background = '#444';
-          bar.style.borderRadius = '8px';
-          bar.innerHTML = '<div style="height:100%;background:#88e;width:0%;border-radius:8px 0 0 8px;" id="unityBar"></div>';
-          container.appendChild(bar);
-          container.progress = bar;
-        }
-        var barInner = document.getElementById('unityBar');
-        if (barInner) barInner.style.width = (progress * 100) + '%';
-      };
+  <script src="/core/gam-scripts/131-car/Build/UnityLoader-v3.js"></script>
+  <script>
+    window.UnityProgress = function(container, progress) {
+      if (!container || typeof container.appendChild !== 'function') {
+        return;
+      }
+      if (!container.progress) {
+        var bar = document.createElement('div');
+        bar.style.position = 'absolute';
+        bar.style.top = '50%';
+        bar.style.left = '50%';
+        bar.style.transform = 'translate(-50%, -50%)';
+        bar.style.width = '50vw';
+        bar.style.height = '32px';
+        bar.style.background = '#444';
+        bar.style.borderRadius = '8px';
+        bar.innerHTML = '<div id="unityBar" style="height:100%;background:#88e;width:0%;border-radius:8px 0 0 8px;"></div>';
+        container.appendChild(bar);
+        container.progress = bar;
+      }
+      var barInner = document.getElementById('unityBar');
+      if (barInner) barInner.style.width = (progress * 100) + '%';
+    };
+
+    UnityLoader.instantiate(
+      "unityContainer",
+      "/core/gam-scripts/131-car/Build/WebGL.json",
+      { onProgress: UnityProgress }
+    );
+
+    var unityContainer = document.getElementById('unityContainer');
+    var loadingScreen = document.getElementById('loadingScreen');
+
+    unityContainer.addEventListener('load', function () {
+      loadingScreen.style.display = 'none';
+    });
+
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+    }, 15000);
   </script>
 </body>
 </html>
