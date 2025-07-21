@@ -101,7 +101,16 @@ if (specialBox7) {
   `;
 }
 
-
+const specialBox8 = document.getElementById('box-8');
+if (specialBox8) {
+  specialBox8.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/slope.png" alt="Slope" draggable="false">
+      <p>Slope</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=8'">Let's go!</button>
+    </div>
+  `;
+}
 
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
