@@ -67,12 +67,12 @@
 <body>
   <canvas id="canvas" class="fullscreen"></canvas>
   <div id="loading-overlay" class="fullscreen">
-    <img id="icon" src="./rubicon-logo.svg" />
+    <img id="icon" src="/core/gam-scripts/cross-the-road/rubicon-logo.svg" />
     <div id="progress-bar">
       <div id="progress-bar-fill"></div>
     </div>
   </div>
-  <script src="./playgama-bridge.js"></script>
+  <script src="/core/gam-scripts/cross-the-road/playgama-bridge.js"></script>
   <script>
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
       let meta = document.createElement('meta')
@@ -172,15 +172,13 @@
         unityLoader.onload = () => {
           createUnityInstance(
               canvas, {
-                dataUrl: 'Build/CrossTheRoadGD.data.unityweb',
-                frameworkUrl: 'Build/CrossTheRoadGD.framework.js.unityweb',
-                codeUrl: 'Build/CrossTheRoadGD.wasm.unityweb',
+                dataUrl: '/core/gam-scripts/cross-the-road/Build/CrossTheRoadGD.data.unityweb',
+                frameworkUrl: '/core/gam-scripts/cross-the-road/Build/CrossTheRoadGD.framework.js.unityweb',
+                codeUrl: '/core/gam-scripts/cross-the-road/Build/CrossTheRoadGD.wasm.unityweb',
                 streamingAssetsUrl: 'StreamingAssets',
                 companyName: 'OneTwoPlay',
                 productName: 'Rubicon Cross The Road',
                 productVersion: '0.1',
-                // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-                // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
               },
               onUnityLoadingProgressChanged)
             .then((unityInstance) => {
