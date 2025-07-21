@@ -123,6 +123,17 @@ if (specialBox9) {
   `;
 }
 
+const specialBox10 = document.getElementById('box-10');
+if (specialBox10) {
+  specialBox10.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/level-devil.png" alt="Level Devil" draggable="false">
+      <p>Level Devil</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=10'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
