@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=UTF8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#382C2A">
+  <meta name="viewport" content="height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+  <title>Infiltrating the airship</title>
+
+  <script type="text/javascript" src="//game-cdn.poki.com/scripts/v2/poki-sdk.js"></script>
+  <script type="text/javascript" src="./js/loader.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      outline: none
+    }
+
+    html,
+    body,
+    #container {
+      margin: 0;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+    }
+
+    #splash {
+      position: absolute;
+      visibility: hidden;
+      z-index: 10;
+    }
+
+    #splash__image {
+      position: absolute;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url("assets/infiltrating_the_airship_splashscreen.jpg");
+      visibility: visible;
+      transition: all 0.5s;
+      z-index: 10;
+    }
+
+    #progress__root {
+      position: absolute;
+    }
+
+    #progress__line {
+      width: 0;
+      height: 100%;
+      transition: all 0.5s;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="splash__image">
+    <div id="progress__root">
+      <div id="progress__line"></div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener("load", () => {
+
+
+
+      PokiSDK.init().then(
+        () => {
+          // successfully initialized
+          onPokiInitComplete(false);
+        }
+      ).catch(
+        () => {
+          // successfully initialized but the user has adblock
+          onPokiInitComplete(true);
+        }
+      );
+
+      let config;
+
+
+      let allFunctions = {};
+      allFunctions['retryButtonAction'] = function(callback) {
+        window["PokiSDK"].commercialBreak().then(() => {
+          window["PokiSDK"].gameplayStart();
+          callback();
+        });
+      };
+      allFunctions['actionWhenRetryButtonEncountered'] = function() {
+        window["PokiSDK"].gameplayStop();
+      };
+      allFunctions['buttonPokiSDKActionsplaybutton'] = function(callback) {
+        window["PokiSDK"].commercialBreak().then(() => {
+          window["PokiSDK"].gameplayStart();
+          callback();
+        });
+      };
+
+      config = {
+        "title": "Infiltrating the airship",
+        "filename": "infiltrating_the_airship",
+        "splash": "assets/infiltrating_the_airship_splashscreen.jpg",
+        "width": 800,
+        "height": 450,
+        "progress": {
+          "direction": "lr",
+          "back": "#000",
+          "line": "#ca0000",
+          "rect": [
+            0.045,
+            0.76,
+            0.37,
+            0.13
+          ]
+        },
+        "retryButtonIDS": [
+          2223,
+          2981,
+          3342,
+          3692,
+          3694,
+          4502,
+          4505,
+          5208,
+          5977,
+          6863,
+          8080,
+          8454,
+          9420,
+          10318,
+          10939,
+          11332,
+          12190,
+          12773,
+          13521,
+          14064,
+          14496,
+          15408,
+          16116,
+          17241,
+          18917,
+          2215,
+          3343,
+          2231,
+          2982,
+          3693,
+          3695,
+          4504,
+          4506,
+          5209,
+          5978,
+          6864,
+          9421,
+          10319,
+          10940,
+          11333,
+          12191,
+          12774,
+          14065,
+          14497,
+          15409,
+          16117,
+          17242,
+          18918
+        ],
+        "retryButtonAction": "___retryButtonAction",
+        "actionWhenRetryButtonEncountered": "___actionWhenRetryButtonEncountered",
+        "buttonPokiSDKActions": {
+          "playbutton": "___buttonPokiSDKActionsplaybutton"
+        },
+        "pokiSDK": true,
+        "debugPoki": true,
+        "showFPS": false,
+        "debug": false,
+        "start": null,
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": "100%",
+        "stageScaleMode": null,
+        "stageAlign": null,
+        "progressParserWeigth": 1,
+        "skipFramesOfScene": null,
+        "actionOnStop": null,
+        "debugpoki": false,
+        "binary": [{
+            "name": "fonts.swf",
+            "path": "assets/fonts.swf",
+            "size": 30506
+          },
+          {
+            "name": "infiltrating_the_airship",
+            "path": "assets/infiltrating_the_airship.swf",
+            "size": 29800042,
+            "resourceType": "GAME"
+          }
+        ],
+        "runtime": "js/PuffballsUnited.js"
+      };
+
+      let connectConfigToFunctions = function(obj) {
+        for (var key in obj) {
+          if (typeof obj[key] == "string" && obj[key].indexOf("___") === 0) {
+            obj[key] = allFunctions[obj[key].replace("___", "")];
+          }
+          if (typeof obj[key] == "object")
+            connectConfigToFunctions(obj[key]);
+        }
+      };
+
+      connectConfigToFunctions(config);
+
+
+      PokiSDK.setDebug(config.debugPoki);
+
+      Loader.init(config);
+
+      let onPokiInitComplete = (adBlocked) => {
+
+        PokiSDK.adBlocked = adBlocked;
+        PokiSDK.gameLoadingStart();
+
+        Loader.runGame((fill) => {
+          PokiSDK.gameLoadingProgress({
+            percentageDone: fill,
+            kbLoaded: 0,
+            kbTotal: 0,
+            fileNameLoaded: "",
+            filesLoaded: 0,
+            filesTotal: 0
+          });
+        }, (instance) => {
+          PokiSDK.gameLoadingFinished();
+        })
+      }
+    })
+  </script>
+</body>
+
+</html>
