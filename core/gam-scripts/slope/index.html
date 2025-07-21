@@ -49,21 +49,21 @@
     #unity-logo {
       width: 154px;
       height: 130px;
-      background: url('TemplateData/unity-logo-dark.png') no-repeat center
+      background: url('/core/gam-scripts/slope/TemplateData/unity-logo-dark.png') no-repeat center
     }
 
     #unity-progress-bar-empty {
       width: 141px;
       height: 18px;
       margin-top: 10px;
-      background: url('TemplateData/progress-bar-empty-dark.png') no-repeat center
+      background: url('/core/gam-scripts/slope/TemplateData/progress-bar-empty-dark.png') no-repeat center
     }
 
     #unity-progress-bar-full {
       width: 0%;
       height: 18px;
       margin-top: 10px;
-      background: url('TemplateData/progress-bar-full-dark.png') no-repeat center
+      background: url('/core/gam-scripts/slope/TemplateData/progress-bar-full-dark.png') no-repeat center
     }
   </style>
   <script src="https://img.y8.com/prevent-keys.js"></script>
@@ -78,16 +78,16 @@
         <div id="unity-progress-bar-full"></div>
       </div>
 
-      <script src="Build/output_2022_version.loader.js"></script>
+      <script src="/core/gam-scripts/slope/Build/output_2022_version.loader.js"></script>
       <script>
         var loadingBar = document.querySelector("#unity-loading-bar");
         var progressBarFull = document.querySelector("#unity-progress-bar-full");
         var canvas = document.querySelector("#unity-canvas");
         var logo = document.querySelector("#unity-logo");
         var config = {
-          dataUrl: "Build/output_2022_version.data.gz",
-          frameworkUrl: "Build/output_2022_version.framework.js.gz",
-          codeUrl: "Build/output_2022_version.wasm.gz",
+          dataUrl: "/core/gam-scripts/slope/Build/output_2022_version.data.gz",
+          frameworkUrl: "/core/gam-scripts/slope/Build/output_2022_version.framework.js.gz",
+          codeUrl: "/core/gam-scripts/slope/Build/output_2022_version.wasm.gz",
           streamingAssetsUrl: "StreamingAssets",
           companyName: "Y8",
           productName: "Slope",
@@ -155,7 +155,7 @@
           document.getElementsByTagName('head')[0].appendChild(meta);
         }
       </script>
-      <script type="text/javascript" src="TemplateData/gameBreakBeta.js"></script>
+      <script type="text/javascript" src="/core/gam-scripts/slope/TemplateData/gameBreakBeta.js"></script>
     </div>
 </body>
 
