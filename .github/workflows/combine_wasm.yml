@@ -3,7 +3,10 @@ name: Combine Wasm Parts
 on:
   push:
     branches:
-      - main  # Change if needed
+      - main  # Change if your main branch has a different name
+
+permissions:
+  contents: write
 
 jobs:
   combine_wasm:
