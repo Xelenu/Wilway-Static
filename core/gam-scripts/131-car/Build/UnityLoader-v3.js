@@ -1,5 +1,3 @@
-// === UNITY PARTS PATCH: Add this near the top of UnityLoader-v3.js ===
-
 function fetchAndCombineParts(baseUrl, numParts) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -24,21 +22,18 @@ function fetchAndCombineParts(baseUrl, numParts) {
   });
 }
 
-// Patch fetch for UnityLoader
-const originalFetch = window.fetch.bind(window);
-window.fetch = function(resource, options) {
-  // === CONFIG: Update these for your build ===
-  const dataBase = '/core/gam-scripts/131-car/Build/WebGL.data.unityweb';
-  const wasmBase = '/core/gam-scripts/131-car/Build/WebGL.wasm.code.unityweb';
-  const dataParts = 5; // Number of .part files for data
-  const wasmParts = 2; // Number of .part files for wasm
+const dataBase = '/core/gam-scripts/131-car/Build/WebGL.data.unityweb';
+const wasmBase = '/core/gam-scripts/131-car/Build/WebGL.wasm.code.unityweb';
+const dataParts = 5;
+const wasmParts = 2;
 
+const realFetch = window.fetch.bind(window);
+window.fetch = function(resource, options) {
   if (typeof resource === 'string' && resource.endsWith('WebGL.data.unityweb')) {
     return fetchAndCombineParts(dataBase, dataParts).then(buffer => new Response(buffer));
   }
   if (typeof resource === 'string' && resource.endsWith('WebGL.wasm.code.unityweb')) {
     return fetchAndCombineParts(wasmBase, wasmParts).then(buffer => new Response(buffer));
   }
-  return originalFetch(resource, options);
+  return realFetch(resource, options);
 };
-// === END UNITY PARTS PATCH ===
