@@ -1,15 +1,15 @@
-name: Combine Snake MLG Data Parts
+name: Combine Snake WASM Parts
 
 on:
   push:
     branches:
-      - main  # Change if your main branch is different
+      - main  # Change if needed
 
 permissions:
   contents: write
 
 jobs:
-  combine_data:
+  combine_wasm:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -20,18 +20,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Combine data unityweb parts
+      - name: Combine wasm unityweb parts
         run: |
-          cat ./core/gam-scripts/snake-mlg/Build/Snake\ MLG\ Edition_3.0.35.4044.data.unityweb.000.part ./core/gam-scripts/snake-mlg/Build/Snake\ MLG\ Edition_3.0.35.4044.data.unityweb.001.part > ./core/gam-scripts/snake-mlg/Build/Snake\ MLG\ Edition_3.0.35.4044.data.unityweb
+          cat ./core/gam-scripts/snake-mlg/Build/Snake\ MLG\ Edition_3.0.35.4044.wasm.unityweb.000.part ./core/gam-scripts/snake-mlg/Build/Snake\ MLG\ Edition_3.0.35.4044.wasm.unityweb.001.part > ./core/gam-scripts/snake-mlg/Build/Snake\ MLG\ Edition_3.0.35.4044.wasm.unityweb
 
-      - name: Commit combined data file
+      - name: Commit combined wasm file
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add ./core/gam-scripts/snake-mlg/Build/Snake\ MLG\ Edition_3.0.35.4044.data.unityweb
+          git add ./core/gam-scripts/snake-mlg/Build/Snake\ MLG\ Edition_3.0.35.4044.wasm.unityweb
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Combine Snake MLG data unityweb parts into single file"
+            git commit -m "Combine Snake WASM unityweb parts into single file"
             git push
           fi
