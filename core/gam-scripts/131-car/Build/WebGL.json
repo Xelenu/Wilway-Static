@@ -2,19 +2,10 @@
   "companyName": "BoneCracker Games",
   "productName": "City Classic Car Driving: 131",
   "productVersion": "1.05",
-  "dataParts": [
-    "/core/gam-scripts/131-car/Build/WebGL.data.unityweb.000",
-    "/core/gam-scripts/131-car/Build/WebGL.data.unityweb.001",
-    "/core/gam-scripts/131-car/Build/WebGL.data.unityweb.002",
-    "/core/gam-scripts/131-car/Build/WebGL.data.unityweb.003",
-    "/core/gam-scripts/131-car/Build/WebGL.data.unityweb.004"
-  ],
-  "wasmCodeParts": [
-    "/core/gam-scripts/131-car/Build/WebGL.wasm.code.unityweb.000",
-    "/core/gam-scripts/131-car/Build/WebGL.wasm.code.unityweb.001"
-  ],
+  "dataUrl": "/core/gam-scripts/131-car/Build/WebGL.data.unityweb",
+  "wasmCodeUrl": "/core/gam-scripts/131-car/Build/WebGL.wasm.code.unityweb",
   "wasmFrameworkUrl": "/core/gam-scripts/131-car/Build/WebGL.wasm.framework.unityweb",
-  "graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+  "graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
   "webglContextAttributes": {"preserveDrawingBuffer": false},
   "splashScreenStyle": "Dark",
   "backgroundColor": "#231F20",
