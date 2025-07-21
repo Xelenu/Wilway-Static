@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>City Classic Car Driving: 131</title>
+  <style>
+    html, body { height: 100%; margin: 0; background: #231F20; }
+    #unityContainer { width: 100vw; height: 100vh; background: #231F20; display: flex; align-items: center; justify-content: center; }
+    #loadingScreen { color: #fff; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: sans-serif; font-size: 1.5em; }
+  </style>
+</head>
+<body>
+  <div id="unityContainer"></div>
+  <div id="loadingScreen">Loading game files...</div>
+  <script>
+    async function fetchAndCombineParts(baseUrl, numParts) {
+      const parts = [];
+      for (let i = 0; i < numParts; i++) {
+        const url = `${baseUrl}.${String(i).padStart(3, '0')}.part`;
+        document.getElementById('loadingScreen').textContent = `Loading: ${url}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Missing part: ${url}`);
+        parts.push(new Uint8Array(await res.arrayBuffer()));
+      }
+      const totalLength = parts.reduce((sum, arr) => sum + arr.length, 0);
+      const merged = new Uint8Array(totalLength);
+      let offset = 0;
+      for (const arr of parts) {
+        merged.set(arr, offset);
+        offset += arr.length;
+      }
+      return merged.buffer;
+    }
+
+    (async () => {
+      const dataParts = 5;
+      const wasmParts = 5;
+      const dataBase = '/core/gam-scripts/131-car/Build/WebGL.data.unityweb';
+      const wasmBase = '/core/gam-scripts/131-car/Build/WebGL.wasm.code.unityweb';
+
+      // Load all parts and show progress
+      document.getElementById('loadingScreen').textContent = 'Loading and combining data files...';
+      const [dataBuffer, wasmBuffer] = await Promise.all([
+        fetchAndCombineParts(dataBase, dataParts),
+        fetchAndCombineParts(wasmBase, wasmParts)
+      ]);
+
+      document.getElementById('loadingScreen').textContent = 'Launching game...';
+
+      // Patch fetch to provide combined files to UnityLoader
+      const realFetch = window.fetch.bind(window);
+      window.fetch = function(resource, options) {
+        if (typeof resource === 'string' && resource.endsWith('WebGL.data.unityweb')) {
+          return Promise.resolve(new Response(dataBuffer));
+        }
+        if (typeof resource === 'string' && resource.endsWith('WebGL.wasm.code.unityweb')) {
+          return Promise.resolve(new Response(wasmBuffer));
+        }
+        return realFetch(resource, options);
+      };
+
+      // Load UnityLoader only after all parts are loaded
+      const unityScript = document.createElement('script');
+      unityScript.src = '/core/gam-scripts/131-car/Build/UnityLoader-v3.js';
+      unityScript.onload = function() {
+        window.UnityLoader.instantiate(
+          "unityContainer",
+          "/core/gam-scripts/131-car/Build/WebGL.json",
+          { onProgress: UnityProgress }
+        );
+        document.getElementById('loadingScreen').style.display = 'none';
+      };
+      document.body.appendChild(unityScript);
+
+      // Optional: Custom Unity progress bar
+      window.UnityProgress = function(container, progress) {
+        if (!container.progress) {
+          var bar = document.createElement('div');
+          bar.style.position = 'absolute';
+          bar.style.top = '50%';
+          bar.style.left = '50%';
+          bar.style.transform = 'translate(-50%, -50%)';
+          bar.style.width = '50vw';
+          bar.style.height = '32px';
+          bar.style.background = '#444';
+          bar.style.borderRadius = '8px';
+          bar.innerHTML = '<div style="height:100%;background:#88e;width:0%;border-radius:8px 0 0 8px;" id="unityBar"></div>';
+          container.appendChild(bar);
+          container.progress = bar;
+        }
+        var barInner = document.getElementById('unityBar');
+        if (barInner) barInner.style.width = (progress * 100) + '%';
+      };
+    })();
+  </script>
+</body>
+</html>
