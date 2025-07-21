@@ -101,39 +101,6 @@ if (specialBox7) {
   `;
 }
 
-const specialBox8 = document.getElementById('box-8');
-if (specialBox8) {
-  specialBox8.innerHTML = `
-    <div class="box-content">
-      <img src="${siteUrl}/core/gam-image/merge-rot.png" alt="Merge Rot" draggable="false">
-      <p>Merge Rot ✨ ✍️</p>
-      <button onclick="window.location.href='${siteUrl}/gam/load?id=8'">Let's go!</button>
-    </div>
-  `;
-}
-
-const specialBox9 = document.getElementById('box-9');
-if (specialBox9) {
-  specialBox9.innerHTML = `
-    <div class="box-content">
-      <img src="${siteUrl}/core/gam-image/plonky.png" alt="Plonky" draggable="false">
-      <p>Plonky</p>
-      <button onclick="window.location.href='${siteUrl}/gam/load?id=9'">Let's go!</button>
-    </div>
-  `;
-}
-
-const specialBox10 = document.getElementById('box-10');
-if (specialBox10) {
-  specialBox10.innerHTML = `
-    <div class="box-content">
-      <img src="${siteUrl}/core/gam-image/level-devil.png" alt="Level Devil" draggable="false">
-      <p>Level Devil</p>
-      <button onclick="window.location.href='${siteUrl}/gam/load?id=10'">Let's go!</button>
-    </div>
-  `;
-}
-
 
 
     const allBoxes = document.querySelectorAll('.box');
