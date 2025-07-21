@@ -18,7 +18,7 @@ async function fetchAndCombineParts(baseUrl, numParts) {
 
 (async () => {
   const dataParts = 5;
-  const wasmParts = 5;
+  const wasmParts = 2;
   const dataBase = '/core/gam-scripts/131-car/Build/WebGL.data.unityweb';
   const wasmBase = '/core/gam-scripts/131-car/Build/WebGL.wasm.code.unityweb';
   const [dataBuffer, wasmBuffer] = await Promise.all([
