@@ -33,12 +33,11 @@
     }
 
     (async () => {
-      const dataParts = 5;
-      const wasmParts = 5;
+      const dataParts = 5;  // 000.part through 004.part
+      const wasmParts = 2;  // 000.part and 001.part only
       const dataBase = '/core/gam-scripts/131-car/Build/WebGL.data.unityweb';
       const wasmBase = '/core/gam-scripts/131-car/Build/WebGL.wasm.code.unityweb';
 
-      // Load all parts and show progress
       document.getElementById('loadingScreen').textContent = 'Loading and combining data files...';
       const [dataBuffer, wasmBuffer] = await Promise.all([
         fetchAndCombineParts(dataBase, dataParts),
@@ -47,7 +46,6 @@
 
       document.getElementById('loadingScreen').textContent = 'Launching game...';
 
-      // Patch fetch to provide combined files to UnityLoader
       const realFetch = window.fetch.bind(window);
       window.fetch = function(resource, options) {
         if (typeof resource === 'string' && resource.endsWith('WebGL.data.unityweb')) {
@@ -59,7 +57,6 @@
         return realFetch(resource, options);
       };
 
-      // Load UnityLoader only after all parts are loaded
       const unityScript = document.createElement('script');
       unityScript.src = '/core/gam-scripts/131-car/Build/UnityLoader-v3.js';
       unityScript.onload = function() {
@@ -72,7 +69,6 @@
       };
       document.body.appendChild(unityScript);
 
-      // Optional: Custom Unity progress bar
       window.UnityProgress = function(container, progress) {
         if (!container.progress) {
           var bar = document.createElement('div');
