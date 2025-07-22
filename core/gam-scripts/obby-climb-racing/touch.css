@@ -1,0 +1,53 @@
+body { -webkit-touch-callout: none !important;user-select: none; }
+a { -webkit-user-select: none !important;user-select: none; }
+
+*:not(input):not(textarea) {
+  -webkit-user-select: none; /* disable selection/Copy of UIWebView */
+  -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
+  user-select: none;
+} 
+
+html {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.not-selectable 
+	{
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		  
+
+	}
+	*.unselectable 
+	{
+   		-moz-user-select: none;
+   		-khtml-user-select: none;
+   		-webkit-user-select: none;
+
+	   /*
+	     Introduced in Internet Explorer 10.
+	     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+	   */
+	   -ms-user-select: none;
+	   user-select: none;
+	}	
+	* {
+	    -webkit-user-select: none;
+	    -khtml-user-select: none;
+	    -moz-user-select: -moz-none;
+	    -o-user-select: none;
+	    user-select: none;
+	}
+
+	p {
+	    -webkit-user-select: text;
+	    -khtml-user-select: text;
+	    -moz-user-select: text;
+	    -o-user-select: text;
+	    user-select: text;
+	}
