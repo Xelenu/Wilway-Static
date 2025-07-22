@@ -1,9 +1,9 @@
-name: Combine .data.unityweb Parts
+name: Combine Unity Data Parts
 
 on:
   workflow_dispatch:
 
-permissions: write
+permissions: write-all
 
 jobs:
   combine-parts:
@@ -12,11 +12,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Combine .data.unityweb parts
+      - name: List parts before combine
+        run: ls -lh /core/gam-scripts/italian-brainrot-survive/Build
+
+      - name: Combine 2 parts into .unityweb file
         run: |
           cd /core/gam-scripts/italian-brainrot-survive/Build
-          cat 05af965b9f551ec2be35ab51c8075a8e.data.part* > 05af965b9f551ec2be35ab51c8075a8e.data.unityweb
+          cat 05af965b9f551ec2be35ab51c8075a8e.data.part0 05af965b9f551ec2be35ab51c8075a8e.data.part1 > 05af965b9f551ec2be35ab51c8075a8e.data.unityweb
 
-      - name: Show output file details
-        run: |
-          ls -lh /core/gam-scripts/italian-brainrot-survive/Build/05af965b9f551ec2be35ab51c8075a8e.data.unityweb
+      - name: List combined file after merge
+        run: ls -lh /core/gam-scripts/italian-brainrot-survive/Build/05af965b9f551ec2be35ab51c8075a8e.data.unityweb
