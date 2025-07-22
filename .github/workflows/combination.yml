@@ -1,0 +1,20 @@
+name: Combine .data.unityweb Parts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  combine-parts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Combine .data.unityweb parts
+        run: |
+          cd /core/gam-scripts/italian-brainrot-survive/Build
+          cat 05af965b9f551ec2be35ab51c8075a8e.data.part* > 05af965b9f551ec2be35ab51c8075a8e.data.unityweb
+
+      - name: Show output file details
+        run: |
+          ls -lh /core/gam-scripts/italian-brainrot-survive/Build/05af965b9f551ec2be35ab51c8075a8e.data.unityweb
