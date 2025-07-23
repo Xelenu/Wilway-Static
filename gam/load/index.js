@@ -76,6 +76,11 @@ const contentSources = {
         creditsText: 'TinyDobbins'
     },
     '15': {
+        url: '/core/gam-scripts/snowrider3d/',
+        showMessage: false,
+        creditsText: 'New Gamer'
+    },
+    '16': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
