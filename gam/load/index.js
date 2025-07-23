@@ -61,6 +61,11 @@ const contentSources = {
         creditsText: 'i forgot'
     },
     '12': {
+        url: '/core/gam-scripts/eggycar/',
+        showMessage: false,
+        creditsText: 'Beedo Gams'
+    },
+    '13': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
