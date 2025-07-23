@@ -145,6 +145,17 @@ if (specialBox11) {
   `;
 }
 
+const specialBox12 = document.getElementById('box-12');
+if (specialBox12) {
+  specialBox12.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/eggy-car.png" alt="Eggy Car" draggable="false">
+      <p>Eggy Car</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=12'">Let's go!</button>
+    </div>
+  `;
+}
+
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
       if (!box.hasChildNodes() || box.children.length === 0) {
