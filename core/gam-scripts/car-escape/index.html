@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Car Parking - Driving Games</title>
+    <title>Car Parking - Driving Gam</title>
     <style>
       body {
         text-align: center;
@@ -78,7 +78,7 @@
     <div id="unity-container">
       <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
     </div>
-    <script src="Build/hazel-cat-escape-hide-and-seek.loader.js"></script>
+    <script src="/core/gam-scripts/car-escape/Build/hazel-cat-escape-hide-and-seek.loader.js"></script>
     <script>
       function setupCanvas() {
         const canvas = document.querySelector("#unity-canvas");
@@ -135,9 +135,9 @@
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
         arguments: [],
-        dataUrl: "Build/hazel-cat-escape-hide-and-seek.data",
-        frameworkUrl: "Build/hazel-cat-escape-hide-and-seek.framework.js",
-        codeUrl: "Build/hazel-cat-escape-hide-and-seek.wasm",
+        dataUrl: "/core/gam-scripts/car-escape/Build/hazel-cat-escape-hide-and-seek.data",
+        frameworkUrl: "/core/gam-scripts/car-escape/Build/hazel-cat-escape-hide-and-seek.framework.js",
+        codeUrl: "/core/gam-scripts/car-escape/Build/hazel-cat-escape-hide-and-seek.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Muhammad Arslan",
         productName: "Car Parking - Driving Games",
