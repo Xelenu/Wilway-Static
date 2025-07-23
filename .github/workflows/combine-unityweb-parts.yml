@@ -1,6 +1,9 @@
 name: Combine Unity Data Parts
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
