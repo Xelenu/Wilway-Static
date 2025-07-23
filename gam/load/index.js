@@ -48,9 +48,14 @@ const contentSources = {
     '9': {
         url: '/core/gam-scripts/cross-the-road/',
         showMessage: false,
-        creditsText: 'Rubicon'
+        creditsText: 'Wilway'
     },
     '10': {
+        url: '/core/gam-scripts/obby-bike/',
+        showMessage: false,
+        creditsText: 'Wilway'
+    },
+    '11': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
