@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="25061104/theme/game.css">
+	<link rel="canonical" href="https://1games.io/wacky-nursery-2"> 
+	<title>Wacky Nursery 2</title>
+	<meta name="description" content="Step into chaos in Wacky Nursery 2, a dark comedy adventure game with more strange tasks, bizarre characters, and schoolyard drama. Outsmart or perish!"/>
+	<style type="text/css">
+		.jss1:before {
+			top: 0;
+			width: 100%;
+			filter: blur(16px);
+			height: 100%;
+			content: "";
+			display: block;
+			opacity: .5;
+			z-index: 0;
+			position: absolute;
+			background-size: cover;
+			background-image: url("25061104/loading.png")
+		}
+	</style> 
+	 
+	<script>
+		var buildUrl = "Build";
+		var versionFolder = "25061104/";
+		buildUrl = "https://play.1games.io/game/wacky-nursery-2/"+versionFolder + buildUrl;
+		var loaderUrl = buildUrl + "/wacky-nursery-2-v25061104.loader.js";
+		var config = {
+			dataUrl: buildUrl + "/wacky-nursery-2-v25061104.data.unityweb",
+			frameworkUrl: buildUrl + "/wacky-nursery-2-v25061104.framework.js.unityweb",
+			codeUrl: buildUrl + "/wacky-nursery-2-v25061104.wasm.unityweb",
+			streamingAssetsUrl: versionFolder+"StreamingAssets",
+			companyName: "1games.io",
+			productName: "Wacky Nursery 2",
+			productVersion: "25061104",
+			pubId: ""
+		};
+		config.hostindex = 2;
+		config.gameId = "wacky-nursery-2";
+		config.eventLog=true;
+		config.buildAPI = "https://event.azgame.io/apiaz/event";
+		let currentDate = new Date();
+		let endLogDate = new Date("2025-07-01T07:27:22.192Z");
+		if(currentDate>endLogDate){
+			config.eventLog=false;
+		}
+		config.enableMoreGame="yes";
+		config.enablePromotion = true;
+		config.gdHost=isHostOnGD();
+		if(config.gdHost){
+			config.enableMoreGame="no";
+			config.enablePromotion = false;
+			config.eventLog = false;
+			config.sdkType = "gd";
+			config.gdGameId = "USE_GD_GAME_ID_CODE";
+		}else{
+			function _0x4dc7(){var _0x5baf6b=['referrer','location','href','https://1games.io/','gameId','top','hostname'];_0x4dc7=function(){return _0x5baf6b;};return _0x4dc7();}function _0x2656(_0x4dc730,_0x265666){var _0x5573fb=_0x4dc7();return _0x2656=function(_0x34657b,_0x5d913d){_0x34657b=_0x34657b-0x0;var _0x1842c9=_0x5573fb[_0x34657b];return _0x1842c9;},_0x2656(_0x4dc730,_0x265666);}isDiffHost()?!document[_0x2656(0x0)]&&(config={}):!document[_0x2656(0x0)]&&(window[_0x2656(0x1)][_0x2656(0x2)]=_0x2656(0x3)+config[_0x2656(0x4)]);function isDiffHost(){try{if(window[_0x2656(0x5)]&&window==window[_0x2656(0x5)])return![];if(window[_0x2656(0x5)][_0x2656(0x1)][_0x2656(0x6)]==window[_0x2656(0x1)][_0x2656(0x6)])return![];}catch(_0x24cfad){return!![];}return!![];}
+		}		
+		function isHostOnGD() {
+			let domainParts = window.location.hostname.split('.');
+			let mainDomain = domainParts.slice(-2).join('.');
+			return (mainDomain=="gamedistribution.com");
+		}
+		
+	</script>
+	<script id="gmsoft-jssdk" src="https://games.1games.io/lib/gmsoftsdk_v5.js"></script>
+</head>
+
+<body>
+<div id="unity-container" style="display: none;">
+	<canvas id="unity-canvas"></canvas> 
+</div>
+<div id="loadingBlock" style="">
+	<div class="jss31 jss34 jss1">
+	<div style="position: absolute; font-family: Arial, Helvetica, sans-serif;	bottom: 10px; right: 10px; font-size: 18px; color: #ffffff; opacity: 0.5;">25061104</div>
+		<div class="spinner"></div>
+		<div class="jss31 jss34 jss48" style="flex: 1 1 0%;">
+			<div class="jss32">
+				<div class="jss7 jss9 jss20 jss3">
+					<div class="jss125">
+						<div class="jss123">
+						 <img src="25061104/logo.png">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--PRODUCT_VERSION:25061104END-->
+		<div class="jss31 jss34" style="flex: 3 1 0%;">
+			<div class="jss32">
+				<div class="jss31 jss34 jss39 jss50 gameloader">
+					<div class="jss32">
+						<div class="gameloader-game-name">Wacky Nursery 2</div>
+					</div>
+					<div class="jss32">
+						<div class="jss32 gameloader-logo">
+							<img id="game-logo" src="25061104/loading.png">
+						</div>
+					</div>
+					<div class="jss32">
+						<div>
+							<div class="gameloader-progressbar">
+								<div class="gameloader-progressbar-progress" id="progress_fill"
+										 style="width: 0%;"></div>
+							</div>
+							<div class="gameloader-progress-info">Game Loading...</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<script> 
+		var progressElement = document.getElementById('progress_fill');
+		var container =	document.getElementById("unity-container");
+		var canvas =	document.getElementById("unity-canvas");
+		var loadingBar = document.querySelector("#loadingBlock");
+		var progressBarFull = document.querySelector("#progress_fill");
+		var progress_text = document.querySelector(".gameloader-progress-info");
+		let text_percent = "";
+		var script = document.createElement("script");
+		script.src = loaderUrl;
+		script.onload = () => {
+		createUnityInstance(canvas, config, (progress) => {
+			progressElement.style.width = 100 * progress + "%";
+			text_percent = "Downloading file: " + Math.round(progress*100) + "%";
+			progress_text.innerText = text_percent;
+			if (progress >= 99) {
+				progress_text.innerText = "Game Loading ...";
+			}
+		}).then((unityInstance) => {
+			window.unityInstance = unityInstance;
+			setTimeout(function() {
+				loadingBar.style.display = "none";
+				window.focus();
+			}, 2000);
+			container.style.display = "block";
+		}).catch((message) => {
+			alert(message);
+		});
+		};
+		document.body.appendChild(script);
+	</script>
+	<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics-compat.js"></script>
+	<script type="module">
+		const firebaseConfig = {
+ apiKey: "AIzaSyB6A8agvhWjtg7T77SypQGJeuoE0GCILSw",
+ authDomain: "wacky-nursery-2-1games.firebaseapp.com",
+ projectId: "wacky-nursery-2-1games",
+ storageBucket: "wacky-nursery-2-1games.firebasestorage.app",
+ messagingSenderId: "371452895550",
+ appId: "1:371452895550:web:db7cb984cae771d8f00c6f",
+ measurementId: "G-TZ2XC8B6CY"
+};
+		if(firebaseConfig ){
+			window.dataLayer = window.dataLayer || [];
+			window.gtag = function () { window.dataLayer.push(arguments); }
+
+			window.gtag("config", firebaseConfig.measurementId, {
+			  cookie_domain: window.location.hostname,
+			  cookie_flags: "SameSite=None;Secure",
+			});
+			// Initialize Firebase
+			const app = firebase.initializeApp(firebaseConfig);
+			//const auth = getAuth(app);
+		}
+	</script>
+	<script>
+		function firebaseSetUserProperties(props) {
+			firebase.analytics().setUserProperties(props);
+		}
+		function firebaseLogEvent(event_name) {
+			firebase.analytics().logEvent(event_name);
+		}
+		function firebaseLogEventParameter(event_name, event_param) {
+			firebase.analytics().logEvent(event_name, event_param);
+		}
+		let time_counter_gm=0;
+		function gmRepeatEvery30Seconds() {
+		  setInterval(function() {
+			if(config.eventLog){
+				firebaseLogEvent("time_countergm_"+time_counter_gm++);
+			}
+		  }, 30000);
+		}
+		gmRepeatEvery30Seconds();
+	</script>
+	
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"2b96e6c69cb44200a90fd32a8c45cada","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>	
+</html>
