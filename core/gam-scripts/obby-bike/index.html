@@ -80,24 +80,30 @@
     } else {
       // Page is not inside an iframe
       // First script
-      var cmpStub = document.createElement('script');
-      cmpStub.src = '/core/gam-distribution/cmp-v1.js';
-      cmpStub.setAttribute('data-prop-id', '8197');
-      document.head.appendChild(cmpStub);
+      /*
+var cmpStub = document.createElement('script');
+cmpStub.src = '/core/gam-distribution/cmp-v1.js';
+cmpStub.setAttribute('data-prop-id', '8197');
+document.head.appendChild(cmpStub);
+*/
 
       // Second script
+      /*
       var cmp = document.createElement('script');
       cmp.src = '/core/gam-distribution/cmp-v1.js';
       cmp.setAttribute('data-prop-stpd-cmp-id', '8197');
       cmp.async = true;
       document.head.appendChild(cmp);
     }
+    */
   </script>
 
-  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-  <script src="/core/gam-scripts/obby-bike/js/gpt-api.js" data-test-mode="off" data-game="obby-on-a-bike"></script>
-  <!-- Prebid controller file -->
-  <script async src="https://stpd.cloud/saas/9916"></script>
+ <!-- 
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
+<script src="/core/gam-scripts/obby-bike/js/gpt-api.js" data-test-mode="off" data-game="obby-on-a-bike"></script>
+[Prebid controller file]
+<script async src="https://stpd.cloud/saas/9916"></script>
+-->
 </head>
 
 <body class="dark">
