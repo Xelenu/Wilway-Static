@@ -178,6 +178,17 @@ if (specialBox14) {
   `;
 }
 
+const specialBox15 = document.getElementById('box-15');
+if (specialBox15) {
+  specialBox15.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/snowrider.png" alt="Snowrider 3D" draggable="false">
+      <p>Snowrider 3D</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=15'">Let's go!</button>
+    </div>
+  `;
+}
+
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
       if (!box.hasChildNodes() || box.children.length === 0) {
