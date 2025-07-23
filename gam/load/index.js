@@ -56,6 +56,11 @@ const contentSources = {
         creditsText: 'Wilway'
     },
     '11': {
+        url: 'https://go.wilway.today/core/gam-scripts/slope-2',
+        showMessage: false,
+        creditsText: 'Y8'
+    },
+    '12': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
