@@ -149,6 +149,51 @@
       }).catch((message) => {
         console.error("Failed to load Unity instance:", message);
       });
+
+      // Block assignment to window.location
+Object.defineProperty(window, 'location', {
+  configurable: false,
+  enumerable: true,
+  writable: false,
+  value: window.location
+});
+
+// Block setting window.location.href
+Object.defineProperty(window.location, 'href', {
+  configurable: false,
+  enumerable: true,
+  writable: false,
+  value: window.location.href
+});
+
+// Override location.replace and location.assign to do nothing
+window.location.replace = function() {
+  console.log("Blocked location.replace()");
+};
+window.location.assign = function() {
+  console.log("Blocked location.assign()");
+};
+
+// Optionally block top-level window.open as well (popups)
+window.open = function() {
+  console.log("Blocked window.open()");
+  return null;
+};
+
+// Block common meta refresh redirects
+const observer = new MutationObserver(() => {
+  document.querySelectorAll('meta[http-equiv="refresh"]').forEach(meta => {
+    meta.parentNode.removeChild(meta);
+    console.log("Blocked meta refresh redirect");
+  });
+});
+observer.observe(document.documentElement, { childList: true, subtree: true });
+
+// Block form-based navigation
+document.addEventListener("submit", function(e) {
+  e.preventDefault();
+  console.log("Blocked form submit redirect");
+}, true);
     </script>
   </body>
 </html>
