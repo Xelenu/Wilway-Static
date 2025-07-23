@@ -56,7 +56,7 @@ const contentSources = {
         creditsText: 'Wilway'
     },
     '11': {
-        url: 'https://go.wilway.today/core/gam-scripts/slope-2',
+        url: '/gam/frame/slope-2.html',
         showMessage: false,
         creditsText: 'Y8'
     },
