@@ -167,6 +167,17 @@ if (specialBox13) {
   `;
 }
 
+const specialBox14 = document.getElementById('box-14');
+if (specialBox14) {
+  specialBox14.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/monkeymart.png" alt="Monkeymart" draggable="false">
+      <p>Monkeymart</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=14'">Let's go!</button>
+    </div>
+  `;
+}
+
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
       if (!box.hasChildNodes() || box.children.length === 0) {
