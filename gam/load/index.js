@@ -66,6 +66,11 @@ const contentSources = {
         creditsText: 'Beedo Gams'
     },
     '13': {
+        url: '/core/gam-scripts/1v1lol/',
+        showMessage: false,
+        creditsText: 'JustPley.LOL'
+    },
+    '14': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
