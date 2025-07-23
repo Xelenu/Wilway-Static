@@ -65,11 +65,6 @@ const contentSources = {
         showMessage: false,
         creditsText: 'Beedo Gams'
     },
-    'test': {
-        url: '/core/gam-scripts/wacky-nursery-2/',
-        showMessage: false,
-        creditsText: '1gams'
-    },
     '13': {
         url: 'https://example.com',
         showMessage: false,
