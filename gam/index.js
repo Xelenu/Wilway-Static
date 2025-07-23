@@ -134,6 +134,17 @@ if (specialBox10) {
   `;
 }
 
+const specialBox11 = document.getElementById('box-11');
+if (specialBox11) {
+  specialBox11.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/stickman-survival.png" alt="Stickman Survival" draggable="false">
+      <p>Stickman Survival</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=11'">Let's go!</button>
+    </div>
+  `;
+}
+
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
       if (!box.hasChildNodes() || box.children.length === 0) {
