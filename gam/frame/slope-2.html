@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>...</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #000;
+      width: 100vw;
+      height: 100vh;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+    .gradient-text {
+      font-family: Impact, Poppins, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 4rem;
+      font-weight: bold;
+      background: linear-gradient(90deg, #003366, #008b8b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+      transition: transform 0.1s;
+      border: none;
+      outline: none;
+      display: inline-block;
+    }
+    .gradient-text:active {
+      transform: scale(0.96);
+    }
+  </style>
+</head>
+<body>
+  <div
+    class="gradient-text"
+    onclick="window.open('/core/gam-scripts/kittytoy/', '_blank')"
+    tabindex="0"
+    role="button"
+    aria-label="Click here to open kittytoy"
+  >CLICK HERE</div>
+</body>
+</html>
