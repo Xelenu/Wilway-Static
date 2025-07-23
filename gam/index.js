@@ -161,7 +161,7 @@ if (specialBox13) {
   specialBox13.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/1v1lol.png" alt="1v1.LOL" draggable="false">
-      <p>1v1LOL</p>
+      <p>1v1.LOL</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=13'">Let's go!</button>
     </div>
   `;
