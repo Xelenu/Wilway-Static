@@ -81,13 +81,13 @@
       // Page is not inside an iframe
       // First script
       var cmpStub = document.createElement('script');
-      cmpStub.src = 'https://cmp.setupcmp.com/cmp/cmp/cmp-stub.js';
+      cmpStub.src = '/core/gam-distribution/cmp-v1.js';
       cmpStub.setAttribute('data-prop-id', '8197');
       document.head.appendChild(cmpStub);
 
       // Second script
       var cmp = document.createElement('script');
-      cmp.src = 'https://cmp.setupcmp.com/cmp/cmp/cmp-v1.js';
+      cmp.src = '/core/gam-distribution/cmp-v1.js';
       cmp.setAttribute('data-prop-stpd-cmp-id', '8197');
       cmp.async = true;
       document.head.appendChild(cmp);
