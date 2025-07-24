@@ -110,6 +110,11 @@ const contentSources = {
         creditsText: 'Gabriele Cirulli'
     },
     '22': {
+        url: '/core/gam-scripts/amazing-rope-police/',
+        showMessage: false,
+        creditsText: 'HGAMS'
+    },
+    '23': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
