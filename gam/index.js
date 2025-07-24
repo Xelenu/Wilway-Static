@@ -266,6 +266,17 @@ if (specialBox22) {
   `;
 }
 
+const specialBox23 = document.getElementById('box-23');
+if (specialBox23) {
+  specialBox23.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/brawl-stars.png" alt="Starr" draggable="false">
+      <p>Brawl Stars</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=23'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
