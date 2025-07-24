@@ -223,7 +223,7 @@ if (specialBox18) {
 }
 
 const specialBox19 = document.getElementById('box-19');
-if (specialBox189) {
+if (specialBox19) {
   specialBox19.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/bacon-may-die.png" alt="Bacon May Die" draggable="false">
