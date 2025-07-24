@@ -78,9 +78,14 @@ const contentSources = {
     '15': {
         url: '/core/gam-scripts/snowrider3d/',
         showMessage: false,
-        creditsText: 'New Gamer'
+        creditsText: 'New Gamr'
     },
     '16': {
+        url: '/core/gam-scripts/ovo/',
+        showMessage: false,
+        creditsText: 'Dedra Gams'
+    },
+    '17': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
