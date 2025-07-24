@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Ruffle: The Binding of Isaac Demo</title>
   <meta name="robots" content="noindex, nofollow, noimageindex" />
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
   <style>
     body {
       background-color: black;
@@ -139,31 +140,27 @@
   <div id="ruffle_content" style="width:100%; height:100%">
     <button id="startFlashBtn">
       <div class="icon">
-        <img src="/core/gam-scripts/the-binding-of-isaac/flash_581168_card.webp" alt="simga"/>
+        <img src="https://picon.ngfiles.com/581000/flash_581168_card.png" alt="Isaac Demo Icon"/>
         <div class="play-over"></div>
       </div>
     </button>
+    <ruffle-player
+      id="player"
+      style="width:640px;height:480px;display:none;margin:40px auto;">
+    </ruffle-player>
     <div id="warnings">
       <p id="warning-text">⚠️ May not be compatible with your device.</p>
       <p id="play-anyway">Play Anyway?</p>
     </div>
   </div>
-  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
-<ruffle-player id="player"
-    style="width:640px;height:480px; margin:40px auto; display:block;">
-</ruffle-player>
-<script>
-  window.addEventListener("DOMContentLoaded", () => {
-    function initRuffle() {
-      if (!window.RufflePlayer || !window.RufflePlayer.newest) {
-        return setTimeout(initRuffle, 50);
-      }
-      const player = document.getElementById("player");
-      player.load("/core/gam-scripts/the-binding-of-isaac/lib/581168_Isaac_demo_Secure.swf");
-    }
-    initRuffle();
-  });
-</script>
+  <script>
+    // Classic Isaac loader logic
+    document.getElementById("startFlashBtn").onclick = function() {
+      document.getElementById("startFlashBtn").style.display = "none";
+      var player = document.getElementById("player");
+      player.style.display = "block";
+      player.setAttribute("src", "/core/gam-scripts/the-binding-of-isaac/lib/581168_Isaac_demo_Secure.swf");
+    };
   </script>
 </body>
 </html>
