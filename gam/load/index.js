@@ -24,8 +24,7 @@ const contentSources = {
     },
     '5': {
         url: '/core/gam-scripts/baldis-fun-new-school-plus-ultimate-edition/',
-        showMessage: true,
-        messageText: '⭐ This is an exclusive gam 😉 This gam was ported by us 🤑 Saves progress 😨 May be INTENSE!',
+        showMessage: false,
         creditsText: 'Wilway'
     },
     '6': {
