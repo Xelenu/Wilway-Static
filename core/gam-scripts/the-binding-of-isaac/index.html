@@ -1,90 +1,214 @@
 <!DOCTYPE html>
-<html lang="en">
+<html style="width: 100%; height: 100%">
 <head>
   <meta charset="UTF-8">
-  <title>The Binding of Isaac Demo (Ruffle Player)</title>
+  <title>Ruffle: The Binding of Isaac Demo</title>
+  <meta name="robots" content="noindex, nofollow, noimageindex" />
   <style>
     body {
-      background: #181818;
-      color: #f8f8f2;
-      font-family: Arial, Helvetica, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
+      background-color: black;
     }
-    h1 {
-      margin-top: 32px;
-      letter-spacing: 2px;
-      font-weight: bold;
-      font-size: 2.2em;
-      text-shadow: 0 2px 6px #000a;
-    }
+
     #ruffle_content {
-      margin-top: 18px;
-    }
-    #startFlashBtn {
-      margin-top: 28px;
-      padding: 18px 34px;
-      font-size: 1.25em;
-      background: #7c5549;
-      color: #fff;
-      border: none;
-      border-radius: 11px;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 4px 20px #0004;
       display: flex;
       align-items: center;
-      gap: 14px;
-      transition: background 0.18s;
+      justify-content: center;
+      text-align: center;
+      height: 100vh;
+      width: 100vw;
     }
-    #startFlashBtn:hover {
-      background: #a66a59;
+
+    #warnings {
+      display: none;
+      pointer-events: none;
     }
-    #startFlashBtn img {
-      width: 42px;
-      height: 42px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px #0008;
-      vertical-align: middle;
+
+    .small #warnings {
+      display: block;
+      position: absolute;
+      color: white;
+      width: 100%;
+      font-family: arial, helvetica, sans-serif;
+      font-weight: bold;
+      font-size: 14px;
     }
-    @media (max-width: 700px) {
-      #ruffle_content {
-        width: 100vw;
-      }
+
+    #warning-text {
+      margin-bottom: 160px;
+      margin-top: 4px;
+    }
+
+    #startFlashBtn {
+      display: block;
+      margin: 0px auto;
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    div.icon {
+      position: relative;
+      display: inline-block;
+    }
+
+    div.icon > img {
+      max-width: 100%;
+      min-width: 360px;
+    }
+
+    .small div.icon {
+      width: 220px;
+      display: inline-flex;
+    }
+
+    .small div.icon > img {
+      width: 220px;
+      min-width: 220px;
+    }
+
+    ruffle-player {
+      margin: 0px auto;
+    }
+
+    #startFlashBtn div.play-over {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    #startFlashBtn div.play-over::before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 120px;
+      height: 120px;
+      border-radius: 9999px;
+      border: 12px solid rgba(255, 255, 255, 0.7);
+      margin-top: -66px;
+      margin-left: -66px;
+      top: 50%;
+      left: 50%;
+    }
+
+    #startFlashBtn div.play-over::after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 60px;
+      height: 0px;
+      border: 40px solid rgba(255, 255, 255, 0.5);
+      border-width: 40px 0px 40px 80px;
+      border-color: transparent transparent transparent rgba(255, 255, 255, 0.7);
+      top: 50%;
+      left: 50%;
+      margin-left: -26px;
+      margin-top: -34px;
+    }
+
+    #startFlashBtn:hover div.play-over {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    #startFlashBtn:hover div.play-over::before {
+      border: 12px solid white;
+    }
+
+    #startFlashBtn:hover div.play-over::after {
+      border-color: transparent transparent transparent white;
+    }
+
+    #startFlashBtn div.play-over::before,
+    #startFlashBtn div.play-over::after {
+      filter: drop-shadow(9px 4px 6px rgba(0, 0, 0, 0.65));
+    }
+
+    .small #startFlashBtn {
+      padding-bottom: 40px;
+      margin-top: 40px;
+    }
+    .small #startFlashBtn div.play-over::before {
+      width: 60px;
+      height: 60px;
+      border-radius: 9999px;
+      border-width: 6px;
+      margin-top: -33px;
+      margin-left: -33px;
+    }
+
+    .small #startFlashBtn div.play-over::after {
+      width: 30px;
+      border-width: 20px 0px 20px 40px;
+      margin-top: -17px;
+      margin-left: -13px;
+    }
+
+    .small #startFlashBtn div.play-over::before,
+    .small #startFlashBtn div.play-over::after {
+      filter: drop-shadow(4.5px 2px 3px rgba(0, 0, 0, 0.65));
+    }
+
+    .small #startFlashBtn:hover div.play-over::before {
+      border-width: 6px;
     }
   </style>
 </head>
-<body>
-  <h1>The Binding of Isaac<br>Demo (Flash + Ruffle)</h1>
-  <div id="ruffle_content"></div>
-  <button id="startFlashBtn">
-    <img src="https://picon.ngfiles.com/581000/flash_581168_card.png" alt="Isaac Icon">
-    Play Demo
-  </button>
+<body style="margin: 0px; padding: 0px; width: 100%; height: 100%">
+  <div id="ruffle_content" style="width:100%; height:100%">
+    <button id="startFlashBtn">
+      <div class="icon">
+        <img src="https://picon.ngfiles.com/581000/flash_581168_card.png" alt="Isaac Demo Icon"/>
+        <div class="play-over"></div>
+      </div>
+    </button>
+    <div id="warnings">
+      <p id="warning-text">⚠️ May not be compatible with your device.</p>
+      <p id="play-anyway">Play Anyway?</p>
+    </div>
+  </div>
   <script>
     (() => {
-      // Hardcoded resource paths:
+      // --- Hardcoded Isaac demo, Ruffle, and WASM ---
       const RUFFLE_JS_URL = '/core/gam-scripts/the-binding-of-isaac/lib/core.ruffle.a31fb2448657cb115403.js';
       const SWF_URL = '/core/gam-scripts/the-binding-of-isaac/lib/581168_Isaac_demo_Secure.swf';
+      const PUBLIC_PATH = '/core/gam-scripts/the-binding-of-isaac/lib/'; // For WASM location
       const WIDTH = 640;
       const HEIGHT = 480;
+      const ICON_URL = "https://picon.ngfiles.com/581000/flash_581168_card.png";
 
+      // --- Setup button ---
       const startButton = document.getElementById('startFlashBtn');
       const container = document.getElementById('ruffle_content');
+
+      // Adjust button if needed
+      startButton.innerHTML = `
+        <div class="icon">
+          <img src="${ICON_URL}" alt="Isaac Demo Icon"/>
+          <div class="play-over"></div>
+        </div>
+      `;
+
       let preReq = { ruffleJS: 0, audio: 0 };
 
+      // Robust check for RufflePlayer readiness
       function preReqUpdated() {
         if (preReq.ruffleJS && preReq.audio) {
+          if (!window.RufflePlayer || typeof window.RufflePlayer.newest !== "function") {
+            setTimeout(preReqUpdated, 50);
+            return;
+          }
           let ruffle = window.RufflePlayer.newest();
           let player = ruffle.createPlayer();
+
+          // Responsive Isaac loader
           container.innerHTML = '';
           container.appendChild(player);
 
           player.ruffle().load({
-            publicPath: '/core/gam-scripts/the-binding-of-isaac/lib/', // where the .wasm is!
+            publicPath: PUBLIC_PATH,
             url: SWF_URL,
             parameters: {},
             autoplay: 'on',
@@ -94,10 +218,10 @@
             scale: 'showAll',
             letterbox: 'fullscreen'
           }).then(() => {
-            // Game loaded!
+            // Loaded!
           });
 
-          // Scale the player for your dimensions
+          // Scaling logic (classic)
           function scalePlayer(w, h) {
             player.style.width = w + "px";
             player.style.height = h + "px";
@@ -109,7 +233,7 @@
         }
       }
 
-      // Load Ruffle JS
+      // Load Ruffle JS (insert <script>)
       const head = document.getElementsByTagName("head")[0];
       const ruffleJSScript = document.createElement("script");
       ruffleJSScript.onload = function () {
@@ -119,12 +243,13 @@
       ruffleJSScript.src = RUFFLE_JS_URL;
       head.appendChild(ruffleJSScript);
 
+      // Button click: play short audio, then load game
       startButton.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         startButton.remove();
 
-        // Play a small audio file to unlock autoplay for Flash sounds
+        // Unlock autoplay for Flash audio
         var audioUrl = "data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU2LjM2LjEwMAAAAAAAAAAAAAAA//OEAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAABIADAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV6urq6urq6urq6urq6urq6urq6urq6urq6v////////////////////////////////8AAAAATGF2YzU2LjQxAAAAAAAAAAAAAAAAJAAAAAAAAAAAASDs90hvAAAAAAAAAAAAAAAAAAAA//MUZAAAAAGkAAAAAAAAA0gAAAAATEFN//MUZAMAAAGkAAAAAAAAA0gAAAAARTMu//MUZAYAAAGkAAAAAAAAA0gAAAAAOTku//MUZAkAAAGkAAAAAAAAA0gAAAAANVVV";
         var audioElement = document.createElement('audio');
         audioElement.addEventListener('playing', function () {
