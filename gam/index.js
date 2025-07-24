@@ -277,6 +277,17 @@ if (specialBox23) {
   `;
 }
 
+const specialBox24 = document.getElementById('box-24');
+if (specialBox24) {
+  specialBox24.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/backrooms.png" alt="Backrooms" draggable="false">
+      <p>Backrooms</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=24'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
