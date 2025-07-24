@@ -200,6 +200,17 @@ if (specialBox16) {
   `;
 }
 
+const specialBox17 = document.getElementById('box-17');
+if (specialBox17) {
+  specialBox17.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/bitlife.png" alt="BitLife" draggable="false">
+      <p>BitLife</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=17'">Let's go!</button>
+    </div>
+  `;
+}
+
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
       if (!box.hasChildNodes() || box.children.length === 0) {
