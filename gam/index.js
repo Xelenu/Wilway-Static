@@ -211,6 +211,17 @@ if (specialBox17) {
   `;
 }
 
+const specialBox18 = document.getElementById('box-18');
+if (specialBox18) {
+  specialBox18.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/badparenting.png" alt="Bad Parenting" draggable="false">
+      <p>Bad Parenting</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=18'">Let's go!</button>
+    </div>
+  `;
+}
+
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
       if (!box.hasChildNodes() || box.children.length === 0) {
