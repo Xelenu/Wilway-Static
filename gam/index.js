@@ -189,6 +189,17 @@ if (specialBox15) {
   `;
 }
 
+const specialBox16 = document.getElementById('box-16');
+if (specialBox16) {
+  specialBox16.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/ovo.png" alt="OvO" draggable="false">
+      <p>OvO</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=16'">Let's go!</button>
+    </div>
+  `;
+}
+
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
       if (!box.hasChildNodes() || box.children.length === 0) {
