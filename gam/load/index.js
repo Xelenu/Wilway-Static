@@ -100,6 +100,16 @@ const contentSources = {
         creditsText: 'SnoutUp Gams'
     },
     '20': {
+        url: '/core/gam-scripts/2048/',
+        showMessage: false,
+        creditsText: 'Gabriele Cirulli'
+    },
+    '21': {
+        url: '/core/gam-scripts/9007199254740992/',
+        showMessage: false,
+        creditsText: 'Gabriele Cirulli'
+    },
+    '22': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
