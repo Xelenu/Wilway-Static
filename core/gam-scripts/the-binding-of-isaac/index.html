@@ -8,7 +8,6 @@
     body {
       background-color: black;
     }
-
     #ruffle_content {
       display: flex;
       align-items: center;
@@ -17,12 +16,10 @@
       height: 100vh;
       width: 100vw;
     }
-
     #warnings {
       display: none;
       pointer-events: none;
     }
-
     .small #warnings {
       display: block;
       position: absolute;
@@ -32,12 +29,10 @@
       font-weight: bold;
       font-size: 14px;
     }
-
     #warning-text {
       margin-bottom: 160px;
       margin-top: 4px;
     }
-
     #startFlashBtn {
       display: block;
       margin: 0px auto;
@@ -46,31 +41,25 @@
       cursor: pointer;
       outline: none;
     }
-
     div.icon {
       position: relative;
       display: inline-block;
     }
-
     div.icon > img {
       max-width: 100%;
       min-width: 360px;
     }
-
     .small div.icon {
       width: 220px;
       display: inline-flex;
     }
-
     .small div.icon > img {
       width: 220px;
       min-width: 220px;
     }
-
     ruffle-player {
       margin: 0px auto;
     }
-
     #startFlashBtn div.play-over {
       position: absolute;
       top: 0px;
@@ -79,7 +68,6 @@
       height: 100%;
       background-color: rgba(0, 0, 0, 0.2);
     }
-
     #startFlashBtn div.play-over::before {
       content: "";
       position: absolute;
@@ -93,7 +81,6 @@
       top: 50%;
       left: 50%;
     }
-
     #startFlashBtn div.play-over::after {
       content: "";
       position: absolute;
@@ -108,24 +95,19 @@
       margin-left: -26px;
       margin-top: -34px;
     }
-
     #startFlashBtn:hover div.play-over {
       background-color: rgba(0, 0, 0, 0.5);
     }
-
     #startFlashBtn:hover div.play-over::before {
       border: 12px solid white;
     }
-
     #startFlashBtn:hover div.play-over::after {
       border-color: transparent transparent transparent white;
     }
-
     #startFlashBtn div.play-over::before,
     #startFlashBtn div.play-over::after {
       filter: drop-shadow(9px 4px 6px rgba(0, 0, 0, 0.65));
     }
-
     .small #startFlashBtn {
       padding-bottom: 40px;
       margin-top: 40px;
@@ -138,19 +120,16 @@
       margin-top: -33px;
       margin-left: -33px;
     }
-
     .small #startFlashBtn div.play-over::after {
       width: 30px;
       border-width: 20px 0px 20px 40px;
       margin-top: -17px;
       margin-left: -13px;
     }
-
     .small #startFlashBtn div.play-over::before,
     .small #startFlashBtn div.play-over::after {
       filter: drop-shadow(4.5px 2px 3px rgba(0, 0, 0, 0.65));
     }
-
     .small #startFlashBtn:hover div.play-over::before {
       border-width: 6px;
     }
@@ -170,32 +149,32 @@
     </div>
   </div>
   <script>
-    (() => {
-      // --- Hardcoded Isaac demo, Ruffle, and WASM ---
-      const RUFFLE_JS_URL = '/core/gam-scripts/the-binding-of-isaac/lib/core.ruffle.a31fb2448657cb115403.js';
-      const SWF_URL = '/core/gam-scripts/the-binding-of-isaac/lib/581168_Isaac_demo_Secure.swf';
-      const PUBLIC_PATH = '/core/gam-scripts/the-binding-of-isaac/lib/'; // For WASM location
-      const WIDTH = 640;
-      const HEIGHT = 480;
-      const ICON_URL = "https://picon.ngfiles.com/581000/flash_581168_card.png";
+    // Loader config: adjust if you change your asset paths!
+    const RUFFLE_JS_URL = '/core/gam-scripts/the-binding-of-isaac/lib/core.ruffle.a31fb2448657cb115403.js';
+    const SWF_URL = '/core/gam-scripts/the-binding-of-isaac/lib/581168_Isaac_demo_Secure.swf';
+    const PUBLIC_PATH = '/core/gam-scripts/the-binding-of-isaac/lib/';
+    const WIDTH = 640;
+    const HEIGHT = 480;
+    const ICON_URL = "https://picon.ngfiles.com/581000/flash_581168_card.png";
 
-      // --- Setup button ---
+    // UI tweak: if you want to display "small" on mobile, uncomment below
+    // if (/Mobi|Android/i.test(navigator.userAgent)) document.body.classList.add('small');
+
+    // Loader logic (classic style, but static)
+    (() => {
       const startButton = document.getElementById('startFlashBtn');
       const container = document.getElementById('ruffle_content');
-
-      // Adjust button if needed
       startButton.innerHTML = `
         <div class="icon">
           <img src="${ICON_URL}" alt="Isaac Demo Icon"/>
           <div class="play-over"></div>
         </div>
       `;
-
       let preReq = { ruffleJS: 0, audio: 0 };
 
-      // Robust check for RufflePlayer readiness
       function preReqUpdated() {
         if (preReq.ruffleJS && preReq.audio) {
+          // Wait until Ruffle is fully registered (for async/slow loading)
           if (!window.RufflePlayer || typeof window.RufflePlayer.newest !== "function") {
             setTimeout(preReqUpdated, 50);
             return;
@@ -203,7 +182,6 @@
           let ruffle = window.RufflePlayer.newest();
           let player = ruffle.createPlayer();
 
-          // Responsive Isaac loader
           container.innerHTML = '';
           container.appendChild(player);
 
@@ -218,10 +196,10 @@
             scale: 'showAll',
             letterbox: 'fullscreen'
           }).then(() => {
-            // Loaded!
+            // Game loaded!
           });
 
-          // Scaling logic (classic)
+          // Responsive scaling
           function scalePlayer(w, h) {
             player.style.width = w + "px";
             player.style.height = h + "px";
@@ -233,7 +211,7 @@
         }
       }
 
-      // Load Ruffle JS (insert <script>)
+      // Load Ruffle script
       const head = document.getElementsByTagName("head")[0];
       const ruffleJSScript = document.createElement("script");
       ruffleJSScript.onload = function () {
@@ -243,13 +221,13 @@
       ruffleJSScript.src = RUFFLE_JS_URL;
       head.appendChild(ruffleJSScript);
 
-      // Button click: play short audio, then load game
+      // Click = Play audio (to unlock Flash audio), then load game
       startButton.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         startButton.remove();
 
-        // Unlock autoplay for Flash audio
+        // Unlock audio autoplay (browser requirement)
         var audioUrl = "data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU2LjM2LjEwMAAAAAAAAAAAAAAA//OEAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAABIADAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV6urq6urq6urq6urq6urq6urq6urq6urq6v////////////////////////////////8AAAAATGF2YzU2LjQxAAAAAAAAAAAAAAAAJAAAAAAAAAAAASDs90hvAAAAAAAAAAAAAAAAAAAA//MUZAAAAAGkAAAAAAAAA0gAAAAATEFN//MUZAMAAAGkAAAAAAAAA0gAAAAARTMu//MUZAYAAAGkAAAAAAAAA0gAAAAAOTku//MUZAkAAAGkAAAAAAAAA0gAAAAANVVV";
         var audioElement = document.createElement('audio');
         audioElement.addEventListener('playing', function () {
