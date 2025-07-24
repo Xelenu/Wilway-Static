@@ -91,6 +91,11 @@ const contentSources = {
         creditsText: 'Candywriter'
     },
     '18': {
+        url: '/core/gam-scripts/badparenting/',
+        showMessage: false,
+        creditsText: '2OO2'
+    },
+    '19': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
