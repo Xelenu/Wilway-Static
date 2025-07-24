@@ -95,6 +95,11 @@ const contentSources = {
         creditsText: '2OO2'
     },
     '19': {
+        url: '/core/gam-scripts/bacon-may-die/',
+        showMessage: false,
+        creditsText: 'SnoutUp Gams'
+    },
+    '20': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
