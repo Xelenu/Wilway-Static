@@ -148,98 +148,22 @@
       <p id="play-anyway">Play Anyway?</p>
     </div>
   </div>
-  <script>
-    // Loader config: adjust if you change your asset paths!
-    const RUFFLE_JS_URL = '/core/gam-scripts/the-binding-of-isaac/lib/core.ruffle.a31fb2448657cb115403.js';
-    const SWF_URL = '/core/gam-scripts/the-binding-of-isaac/lib/581168_Isaac_demo_Secure.swf';
-    const PUBLIC_PATH = '/core/gam-scripts/the-binding-of-isaac/lib/';
-    const WIDTH = 640;
-    const HEIGHT = 480;
-    const ICON_URL = "/core/gam-scripts/the-binding-of-isaac/flash_581168_card.webp";
-
-    // UI tweak: if you want to display "small" on mobile, uncomment below
-    // if (/Mobi|Android/i.test(navigator.userAgent)) document.body.classList.add('small');
-
-    // Loader logic (classic style, but static)
-    (() => {
-      const startButton = document.getElementById('startFlashBtn');
-      const container = document.getElementById('ruffle_content');
-      startButton.innerHTML = `
-        <div class="icon">
-          <img src="${ICON_URL}" alt="Isaac Demo Icon"/>
-          <div class="play-over"></div>
-        </div>
-      `;
-      let preReq = { ruffleJS: 0, audio: 0 };
-
-      function preReqUpdated() {
-        if (preReq.ruffleJS && preReq.audio) {
-          // Wait until Ruffle is fully registered (for async/slow loading)
-          if (!window.RufflePlayer || typeof window.RufflePlayer.newest !== "function") {
-            setTimeout(preReqUpdated, 50);
-            return;
-          }
-          let ruffle = window.RufflePlayer.newest();
-          let player = ruffle.createPlayer();
-
-          container.innerHTML = '';
-          container.appendChild(player);
-
-          player.ruffle().load({
-            publicPath: PUBLIC_PATH,
-            url: SWF_URL,
-            parameters: {},
-            autoplay: 'on',
-            allowScriptAccess: true,
-            allowFullScreen: true,
-            forceScale: true,
-            scale: 'showAll',
-            letterbox: 'fullscreen'
-          }).then(() => {
-            // Game loaded!
-          });
-
-          // Responsive scaling
-          function scalePlayer(w, h) {
-            player.style.width = w + "px";
-            player.style.height = h + "px";
-            player.style.maxWidth = "98vw";
-            player.style.maxHeight = "80vh";
-          }
-          window.onresize = function () { scalePlayer(WIDTH, HEIGHT); };
-          scalePlayer(WIDTH, HEIGHT);
-        }
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+<ruffle-player id="player"
+    style="width:640px;height:480px; margin:40px auto; display:block;">
+</ruffle-player>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    function initRuffle() {
+      if (!window.RufflePlayer || !window.RufflePlayer.newest) {
+        return setTimeout(initRuffle, 50);
       }
-
-      // Load Ruffle script
-      const head = document.getElementsByTagName("head")[0];
-      const ruffleJSScript = document.createElement("script");
-      ruffleJSScript.onload = function () {
-        preReq.ruffleJS = 1;
-        preReqUpdated();
-      };
-      ruffleJSScript.src = RUFFLE_JS_URL;
-      head.appendChild(ruffleJSScript);
-
-      // Click = Play audio (to unlock Flash audio), then load game
-      startButton.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        startButton.remove();
-
-        // Unlock audio autoplay (browser requirement)
-        var audioUrl = "data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU2LjM2LjEwMAAAAAAAAAAAAAAA//OEAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAABIADAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV6urq6urq6urq6urq6urq6urq6urq6urq6v////////////////////////////////8AAAAATGF2YzU2LjQxAAAAAAAAAAAAAAAAJAAAAAAAAAAAASDs90hvAAAAAAAAAAAAAAAAAAAA//MUZAAAAAGkAAAAAAAAA0gAAAAATEFN//MUZAMAAAGkAAAAAAAAA0gAAAAARTMu//MUZAYAAAGkAAAAAAAAA0gAAAAAOTku//MUZAkAAAGkAAAAAAAAA0gAAAAANVVV";
-        var audioElement = document.createElement('audio');
-        audioElement.addEventListener('playing', function () {
-          preReq.audio = 1;
-          preReqUpdated();
-        });
-        document.body.appendChild(audioElement);
-        audioElement.setAttribute('src', audioUrl);
-        audioElement.load();
-        audioElement.play();
-      });
-    })();
+      const player = document.getElementById("player");
+      player.load("/core/gam-scripts/the-binding-of-isaac/lib/581168_Isaac_demo_Secure.swf");
+    }
+    initRuffle();
+  });
+</script>
   </script>
 </body>
 </html>
