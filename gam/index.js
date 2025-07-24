@@ -233,6 +233,29 @@ if (specialBox19) {
   `;
 }
 
+const specialBox20 = document.getElementById('box-20');
+if (specialBox20) {
+  specialBox20.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/2048.png" alt="2048" draggable="false">
+      <p>2048</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=20'">Let's go!</button>
+    </div>
+  `;
+}
+
+const specialBox21 = document.getElementById('box-21');
+if (specialBox21) {
+  specialBox21.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/9007199254740992.png" alt="9007199254740992" draggable="false">
+      <p>9007199254740992</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=21'">Let's go!</button>
+    </div>
+  `;
+}
+
+
 
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
