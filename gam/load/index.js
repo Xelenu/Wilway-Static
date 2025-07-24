@@ -120,6 +120,11 @@ const contentSources = {
         creditsText: 'Supercell'
     },
     '24': {
+        url: '/core/gam-scripts/backrooms/',
+        showMessage: false,
+        creditsText: 'Anonymous 4chan user'
+    },
+    '25': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
