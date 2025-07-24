@@ -115,6 +115,11 @@ const contentSources = {
         creditsText: 'HGAMS'
     },
     '23': {
+        url: '/core/gam-scripts/brawl-stars/',
+        showMessage: false,
+        creditsText: 'Supercell'
+    },
+    '24': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
