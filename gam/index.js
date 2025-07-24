@@ -222,6 +222,18 @@ if (specialBox18) {
   `;
 }
 
+const specialBox19 = document.getElementById('box-19');
+if (specialBox189) {
+  specialBox19.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/bacon-may-die.png" alt="Bacon May Die" draggable="false">
+      <p>Bacon May Die</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=19'">Let's go!</button>
+    </div>
+  `;
+}
+
+
     const allBoxes = document.querySelectorAll('.box');
     allBoxes.forEach(box => {
       if (!box.hasChildNodes() || box.children.length === 0) {
