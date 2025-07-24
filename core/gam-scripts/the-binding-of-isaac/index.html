@@ -1,164 +1,19 @@
 <!DOCTYPE html>
-<html style="width: 100%; height: 100%">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Ruffle: The Binding of Isaac Demo</title>
-  <meta name="robots" content="noindex, nofollow, noimageindex" />
+  <meta charset="utf-8">
+  <title>Isaac Standalone Ruffle</title>
   <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
-  <style>
-    body {
-      background-color: black;
-    }
-    #ruffle_content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      height: 100vh;
-      width: 100vw;
-    }
-    #warnings {
-      display: none;
-      pointer-events: none;
-    }
-    .small #warnings {
-      display: block;
-      position: absolute;
-      color: white;
-      width: 100%;
-      font-family: arial, helvetica, sans-serif;
-      font-weight: bold;
-      font-size: 14px;
-    }
-    #warning-text {
-      margin-bottom: 160px;
-      margin-top: 4px;
-    }
-    #startFlashBtn {
-      display: block;
-      margin: 0px auto;
-      background: none;
-      border: none;
-      cursor: pointer;
-      outline: none;
-    }
-    div.icon {
-      position: relative;
-      display: inline-block;
-    }
-    div.icon > img {
-      max-width: 100%;
-      min-width: 360px;
-    }
-    .small div.icon {
-      width: 220px;
-      display: inline-flex;
-    }
-    .small div.icon > img {
-      width: 220px;
-      min-width: 220px;
-    }
-    ruffle-player {
-      margin: 0px auto;
-    }
-    #startFlashBtn div.play-over {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-    #startFlashBtn div.play-over::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 120px;
-      height: 120px;
-      border-radius: 9999px;
-      border: 12px solid rgba(255, 255, 255, 0.7);
-      margin-top: -66px;
-      margin-left: -66px;
-      top: 50%;
-      left: 50%;
-    }
-    #startFlashBtn div.play-over::after {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 60px;
-      height: 0px;
-      border: 40px solid rgba(255, 255, 255, 0.5);
-      border-width: 40px 0px 40px 80px;
-      border-color: transparent transparent transparent rgba(255, 255, 255, 0.7);
-      top: 50%;
-      left: 50%;
-      margin-left: -26px;
-      margin-top: -34px;
-    }
-    #startFlashBtn:hover div.play-over {
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-    #startFlashBtn:hover div.play-over::before {
-      border: 12px solid white;
-    }
-    #startFlashBtn:hover div.play-over::after {
-      border-color: transparent transparent transparent white;
-    }
-    #startFlashBtn div.play-over::before,
-    #startFlashBtn div.play-over::after {
-      filter: drop-shadow(9px 4px 6px rgba(0, 0, 0, 0.65));
-    }
-    .small #startFlashBtn {
-      padding-bottom: 40px;
-      margin-top: 40px;
-    }
-    .small #startFlashBtn div.play-over::before {
-      width: 60px;
-      height: 60px;
-      border-radius: 9999px;
-      border-width: 6px;
-      margin-top: -33px;
-      margin-left: -33px;
-    }
-    .small #startFlashBtn div.play-over::after {
-      width: 30px;
-      border-width: 20px 0px 20px 40px;
-      margin-top: -17px;
-      margin-left: -13px;
-    }
-    .small #startFlashBtn div.play-over::before,
-    .small #startFlashBtn div.play-over::after {
-      filter: drop-shadow(4.5px 2px 3px rgba(0, 0, 0, 0.65));
-    }
-    .small #startFlashBtn:hover div.play-over::before {
-      border-width: 6px;
-    }
-  </style>
 </head>
-<body style="margin: 0px; padding: 0px; width: 100%; height: 100%">
-  <div id="ruffle_content" style="width:100%; height:100%">
-    <button id="startFlashBtn">
-      <div class="icon">
-        <img src="https://picon.ngfiles.com/581000/flash_581168_card.png" alt="Isaac Demo Icon"/>
-        <div class="play-over"></div>
-      </div>
-    </button>
-    <ruffle-player
-      id="player"
-      style="width:640px;height:480px;display:none;margin:40px auto;">
-    </ruffle-player>
-    <div id="warnings">
-      <p id="warning-text">⚠️ May not be compatible with your device.</p>
-      <p id="play-anyway">Play Anyway?</p>
-    </div>
-  </div>
+<body style="background:black;">
+  <button id="startFlashBtn" style="display:block; margin:80px auto; font-size:2em; padding:20px 60px;">PLAY</button>
+  <ruffle-player id="player" style="width:640px;height:480px;display:none; margin:40px auto;"></ruffle-player>
   <script>
     document.getElementById("startFlashBtn").onclick = function() {
       document.getElementById("startFlashBtn").style.display = "none";
       var player = document.getElementById("player");
       player.style.display = "block";
-      player.setAttribute("src", "/core/gam-scripts/the-binding-of-isaac/lib/581168_Isaac_demo_Secure.swf");
+      player.setAttribute("src", "lib/581168_Isaac_demo_Secure.swf");
     };
   </script>
 </body>
