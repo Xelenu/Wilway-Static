@@ -86,6 +86,11 @@ const contentSources = {
         creditsText: 'Dedra Gams'
     },
     '17': {
+        url: '/core/gam-scripts/bitlife/',
+        showMessage: false,
+        creditsText: 'Candywriter'
+    },
+    '18': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
