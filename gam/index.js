@@ -255,6 +255,17 @@ if (specialBox21) {
   `;
 }
 
+const specialBox22 = document.getElementById('box-22');
+if (specialBox22) {
+  specialBox22.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/rope-police.png" alt="Rope Police" draggable="false">
+      <p>Rope Police</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=22'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
