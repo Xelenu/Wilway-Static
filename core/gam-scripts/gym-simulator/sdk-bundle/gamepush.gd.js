@@ -16805,7 +16805,20 @@
           })();
         }
         init() {
-    e.done(this);
+    const e = (0, r._)(); // sets up a promise or gate
+    return (
+        this.ready = e.ready,
+        window.GD_OPTIONS = {
+            gameId: this.config.appId,
+            onEvent: (t) => {
+                switch (t.name) {
+                    case "SDK_READY":
+                    case "SDK_ERROR":
+                        e.done(this);
+                }
+            },
+        }
+    );
 }
               (function ({ src: e, check: t }) {
                 return new Promise((i, r) => {
@@ -16826,7 +16839,7 @@
                     t && (n = setInterval(s, 100)));
                 });
               })({
-                src: "https://html5.api.gamedistribution.com/main.min.js",
+                src: null,
                 check: (e) => "gdsdk" in e,
               })
                 .then(() => (this.gdsdk = window.gdsdk))
