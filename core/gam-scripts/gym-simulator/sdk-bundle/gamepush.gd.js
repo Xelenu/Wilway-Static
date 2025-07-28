@@ -16837,7 +16837,7 @@
                     t && (n = setInterval(s, 100)));
                 });
               })({
-                src: "https://html5.api.gamedistribution.com/main.min.js",
+                src: null,
                 check: (e) => "gdsdk" in e,
               })
                 .then(() => (this.gdsdk = window.gdsdk))
