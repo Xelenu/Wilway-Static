@@ -135,6 +135,11 @@ const contentSources = {
         creditsText: 'Puffballs United'
     },
     '27': {
+        url: '/core/gam-scripts/escaping-the-prison/',
+        showMessage: false,
+        creditsText: 'Puffballs United'
+    },
+    '28': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
