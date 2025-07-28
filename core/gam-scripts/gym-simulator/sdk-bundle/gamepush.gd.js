@@ -8197,6 +8197,7 @@
               (e.Android = "ANDROID"),
               (e.Pikabu = "PIKABU"),
               (e.XiaomiGamecenter = "XIAOMI_GAMECENTER"),
+             (e.Wilway = "WILWAY"),
               (e.None = "NONE"));
           })(_t || (_t = {})),
           (function (e) {
