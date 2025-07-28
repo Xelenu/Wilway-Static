@@ -125,6 +125,11 @@ const contentSources = {
         creditsText: 'Anonymous 4chan user'
     },
     '25': {
+        url: '/core/gam-scripts/the-binding-of-isaac/',
+        showMessage: false,
+        creditsText: 'in the gam'
+    },
+    '26': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
