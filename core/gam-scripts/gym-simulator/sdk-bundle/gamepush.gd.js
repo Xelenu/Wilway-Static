@@ -16805,8 +16805,8 @@
           })();
         }
         init() {
-          e.done(this);
-              }),
+    e.done(this);
+}
               (function ({ src: e, check: t }) {
                 return new Promise((i, r) => {
                   let n = 0;
