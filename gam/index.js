@@ -310,6 +310,17 @@ if (specialBox26) {
   `;
 }
 
+const specialBox27 = document.getElementById('box-27');
+if (specialBox27) {
+  specialBox27.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/escaping-the-prison.png" alt="Escaping the Prison" draggable="false">
+      <p>Escaping the Prison</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=27'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
