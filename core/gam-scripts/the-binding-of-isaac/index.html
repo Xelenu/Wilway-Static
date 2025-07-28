@@ -1,20 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Isaac Standalone Ruffle</title>
-  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Binding of Isaac</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #flashContent {
+            width: 800px;
+            height: 600px;
+            max-width: 90vw;
+            max-height: 80vh;
+            background-color: #000;
+            border: 2px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        #rufflePlayer {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        #pauseScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            z-index: 10;
+            cursor: pointer;
+        }
+        #pauseScreen h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        #pauseScreen.hidden {
+            display: none;
+        }
+        #fallbackMessage {
+            color: #fff;
+            text-align: center;
+            font-size: 1.2rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0;
+            z-index: 5;
+        }
+        @media (max-width: 900px) {
+            #flashContent {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 4 / 3;
+            }
+        }
+    </style>
 </head>
-<body style="background:black;">
-  <button id="startFlashBtn" style="display:block; margin:80px auto; font-size:2em; padding:20px 60px;">PLAY</button>
-  <ruffle-player id="player" style="width:640px;height:480px;display:none; margin:40px auto;"></ruffle-player>
-  <script>
-    document.getElementById("startFlashBtn").onclick = function() {
-      document.getElementById("startFlashBtn").style.display = "none";
-      var player = document.getElementById("player");
-      player.style.display = "block";
-      player.setAttribute("src", "lib/581168_Isaac_demo_Secure.swf");
-    };
-  </script>
+<body>
+    <div id="flashContent">
+        <div id="pauseScreen">
+            <h1>Game Paused</h1>
+        </div>
+        <p id="fallbackMessage">:c</p>
+    </div>
+    <script src="https://unpkg.com/@ruffle-rs/ruffle/ruffle.js"></script>
+    <script>
+        window.RufflePlayer = window.RufflePlayer || {};
+        let player;
+
+        function initializePlayer() {
+            const ruffle = window.RufflePlayer.newest();
+            player = ruffle.createPlayer();
+            player.id = "rufflePlayer";
+            const container = document.getElementById("flashContent");
+            const pauseScreen = document.getElementById("pauseScreen");
+            const fallbackMessage = document.getElementById("fallbackMessage");
+            if (fallbackMessage) {
+                fallbackMessage.style.display = "none";
+            }
+            container.insertBefore(player, pauseScreen);
+            player.load({
+                url: "/core/gam-scripts/the-binding-of-isaac/lib/581168_Isaac_demo_Secure.swf",
+                allowScriptAccess: true,
+                quality: "high",
+                scaleMode: "showAll"
+            }).catch(error => {
+                console.error("it didnt load:", error);
+                if (fallbackMessage) {
+                    fallbackMessage.style.display = "block";
+                }
+                if (pauseScreen) {
+                    pauseScreen.style.display = "none";
+                }
+            });
+        }
+
+        function showPauseScreen() {
+            const pauseScreen = document.getElementById("pauseScreen");
+            if (pauseScreen) {
+                pauseScreen.classList.remove("hidden");
+            }
+            if (player && player.pause) {
+                player.pause();
+            }
+        }
+
+        function hidePauseScreen() {
+            const pauseScreen = document.getElementById("pauseScreen");
+            if (pauseScreen) {
+                pauseScreen.classList.add("hidden");
+            }
+            if (player && player.play) {
+                player.play();
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            const pauseScreen = document.getElementById("pauseScreen");
+            if (pauseScreen) {
+                pauseScreen.addEventListener("click", hidePauseScreen);
+            } else {
+                console.error("Pause screen not found");
+            }
+
+            initializePlayer();
+
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) {
+                    showPauseScreen();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
