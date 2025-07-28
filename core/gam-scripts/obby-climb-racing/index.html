@@ -37,6 +37,46 @@ if (location.protocol.substr(0, 4) === "file")
 	<script src="/core/gam-scripts/obby-climb-racing/scripts/offlineclient.js" type="module"></script>
 	<script src="/core/gam-scripts/obby-climb-racing/scripts/main.js" type="module"></script>
 	<script src="/core/gam-scripts/obby-climb-racing/scripts/register-sw.js" type="module"></script>
+<script>
+	// 🧱 Stub for SingleGlobalInstance (used in Construct event sheets)
+window.SingleGlobalInstance = {
+  PreloadRewardedAd: () => {
+    console.log("[Stub] PreloadRewardedAd() called");
+  },
+  ShowRewardedAd: () => {
+    console.log("[Stub] ShowRewardedAd() called");
+    return Promise.resolve(true); // simulate ad success
+  },
+  ShowInterstitialAd: () => {
+    console.log("[Stub] ShowInterstitialAd() called");
+    return Promise.resolve();
+  }
+};
 
+// 🧱 Stub for Construct's adplugin via cr_getC2Runtime (used by legacy Construct ads)
+window.cr_getC2Runtime = () => ({
+  adplugin: {
+    preloadAd: () => console.log("[Stub] adplugin.preloadAd()"),
+    showAd: () => console.log("[Stub] adplugin.showAd()"),
+    showRewardedAd: () => {
+      console.log("[Stub] adplugin.showRewardedAd()");
+      return Promise.resolve(true);
+    },
+    isAdAvailable: () => true
+  }
+});
+
+// 🧱 Stub for generic Ads object (used in GameDistribution-style games)
+window.Ads = {
+  showInterstitial: () => {
+    console.log("[Stub] Ads.showInterstitial()");
+    return Promise.resolve();
+  },
+  showRewarded: () => {
+    console.log("[Stub] Ads.showRewarded()");
+    return Promise.resolve(true);
+  }
+};
+</script>
 </body>
 </html>
