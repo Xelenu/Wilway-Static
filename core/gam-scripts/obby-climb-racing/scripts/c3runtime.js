@@ -28,6 +28,63 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 */
+
+	// 🧱 Stub for SingleGlobalInstance (used in Construct event sheets)
+window.SingleGlobalInstance = {
+  PreloadRewardedAd: () => {
+    console.log("[Stub] PreloadRewardedAd() called");
+  },
+  ShowRewardedAd: () => {
+    console.log("[Stub] ShowRewardedAd() called");
+    return Promise.resolve(true); // simulate ad success
+  },
+  ShowInterstitialAd: () => {
+    console.log("[Stub] ShowInterstitialAd() called");
+    return Promise.resolve();
+  }
+};
+
+// 🧱 Stub for Construct's adplugin via cr_getC2Runtime (used by legacy Construct ads)
+window.cr_getC2Runtime = () => ({
+  adplugin: {
+    preloadAd: () => console.log("[Stub] adplugin.preloadAd()"),
+    showAd: () => console.log("[Stub] adplugin.showAd()"),
+    showRewardedAd: () => {
+      console.log("[Stub] adplugin.showRewardedAd()");
+      return Promise.resolve(true);
+    },
+    isAdAvailable: () => true
+  }
+});
+
+// 🧱 Stub for generic Ads object (used in GameDistribution-style games)
+window.Ads = {
+  showInterstitial: () => {
+    console.log("[Stub] Ads.showInterstitial()");
+    return Promise.resolve();
+  },
+  showRewarded: () => {
+    console.log("[Stub] Ads.showRewarded()");
+    return Promise.resolve(true);
+  }
+};
+
+// 🔐 Optional global error handler to suppress crashes from missing ad features
+window.onerror = function (message, source, lineno, colno, error) {
+  if (
+    message?.includes("preloadAd") ||
+    message?.includes("adplugin") ||
+    message?.includes("SingleGlobalInstance") ||
+    message?.includes("Ads")
+  ) {
+    console.warn("[Bypass] Suppressed ad-related error:", message);
+    return true; // prevent fatal crash
+  }
+  return false; // allow other errors
+};
+
+console.log("[✔] Ad stubs injected — game should no longer crash due to missing ads.");
+
 'use strict';(function(global,factory){typeof exports==="object"&&typeof module!=="undefined"?factory(exports):typeof define==="function"&&define.amd?define(["exports"],factory):(global=typeof globalThis!=="undefined"?globalThis:global||self,factory(global.glMatrix={}))})(this,function(exports){var EPSILON=1E-6;var ARRAY_TYPE=typeof Float32Array!=="undefined"?Float32Array:Array;var RANDOM=Math.random;var ANGLE_ORDER="zyx";function setMatrixArrayType(type){ARRAY_TYPE=type}var degree=Math.PI/180;function toRadian(a){return a*
 degree}function equals$9(a,b){return Math.abs(a-b)<=EPSILON*Math.max(1,Math.abs(a),Math.abs(b))}if(!Math.hypot)Math.hypot=function(){var y=0,i=arguments.length;while(i--)y+=arguments[i]*arguments[i];return Math.sqrt(y)};var common=Object.freeze({__proto__:null,EPSILON:EPSILON,get ARRAY_TYPE(){return ARRAY_TYPE},RANDOM:RANDOM,ANGLE_ORDER:ANGLE_ORDER,setMatrixArrayType:setMatrixArrayType,toRadian:toRadian,equals:equals$9});function create$8(){var out=new ARRAY_TYPE(4);if(ARRAY_TYPE!=Float32Array){out[1]=
 0;out[2]=0}out[0]=1;out[3]=1;return out}function clone$8(a){var out=new ARRAY_TYPE(4);out[0]=a[0];out[1]=a[1];out[2]=a[2];out[3]=a[3];return out}function copy$8(out,a){out[0]=a[0];out[1]=a[1];out[2]=a[2];out[3]=a[3];return out}function identity$5(out){out[0]=1;out[1]=0;out[2]=0;out[3]=1;return out}function fromValues$8(m00,m01,m10,m11){var out=new ARRAY_TYPE(4);out[0]=m00;out[1]=m01;out[2]=m10;out[3]=m11;return out}function set$8(out,m00,m01,m10,m11){out[0]=m00;out[1]=m01;out[2]=m10;out[3]=m11;return out}
