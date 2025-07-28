@@ -5801,7 +5801,7 @@ JSON.stringify(this.currentProduct["transaction"])||""}}};
         if (d.getElementById(id)) return;
         js = d.createElement(s);
         js.id = id;
-        js.src = "//html5.api.gamedistribution.com/main.min.js";
+        js.src = "/core/gam-distribution/main.min.js";
         fjs.parentNode.insertBefore(js, fjs);
       })(document, "script", "gamedistribution-jssdk");
     }
