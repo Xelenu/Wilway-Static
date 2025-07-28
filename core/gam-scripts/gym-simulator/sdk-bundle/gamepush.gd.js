@@ -16805,19 +16805,7 @@
           })();
         }
         init() {
-          return is(this, void 0, void 0, function* () {
-            const e = (0, r._)();
-            return (
-              (this.ready = e.ready),
-              (window.GD_OPTIONS = {
-                gameId: this.config.appId,
-                onEvent: (t) => {
-                  switch (t.name) {
-                    case "SDK_READY":
-                    case "SDK_ERROR":
-                      e.done(this);
-                  }
-                },
+          e.done(this);
               }),
               (function ({ src: e, check: t }) {
                 return new Promise((i, r) => {
