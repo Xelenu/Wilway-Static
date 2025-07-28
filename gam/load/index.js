@@ -130,6 +130,11 @@ const contentSources = {
         creditsText: 'in the gam'
     },
     '26': {
+        url: '/core/gam-scripts/breaking-the-bank/',
+        showMessage: false,
+        creditsText: 'Puffballs United'
+    },
+    '27': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
