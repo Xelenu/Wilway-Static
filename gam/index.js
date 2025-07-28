@@ -293,7 +293,7 @@ if (specialBox25) {
   specialBox25.innerHTML = `
     <div class="box-content">
       <img src="${siteUrl}/core/gam-image/tboi.png" alt="TBOI" draggable="false">
-      <p>The Binding Of Isaac</p>
+      <p>The Binding of Isaac</p>
       <button onclick="window.location.href='${siteUrl}/gam/load?id=25'">Let's go!</button>
     </div>
   `;
