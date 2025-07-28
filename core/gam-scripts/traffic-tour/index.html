@@ -304,5 +304,42 @@
       document.body.appendChild(script);
     </script>
 	<script src="/core/gam-scripts/traffic-tour/v2.d2cdeaa3c02cf02d20e3.js"></script>
+	<script>
+window.YaGames = {
+  init: () => Promise.resolve({
+    adv: {
+      showFullscreenAdv: ({callbacks}) => {
+        // Callbacks stub
+        if (callbacks && callbacks.onClose) callbacks.onClose(true);
+      },
+      showRewardedVideo: ({callbacks}) => {
+        if (callbacks && callbacks.onOpen) callbacks.onOpen();
+        if (callbacks && callbacks.onRewarded) callbacks.onRewarded();
+        if (callbacks && callbacks.onClose) callbacks.onClose();
+      }
+    },
+    auth: {
+      openAuthDialog: () => Promise.resolve()
+    },
+    getPlayer: () => Promise.resolve({
+      getID: () => "fake-id",
+      getName: () => "Player",
+      getPhoto: (size) => "",
+      getUniqueID: () => "fake-uid"
+    }),
+    features: {
+      LoadingAPI: {
+        ready: () => {}
+      }
+    },
+    getPayments: () => Promise.resolve({
+      getPurchases: () => Promise.resolve([]),
+      getCatalog: () => Promise.resolve([]),
+      purchase: (id) => Promise.resolve({id}),
+      consumePurchase: (token) => {}
+    }),
+  })
+};
+</script>
 </body>
 </html>
