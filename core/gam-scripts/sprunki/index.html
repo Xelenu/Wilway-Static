@@ -2,23 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sprunki</title>
+  <title>Sprunk Game Loader</title>
 
+  <!-- ✅ Content Security Policy must be inside <head> -->
   <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: blob:;">
 
   <style>
-    body { margin: 0; background: black; }
-    #game-container { width: 100%; height: 100vh; overflow: hidden; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: white;
+      font-family: sans-serif;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+    #game-container {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
-  <div id="game-container">Loading...</div>
+  <div id="game-container">Loading game...</div>
 
   <script>
     const container = document.getElementById("game-container");
     const partCount = 5;
-    const folder = "./";
-    const partFiles = Array.from({ length: partCount }, (_, i) => `${folder}part${i}.html`);
+    const partFiles = Array.from({ length: partCount }, (_, i) => `part${i}.html`);
 
     Promise.all(partFiles.map(file =>
       fetch(file)
@@ -29,7 +45,7 @@
     )).then(parts => {
       container.innerHTML = parts.join('');
     }).catch(err => {
-      container.textContent = "Error loading game: " + err.message;
+      container.innerHTML = `<div style="color:red">Error loading game: ${err.message}</div>`;
       console.error(err);
     });
   </script>
