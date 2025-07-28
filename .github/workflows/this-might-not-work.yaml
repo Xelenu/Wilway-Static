@@ -1,0 +1,30 @@
+name: Merge HTML Parts
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write  # allow pushing back to the repo
+
+jobs:
+  merge-html:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Merge HTML parts into index.html
+        run: |
+          cd core/gam-scripts/sprunki
+          cat part0.html part1.html part2.html part3.html part4.html > index.html
+
+      - name: Commit merged index.html
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add index.html
+          git commit -m "Auto-merged HTML parts into index.html"
+          git push
