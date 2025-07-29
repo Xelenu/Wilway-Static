@@ -332,6 +332,17 @@ if (specialBox28) {
   `;
 }
 
+const specialBox29 = document.getElementById('box-29');
+if (specialBox29) {
+  specialBox29.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/infiltrating-the-airship.png" alt="Infiltrating the Airship" draggable="false">
+      <p>Infiltrating the Airship</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=29'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
