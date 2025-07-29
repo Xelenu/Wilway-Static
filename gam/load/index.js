@@ -145,6 +145,11 @@ const contentSources = {
         creditsText: 'Puffballs United'
     },
     '29': {
+        url: '/core/gam-scripts/infiltrating-the-airship/',
+        showMessage: false,
+        creditsText: 'Puffballs United'
+    },
+    '30': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
