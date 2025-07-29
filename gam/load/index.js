@@ -165,6 +165,11 @@ const contentSources = {
         creditsText: 'Arri'
     },
     '33': {
+        url: '/core/gam-scripts/buckshot-roulette/',
+        showMessage: false,
+        creditsText: 'Port by buckshotroulette.online, files by breadbb'
+    },
+    '34': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
