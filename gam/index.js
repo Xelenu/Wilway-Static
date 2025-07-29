@@ -343,6 +343,18 @@ if (specialBox29) {
   `;
 }
 
+const specialBox30 = document.getElementById('box-30');
+if (specialBox30) {
+  specialBox30.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/fleeing-the-complex.png" alt="Fleeing the Complex" draggable="false">
+      <p>Fleeing the Complex</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=30'">Let's go!</button>
+    </div>
+  `;
+}
+
+
 
 
     const allBoxes = document.querySelectorAll('.box');
