@@ -321,6 +321,17 @@ if (specialBox27) {
   `;
 }
 
+const specialBox28 = document.getElementById('box-28');
+if (specialBox28) {
+  specialBox28.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/stealing-the-diamond.png" alt="Stealing the Diamond" draggable="false">
+      <p>Stealing the Diamond</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=28'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
