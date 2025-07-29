@@ -343,13 +343,13 @@ if (specialBox29) {
   `;
 }
 
-const specialBox30 = document.getElementById('box-30');
-if (specialBox30) {
-  specialBox30.innerHTML = `
+const specialBox31 = document.getElementById('box-31');
+if (specialBox31) {
+  specialBox31.innerHTML = `
     <div class="box-content">
-      <img src="${siteUrl}/core/gam-image/fleeing-the-complex.png" alt="Fleeing the Complex" draggable="false">
-      <p>Fleeing the Complex</p>
-      <button onclick="window.location.href='${siteUrl}/gam/load?id=30'">Let's go!</button>
+      <img src="${siteUrl}/core/gam-image/gym-simulator.png" alt="GS" draggable="false">
+      <p>Gym Simulator 🔥</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=31'">Let's go!</button>
     </div>
   `;
 }
