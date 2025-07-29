@@ -140,6 +140,11 @@ const contentSources = {
         creditsText: 'Puffballs United'
     },
     '28': {
+        url: '/core/gam-scripts/stealing-the-diamond/',
+        showMessage: false,
+        creditsText: 'Puffballs United'
+    },
+    '29': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
