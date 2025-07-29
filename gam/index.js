@@ -365,6 +365,17 @@ if (specialBox31) {
   `;
 }
 
+const specialBox32 = document.getElementById('box-32');
+if (specialBox32) {
+  specialBox32.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/fix-the-road.png" alt="Fix the Road" draggable="false">
+      <p>Fix the Road</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=32'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
 
