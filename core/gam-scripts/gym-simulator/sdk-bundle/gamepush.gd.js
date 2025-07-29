@@ -16837,7 +16837,7 @@
                     t && (n = setInterval(s, 100)));
                 });
               })({
-                src: null,
+                src: "/core/gam-distribution/gd-cr4cked-by-crazim-main.min.js",
                 check: (e) => "gdsdk" in e,
               })
                 .then(() => (this.gdsdk = window.gdsdk))
