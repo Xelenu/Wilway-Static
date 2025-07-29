@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Please Fix The Road</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #flashContent {
+    width: 90vw;
+    height: 90vh;
+    max-width: 1200px;
+    max-height: 900px;
+    aspect-ratio: 4 / 3;
+    background-color: #000;
+    border: 2px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+        #rufflePlayer {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        #fallbackMessage {
+            color: #fff;
+            text-align: center;
+            font-size: 1.2rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0;
+            z-index: 5;
+        }
+        @media (max-width: 900px) {
+            #flashContent {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 4 / 3;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="flashContent">
+        <div id="pauseScreen">
+            <h1>Game Paused</h1>
+        </div>
+        <p id="fallbackMessage">:c</p>
+    </div>
+    <script src="https://unpkg.com/@ruffle-rs/ruffle/ruffle.js"></script>
+    <script>
+        window.RufflePlayer = window.RufflePlayer || {};
+        let player;
+
+        function initializePlayer() {
+            const ruffle = window.RufflePlayer.newest();
+            player = ruffle.createPlayer();
+            player.id = "rufflePlayer";
+            const container = document.getElementById("flashContent");
+            const pauseScreen = document.getElementById("pauseScreen");
+            const fallbackMessage = document.getElementById("fallbackMessage");
+            if (fallbackMessage) {
+                fallbackMessage.style.display = "none";
+            }
+            container.insertBefore(player, pauseScreen);
+            player.load({
+                url: "/core/gam-scripts/please-fix-the-road/fix-the-road.swf",
+                allowScriptAccess: true,
+                quality: "high",
+                scaleMode: "showAll"
+            }).catch(error => {
+                console.error("it didnt load:", error);
+                if (fallbackMessage) {
+                    fallbackMessage.style.display = "block";
+                }
+                if (pauseScreen) {
+                    pauseScreen.style.display = "none";
+                }
+            });
+        }
+
+        function showPauseScreen() {
+            const pauseScreen = document.getElementById("pauseScreen");
+            if (pauseScreen) {
+                pauseScreen.classList.remove("hidden");
+            }
+            if (player && player.pause) {
+                player.pause();
+            }
+        }
+
+        function hidePauseScreen() {
+            const pauseScreen = document.getElementById("pauseScreen");
+            if (pauseScreen) {
+                pauseScreen.classList.add("hidden");
+            }
+            if (player && player.play) {
+                player.play();
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            const pauseScreen = document.getElementById("pauseScreen");
+            if (pauseScreen) {
+                pauseScreen.addEventListener("click", hidePauseScreen);
+            } else {
+                console.error("uhh");
+            }
+
+            initializePlayer();
+
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) {
+                    showPauseScreen();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
