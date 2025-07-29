@@ -1,6 +1,6 @@
 {
-"companyName": "meyagames.com",
-"productName": "meyagames.com - Squid Sniper Game",
+"companyName": "meyagams.com",
+"productName": "Squid Gam Sniper",
 "productVersion": "1.0",
 "dataUrl": "Build.data.unityweb",
 "wasmCodeUrl": "Build.wasm.code.unityweb",
@@ -10,7 +10,7 @@
 "backgroundUrl": "Build.jpg",
 "splashScreenStyle": "Dark",
 "backgroundColor": "#FFFFFF",
-"developmentBuild": false,
+"developmentBuild": true,
 "multithreading": false,
 "unityVersion": "2019.4.18f1"
 }
