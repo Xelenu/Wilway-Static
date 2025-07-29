@@ -155,6 +155,11 @@ const contentSources = {
         creditsText: 'Puffballs United'
     },
     '31': {
+        url: '/core/gam-scripts/gym-simulator/',
+        showMessage: false,
+        creditsText: 'GamPush'
+    },
+    '32': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
