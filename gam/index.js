@@ -376,6 +376,17 @@ if (specialBox32) {
   `;
 }
 
+const specialBox33 = document.getElementById('box-33');
+if (specialBox33) {
+  specialBox33.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/buckshot-roulette.png" alt="Buckshot Roulette" draggable="false">
+      <p>Buckshot Roulette</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=33'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
 
