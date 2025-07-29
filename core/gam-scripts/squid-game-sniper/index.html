@@ -131,7 +131,7 @@
             if (d.getElementById(id)) return;
             js = d.createElement(s);
             js.id = id;
-            js.src = "https://html5.api.gamedistribution.com/main.min.js";
+            js.src = null;
             fjs.parentNode.insertBefore(js, fjs);
           })(document, "script", "gamedistribution-jssdk");
         };
@@ -158,7 +158,7 @@
           };
 
           var searchPart = formatTokenURLSearch(data);
-          var gameSrc = "//html5.gamedistribution.com/rvvASMiM/1a51c197b90b42688ddd10c078cb73bb/index.html" + searchPart;
+          var gameSrc = "/core/gam-scripts/squid-game-sniper/index.html" + searchPart;
           this._container.src = gameSrc;
 
           this._container.onload = this._onFrameLoaded.bind(this);
