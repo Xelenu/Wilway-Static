@@ -20,7 +20,7 @@ function createBox(row, col, index) {
       }
     }
 
-    createGrid(20, 2);
+    createGrid(40, 4);
 
 const siteUrl = window.location.origin;
 
@@ -387,6 +387,16 @@ if (specialBox33) {
   `;
 }
 
+const specialBox34 = document.getElementById('box-34');
+if (specialBox34) {
+  specialBox34.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/squid-gam-sniper.png" alt="Squid Gam Sniper" draggable="false">
+      <p>Squid Gam Sniper</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=34'">Let's go!</button>
+    </div>
+  `;
+}
 
 
 
