@@ -170,6 +170,12 @@ const contentSources = {
         creditsText: 'Port by buckshotroulette.online, files by breadbb'
     },
     '34': {
+        url: '/core/gam-scripts/squid-gam-sniper/',
+        showMessage: true,
+        messageText: '🙂 Thanks GD',
+        creditsText: 'Wilway'
+    },
+    '35': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
