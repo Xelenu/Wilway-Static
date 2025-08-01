@@ -20,7 +20,7 @@ function createBox(row, col, index) {
       }
     }
 
-    createGrid(40, 4);
+    createGrid(40, 2);
 
 const siteUrl = window.location.origin;
 
