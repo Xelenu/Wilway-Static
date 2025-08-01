@@ -398,6 +398,17 @@ if (specialBox34) {
   `;
 }
 
+const specialBox35 = document.getElementById('box-35');
+if (specialBox35) {
+  specialBox35.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/you-vs-skibidi.png" alt="You vs Skibidi" draggable="false">
+      <p>You vs 100 Skibidy Toilets</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=35'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
