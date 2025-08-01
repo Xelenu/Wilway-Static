@@ -176,6 +176,11 @@ const contentSources = {
         creditsText: 'Wilway'
     },
     '35': {
+        url: '/core/gam-scripts/you-vs-skibidi/',
+        showMessage: false,
+        creditsText: 'Wilway'
+    },
+    '36': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
