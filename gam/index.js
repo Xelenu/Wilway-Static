@@ -409,6 +409,17 @@ if (specialBox35) {
   `;
 }
 
+const specialBox36 = document.getElementById('box-36');
+if (specialBox36) {
+  specialBox36.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/offroad-climb.png" alt="Offroad Climb" draggable="false">
+      <p>Offroad Climb</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=36'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
