@@ -453,17 +453,6 @@ if (specialBox39) {
   `;
 }
 
-const specialBox40 = document.getElementById('box-40');
-if (specialBox40) {
-  specialBox40.innerHTML = `
-    <div class="box-content">
-      <img src="${siteUrl}/core/gam-image/nsr-racing.png" alt="NSR Racing" draggable="false">
-      <p>NSR Racing 🔥</p>
-      <button onclick="window.location.href='${siteUrl}/gam/load?id=40'">Let's go!</button>
-    </div>
-  `;
-}
-
 
 
     const allBoxes = document.querySelectorAll('.box');
