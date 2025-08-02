@@ -81,14 +81,12 @@
 
     <script>
       var canvas = document.querySelector("#unity-canvas");
-      // Disable iOS/Safari long‑press context menu and related selection gestures
       ['contextmenu', 'selectstart', 'gesturestart'].forEach(function (evt) {
         canvas.addEventListener(evt, function (e) {
           e.preventDefault();
         }, { capture: true, passive: false });
       });
 
-      // Utility function to display warnings/errors.
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
@@ -108,35 +106,33 @@
         updateBannerVisibility();
       }
 
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/nsr.loader.js";
-      var dataFilename = "nsr.data"
-      // If user is on a mobile browser, then use alternative data file
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) 
-      {
-        dataFilename = dataFilename.replace("nsr", "nsr-mobilebrowser");
-      }
-          
-      var config = 
-      {
-        arguments: [],
-        dataUrl: buildUrl + "/" + dataFilename,
-        frameworkUrl: buildUrl + "/nsr.framework.js",
-        streamingAssetsUrl: "StreamingAssets",
-        codeUrl: buildUrl + "/nsr.wasm",
-        companyName: "Yes2Games",
-        productName: "NSR Street",
-        productVersion: "1.0.7",
-        showBanner: unityShowBanner,
-      };
+var baseUrl = "https://cdn.jsdelivr.net/gh/ccrazim/NSR-Racing/";
+var buildUrl = baseUrl + "Build";
 
-      canvas.style.background = "url('" + buildUrl + "/nsr.jpg') center / cover";
-      document.querySelector("#unity-loading-bar").style.display = "block";
+var dataFilename = "nsr.data";
+if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+  dataFilename = "nsr-mobilebrowser.data";
+}
 
-      let resizeTimer = null;   // debounce handle
+var config = {
+  arguments: [],
+  dataUrl: buildUrl + "/" + dataFilename,
+  frameworkUrl: buildUrl + "/nsr.framework.js",
+  streamingAssetsUrl: baseUrl + "StreamingAssets",
+  codeUrl: buildUrl + "/nsr.wasm",
+  companyName: "Yes2Games",
+  productName: "NSR Street",
+  productVersion: "1.0.7",
+  showBanner: unityShowBanner,
+};
+
+canvas.style.background = "url('" + buildUrl + "/nsr.jpg') center / cover";
+
+document.querySelector("#unity-loading-bar").style.display = "block";
+
+let resizeTimer = null;
 
       function notifyResize() {
-        // Debounce the expensive Unity UI refresh
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
           if (window.unityInstance) {
@@ -176,7 +172,6 @@
           alert(message);
         });
       };
-
       document.body.appendChild(script);
     </script>
   </body>
