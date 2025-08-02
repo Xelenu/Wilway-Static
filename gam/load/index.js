@@ -201,12 +201,6 @@ const contentSources = {
         creditsText: 'Wilway'
     },
     '40': {
-        url: '/core/gam-scripts/nsr-racing/',
-        showMessage: true,
-        messageText: '😬 May be blocked',
-        creditsText: 'Wilway'
-    },
-    '41': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
