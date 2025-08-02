@@ -191,6 +191,11 @@ const contentSources = {
         creditsText: 'Wilway'
     },
     '38': {
+        url: '/core/gam-scripts/skibidi-toilet-shot/',
+        showMessage: false,
+        creditsText: 'Wilway'
+    },
+    '39': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
