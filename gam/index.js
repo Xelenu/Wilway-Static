@@ -420,6 +420,17 @@ if (specialBox36) {
   `;
 }
 
+const specialBox37 = document.getElementById('box-37');
+if (specialBox37) {
+  specialBox37.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/geometry-arrow.png" alt="Geometry Arrow" draggable="false">
+      <p>Geometry Arrow</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=37'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
