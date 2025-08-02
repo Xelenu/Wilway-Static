@@ -201,6 +201,11 @@ const contentSources = {
         creditsText: 'Wilway'
     },
     '40': {
+        url: '/core/gam-scripts/nsr-racing/',
+        showMessage: false,
+        creditsText: 'Wilway'
+    },
+    '41': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
