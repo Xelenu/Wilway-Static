@@ -1,0 +1,40 @@
+name: Combine Offroad Climb Data Parts
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  combine_data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Combine .data parts
+        run: |
+          cat ./core/gam-scripts/offroad-climb/Build/ca2e10390226a849b407ba77e113dd07.data.000.part \
+              ./core/gam-scripts/offroad-climb/Build/ca2e10390226a849b407ba77e113dd07.data.001.part \
+              ./core/gam-scripts/offroad-climb/Build/ca2e10390226a849b407ba77e113dd07.data.002.part \
+            > ./core/gam-scripts/offroad-climb/Build/ca2e10390226a849b407ba77e113dd07.data
+
+      - name: Commit combined data file
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add ./core/gam-scripts/offroad-climb/Build/ca2e10390226a849b407ba77e113dd07.data
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Combine ca2e10390226a849b407ba77e113dd07.data parts into single file"
+            git push
+          fi
