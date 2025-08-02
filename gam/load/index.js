@@ -196,6 +196,11 @@ const contentSources = {
         creditsText: 'Wilway'
     },
     '39': {
+        url: '/core/gam-scripts/brainrot-parkour/',
+        showMessage: false,
+        creditsText: 'Wilway'
+    },
+    '40': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
