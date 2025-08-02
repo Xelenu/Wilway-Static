@@ -190,11 +190,6 @@ const contentSources = {
         showMessage: false,
         creditsText: 'Wilway'
     },
-    'test': {
-        url: '/core/gam-scripts/wacky-nursery-2/',
-        showMessage: false,
-        creditsText: 'Wilway'
-    },
     '38': {
         url: 'https://example.com',
         showMessage: false,
