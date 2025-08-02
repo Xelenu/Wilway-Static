@@ -442,6 +442,17 @@ if (specialBox38) {
   `;
 }
 
+const specialBox39 = document.getElementById('box-39');
+if (specialBox39) {
+  specialBox39.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/brainrot-parkour.png" alt="Brainrot Parkour" draggable="false">
+      <p>Brainrot Parkour</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=39'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
