@@ -431,6 +431,17 @@ if (specialBox37) {
   `;
 }
 
+const specialBox38 = document.getElementById('box-38');
+if (specialBox38) {
+  specialBox38.innerHTML = `
+    <div class="box-content">
+      <img src="${siteUrl}/core/gam-image/skibidi-toilet-shot.png" alt="Skibidy Toilet Shot" draggable="false">
+      <p>Skibidy Toilet Shot</p>
+      <button onclick="window.location.href='${siteUrl}/gam/load?id=38'">Let's go!</button>
+    </div>
+  `;
+}
+
 
 
     const allBoxes = document.querySelectorAll('.box');
