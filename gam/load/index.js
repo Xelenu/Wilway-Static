@@ -186,6 +186,11 @@ const contentSources = {
         creditsText: 'Wilway'
     },
     '37': {
+        url: '/core/gam-scripts/geometry-arrow/',
+        showMessage: false,
+        creditsText: 'Wilway'
+    },
+    '38': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
