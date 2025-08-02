@@ -181,6 +181,11 @@ const contentSources = {
         creditsText: 'Wilway'
     },
     '36': {
+        url: '/core/gam-scripts/offroad-climb/',
+        showMessage: false,
+        creditsText: 'Wilway'
+    },
+    '37': {
         url: 'https://example.com',
         showMessage: false,
         creditsText: '...'
